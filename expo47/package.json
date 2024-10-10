@@ -66,7 +66,7 @@
     "@babel/core": "^7.12.9",
     "@testing-library/react": "^13.4.0",
     "@types/jest": "^29.2.3",
-    "@types/lodash": "^4.14.189",
+    "@types/lodash": "^4.14.194",
     "@types/lz-string": "^1.3.34",
     "@types/react": "~18.2.14",
     "@types/uuid": "^8.3.4",
