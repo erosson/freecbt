@@ -1,35 +1,48 @@
 {
   "onboarding_screen": {
-    "auto_thought_ex": "Ich war nicht auf Georg's Party, er hasst mich bestimmt.",
-    "challenge_ex": "George weiß ich kann nicht jedes mal Zeit finden, Ich würde ihn nicht hassen, wenn er etwas von mir verpasst.\n\nIch sollte mich selbst mindestens so gut behandeln wie ich andere behandle.",
-    "alt_thought_ex": "Es ist wahr, ich habe George's Party verpasst, ich kann mich entschuldigen, er wird mir wahrscheinlich verzeihen.",
-    "cog_distortion": { "label": "Gedanken Lesen", "slug": "mind-reading" },
+    "readme": "Lies' das als erstes.",
+    "header": "Der FreeCBT-Guide",
+    "block1": {
+      "header": "FreeCBT ist etwas, was du regelmäßig trainieren musst.",
+      "body": "Es braucht etwas Zeit, doch FreeCBT zu erlernen, kann dir helfen, dich wesentlich besser zu fühlen."
+    },
+    "block2": {
+      "header": "Nutze FreeCBT im Moment.",
+      "body": "Wenn du dich ängstlich, wütend oder traurig fühlst, dann nutze FreeCBT."
+    },
+    "auto_thought_ex": "Ich war nicht auf Georges Party. Dafür hasst er mich bestimmt.",
+    "challenge_ex": "George weiß, dass ich nicht immer Zeit für ihn finden kann. Ich würde ihn nicht dafür hassen, wenn er etwas von mir verpasst.\n\nIch sollte mich selbst mindestens so gut behandeln, wie ich andere behandle.",
+    "alt_thought_ex": "Es stimmt, dass ich Georges Party verpasst habe, doch ich kann mich dafür bei ihm entschuldigen. Er wird mir wahrscheinlich verzeihen.",
+    "cog_distortion": {
+      "label": "Gedankenlesen",
+      "slug": "mind-reading"
+    },
     "intro": {
-      "line1": "Willkommen zu",
+      "line1": "Willkommen bei",
       "emphasis1": "FreeCBT",
-      "line2": ", der",
-      "emphasis2": "kognitiven Verhaltens-therapie (CBT)",
-      "line3": "App."
+      "line2": ", der App für",
+      "emphasis2": "kognitive Verhaltenstherpaie",
+      "line3": "(CBT)."
     },
     "crash_course": {
       "line1": "Dies ist ein",
-      "emphasis1": "grundlegende Hilfsanwendung",
+      "emphasis1": "Crashkurs",
       "line2": "in CBT und",
-      "emphasis2": "keine Alternative",
+      "emphasis2": "kein Ersatz",
       "line3": "für einen ausgebildeten Therapeuten."
     },
     "mood_thoughts": {
       "line1": "Erstens:",
-      "emphasis1": "deine Gedanken beeinflußen deine Stimmung."
+      "emphasis1": "Deine Gedanken beeinflussen deine Stimmung."
     },
     "thoughts_arent_thoughts": {
-      "line1": "Zweitens: deine Gedanken können",
+      "line1": "Zweitens: Deine Gedanken können",
       "emphasis1": "unbewusst angelernt",
-      "line2": "sein"
+      "line2": "sein."
     },
     "your_distorted": {
-      "line1": "Drittens: angelernte Gedanken können",
-      "emphasis1": "verfälscht",
+      "line1": "Drittens: Angelernte Gedanken können",
+      "emphasis1": "unwahr",
       "line2": "sein."
     },
     "cbt_overview": {
@@ -37,11 +50,11 @@
       "emphasis1": "angelernten Gedanken",
       "line2": "und",
       "emphasis2": "dem Ersetzen",
-      "line3": "mit Rationalen."
+      "line3": "mit rationalen."
     },
     "ready": {
       "emphasis1": "Bereit?",
-      "line1": "Lass und die Schritte besprechen."
+      "line1": "Lass' und die Schritte durchgehen."
     },
     "catch": {
       "line1": "1. Wir starten mit",
@@ -50,26 +63,26 @@
     },
     "bad_thought_note": {
       "line1": "Schreiben deinen Gedanken auf:",
-      "line2": "Ich war nicht auf Georg's Party, er hasst mich bestimmt."
+      "line2": "Ich war nicht auf Georges Party, er hasst mich dafür bestimmt."
     },
     "identify_distortions": {
       "line1": "Achte auf eine",
       "emphasis1": "verzerrte Wahrnehmung."
     },
     "bad_distortions": {
-      "line1": "Bist du dir sicher George hast dich? Wenn nicht, bist du am",
-      "emphasis1": "Gedanken Lesen",
-      "line2": "Ich war nicht auf Georg's Party, er hasst mich bestimmt."
+      "line1": "Bist du dir sicher, George dich dafür hasst? Falls nicht, dann übst du dich vermutlich im",
+      "emphasis1": "Gedankenlesen",
+      "line2": "Ich war nicht auf Georges Party, er hasst mich bestimmt."
     },
     "challenge_screen": {
       "line1": "3. Wieso ist dieser Gedanke nicht realistisch?",
       "emphasis1": "Korrigiere deine Gedanken."
     },
     "write_challenge": {
-      "line1": "Schreib stattdessen:"
+      "line1": "Schreib' stattdessen:"
     },
     "alt_thought": {
-      "line1": "4. Nun, schreib einen",
+      "line1": "4. Nun verfasse einen",
       "emphasis1": "alternativen Gedanken."
     },
     "show_off": {
@@ -77,63 +90,227 @@
     },
     "got_it": {
       "line1": "So einfach ist es.",
-      "btn_title": "Lass uns anfangen!"
+      "btn_title": "Lass' uns loslegen!"
+    },
+    "reminders": {
+      "header": "Bevor du gehst: Wir können dir Erinnerung schicken, falls du magst.",
+      "disabled": "Du kannst diese Erinnerungen in den Einstellungen anpassen.",
+      "button": {
+        "yes": "Ja, bitte!",
+        "no": "Ohne Benachrichtigungen fortfahren",
+        "continue": "Weiter"
+      }
     }
   },
-  "auto_thought": "angelernter Gedanke",
-  "cog_distortion": "verzerrte Wahrnehmung",
-  "challenge": "Herausfordern",
-  "alt_thought": "alternativer Gedanke",
+  "auto_thought": "Automatischer Gedanke",
+  "cog_distortion": "Wähle alle zutreffenden Verzerrungen aus.",
+  "challenge": "Hinterfrage den Gedanken.",
+  "alt_thought": "Verfasse einen alternativen Gedanken.",
+  "alt_thought_description": "Dies ist keine Hinterfragung, sondern die Möglichkeit, einen alternativen Gedanken zu verfestigen.",
+  "cbt_list": {
+    "header": ".FreeCBT",
+    "today": "Heute",
+    "empty": "Noch keine Gedanken"
+  },
+  "settings": {
+    "header": "FreeCBT*",
+    "reminders": {
+      "header": "*reminders",
+      "description": "Wenn du möchtest, kannst du Benachrichtigungserinnerungen einschalten, die dir helfen können, dir das Überdenken von Gedanken zur Gewohnheit zu machen.",
+      "button": {
+        "yes": "Bitte erinnere mich",
+        "no": "Keine Erinnerungen, danke"
+      }
+    },
+    "pincode": {
+      "header": "*pincode lock 🔒",
+      "description": "Du kannst die App mit einem Pincode sperren, wenn du das möchtest. Merke dir diesen Code gut, denn die einzige Möglichkeit, einen vergessenen Code zurückzusetzen, besteht darin, alle deine Daten zu löschen.",
+      "button": {
+        "update": "Update Pincode",
+        "clear": "Lösche Pincode",
+        "set": "Setze Pincode"
+      }
+    },
+    "history": {
+      "header": "*history button labels",
+      "description": "Standardmäßig ist die Übersicht im historischen Verlauf so eingestellt, dass dein alternative Gedanke angezeigt wird. Dies soll dabei helfen, den Gedanken als „geändert“ zu verfestigen.",
+      "button": {
+        "alternative": "Alternativer Gedanke",
+        "automatic": "Automatischer Gedanke"
+      }
+    },
+    "backup": {
+      "header": "*backup",
+      "button": "Sicherung deiner FreeCBT-Daten",
+      "export-button": "Exportiere deine FreeCBT-Daten"
+    },
+    "locale": {
+      "header": "*language",
+      "default": "Systemvorgabe",
+      "contribute": "Hilf' bei der Übersetzung von FreeCBT",
+      "// list": "translator note: use each language's native translation here; don't translate this list in other file. initial list based on https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes",
+      "list": {
+        "de": "Deutsch",
+        "en": "English",
+        "es": "Español",
+        "fi": "Suomi",
+        "fr": "Français",
+        "hi": "हिंदी",
+        "it": "Italiano",
+        "ko": "한국어",
+        "nb": "Norsk Bokmål",
+        "nl": "Nederlands",
+        "pl": "język polski",
+        "pt-BR": "Português do Brasil",
+        "pt-PT": "Português",
+        "ro": "Română",
+        "ru": "русский",
+        "sv": "Svenska",
+        "zh-Hans": "中文",
+        "fa": "فارسی",
+        "_test": ")tset( hsilgnE-esreveR"
+      }
+    },
+    "privacy": "Datenschutzrichtlinie",
+    "terms": "Nutzungsbedingungen"
+  },
   "cbt_form": {
+    "header": "FreeCBT",
     "edit": "Bearbeiten",
     "new": "Neu",
     "save": "Speichern",
-    "auto_thought_placeholder": "Was geht dir durch den Kopf?",
-    "cog_distortion": "verzerrte Wahrnehmung",
-    "challenged": "Herausfordern",
-    "changed_placeholder": "erörtern deinen Gedanken!",
-    "alt_thought_placeholder": "Was könnte ich anstatt dessen denken?"
+    "submit": "Speichern & Beenden",
+    "auto_thought_placeholder": "z. B.: 'Das Flugzeug könnte abstürzen'",
+    "cog_distortion": "Kognitive Verzerrung",
+    "challenged": "Challenge",
+    "changed_placeholder": "Es stimmt vielleicht nicht, dass...",
+    "alt_thought_placeholder": "Was könnten wir stattdessen denken?",
+    "show_details": "Detaillierte Beschreibungen anzeigen"
   },
-  "all_or_nothing_thinking": "Alles oder Nichts Denken",
-  "all_or_nothing_thinking_explanation": "Die Verzehrung passiert wenn du keinen Mittelweg siehst. Wenn du denkst, dass ein kleiner Fehler in deinem Verhalten bedeutet, dass du endgültig verdorben oder schlecht bist, denkst du wahrscheinlich in Schwarz und Weiß.",
-  "all_or_nothing_thinking_thought": "Ich habe das Bewerbungsgespräch vermasselt, ich bin komplett uneinstellbar.",
-  "catastrophizing": "Katastrophen ausdenken",
-  "catastrophizing_explanation": "Wenn du ein kleines Problem größer machst als es ist, denkst du dir Katastrophen aus. Hast du einen kleinen Fehler bei der Arbeit gemacht und bist fürchtest dich davor, dass es Jemand rausfindet, obwohl es nichts ernstes ist? Du denkst dir Katastrophen aus.",
-  "catastrophizing_thought": "Ich fühle mich hektisch, vielleicht habe ich einen Schlaganfall.",
-  "emotional_reasoning": "emotionales Schlussfolgern",
-  "emotional_reasoning_explanation_1": "\"Ich fühle es, deswegen muss es wahr sein.\" Wenn du dich erwischst wie du die \"Gefahr\" von etwas dir selbst unbewusst erklärst, weil du davor Angst hast, dann tust du wahrscheinlich emotional Schlussfolgern. Es ist nicht gefährlich weil du davor Angst hast und du bist nicht furchtbar nur weil du es vielleicht denkst.",
-  "emotional_reasoning_explanation_2": "Es ist schwierig zu erkennen. Es braucht Übung um zu erkennen wenn dein emotionales Denken die Führung vor dem logischen übernimmt.",
-  "emotional_reasoning_thought": "Ich fühle mich schuldig, also muss ich etwas angestellt haben.",
-  "fortune_telling": "Zukunft Vorhersagen",
-  "fortune_telling_explanation": "Diese Verzehrung passiert, wenn wir die Zukunft vorhersagen. Wir überschätzen oft unsere Fähigkeiten vorherzusehen was passieren wird. Manchmal fangen wir mit etwas von dem wir Angst haben an und suchen nach Beweisen, dass es passieren wird.",
-  "fortune_telling_thought": "Das Flugzeug, mit dem ich gleich fliege, wird abstürzen.",
+  "explanation_screen": {
+    "header": "FreeCBT.",
+    "intro": "Intro"
+  },
+  "finished_screen": {
+    "header": "FreeCBT"
+  },
+  "all_or_nothing_thinking": "Alles-oder-Nichts-Denken",
+  "all_or_nothing_thinking_explanation": "Diese Verzerrung tritt auf, wenn wir keinen Raum für einen Mittelweg sehen. Wenn wir denken, dass ein kleiner Fehler in uns selbst bedeutet, dass wir grundsätzlich schlecht oder anderweitig schrecklich sind, dann denken wir wahrscheinlich in alles-oder-nichts.",
+  "all_or_nothing_thinking_thought": "Ich habe das Vorstellungsgespräch vermasselt, ich bin uneinstellbar.",
+  "catastrophizing": "Katastrophisieren",
+  "catastrophizing_explanation": "Wenn wir ein kleines Problem nehmen und es künstlich aufbauschen, dann katastrophieren wir. Hast du bei der Arbeit einen kleinen Fehler gemacht und fürchtest dich davor, dass jemand davon erfährt, obwohl es nichts Schlimmes war? Dann katastrophierst du vermutlich gerade.",
+  "catastrophizing_thought": "Ich fühle mich hibbelig, vielleicht bekomme ich gerade einen Herzinfarkt.",
+  "emotional_reasoning": "Emotionales Schlussfolgern",
+  "emotional_reasoning_explanation_1": "\"Ich fühle es, deswegen ist es so\" Wenn du dich dabei ertappst, dass du die „Gefahr“ von etwas Harmlosem rechtfertigst, weil du Angst davor hast, dann bist du wahrscheinlich in einer emotionalen Phase des Denkens. Dinge sind nicht gefährlich, weil wir Angst vor ihnen haben, und wir sind nicht furchtbar, nur weil wir das vielleicht denken.",
+  "emotional_reasoning_explanation_2": "Dieser Aspekt ist oft schwer zu erkennen. Es bedarf einiger Anstrengung, um zu erkennen, wann der emotionale Verstand die logischen Zügel in die Hand nimmt.",
+  "emotional_reasoning_thought": "Ich fühle mich schuldig, also muss ich etwas Schlimmes getan haben.",
+  "fortune_telling": "Zukunft vorhersehen",
+  "fortune_telling_explanation": "Diese Verzerrung tritt auf, wenn wir versuchen die Zukunft vorherzusagen. Wir überschätzen oft unsere Fähigkeiten, vorherzusehen, was passieren wird. Häufig machen wir uns Sorgen, dass etwas passieren könnte, und suchen dann nach Beweisen dafür, dass es eintreten wird.",
+  "fortune_telling_thought": "Das Flugzeug, das ich gleich boarden werde, wird abstürzen.",
   "labeling": "Schubladendenken",
-  "labeling_explanation": "Wenn wir eine Charaktereigenschaft nehmen und diese auf die ganze Person beziehen, denken wir in Schubladen. Wenn uns jemand anrempelt, ist diese Person ein \"Depp,\" vielleicht war die Person einfach in Eile. Das trifft auch auf uns zu; nur weil wir einen Fehler gemacht haben, heißt das nicht das wir ein \"Fehler\" sind.",
-  "labeling_thought": "Ich habe eine Prüfung nicht bestanden, also bin ich ein schlechter Student.",
-  "magnification_of_the_negative": "Verherrlichung vom Negativen",
-  "magnification_of_the_negative_explanation": "Wenn du eine Situation vollständig auf dem negativen Aspekt bewertest und die positiven Aspekte übersiehst, verherrlichst du wahrscheinlich das Negative. Wenn du ständig mit dir selbst schimpfst wegen des schlechten Bewerbungsgespräches, achtest du wahrscheinlich nicht auf die Erfahrung die du gewonnen hast.",
-  "magnification_of_the_negative_thought": "Diese Woche habe ich gesund gegessen, aber ich war nicht Laufen.",
-  "mind_reading": "Gedanken lesen",
-  "mind_reading_explanation": "Wenn wir uns darüber Gedanken machen, was jemand anderes über uns denkt, versuchen wir Gedanken zu lesen. Bis jemand sagt was er denkt, kannst du nicht wissen was er denkt. Wieso vom Schlimmsten ausgehen?",
-  "mind_reading_thought": "Ich glaube ich war unverschämt zu George, er hast mich bestimmt.",
-  "minimization_of_the_positive": "Reduzierung vom Positiven",
-  "minimization_of_the_positive_explanation": "Wenn wir die guten Sachen, welche uns passieren nicht wertschätzen, reduzieren wir das Positive. Selbst wenn unser Tag nicht zu 100% wie geplant verlief, heißt nicht dass wir 60% welche gut verliefen ignorieren sollten.",
-  "minimization_of_the_positive_thought": "Viele mochten meine Präsentation, aber ich stotterte bei der Einleitung, also war die Präsentation schlecht.",
+  "labeling_explanation": "Wenn wir eine Eigenschaft einer Person auf die ganze Person übertragen, dann ist das eine Art Schubladendenken. Wenn uns jemand abblitzen lässt, ist er vielleicht kein „Idiot“, sondern hat es nur eilig. Das gilt auch für uns selbst; nur weil wir einen Fehler machen, heißt das nicht, dass wir ein „Versager“ sind.",
+  "labeling_thought": "Ich habe den Test nicht bestanden, also bin ich ein schlechter Schüler.",
+  "magnification_of_the_negative": "Verstärkung des Negativen",
+  "magnification_of_the_negative_explanation": "Wenn du eine Situation ausschließlich nach den negativen Aspekten beurteilst und die positiven Aspekte außer Acht lässt, verstärkst du wahrscheinlich das Negative. Wenn du dir ständig Vorwürfe machst, weil du ein Vorstellungsgespräch vergeigt hast, filterst du wahrscheinlich alle Erfahrungen, die du bei diesem Gespräch gesammelt hast, heraus, die auf längere Sicht ein Learning sein könnten.",
+  "magnification_of_the_negative_thought": "Ich habe mich diese Woche zwar gesund ernährt, aber ich war nicht joggen.",
+  "mind_reading": "Gedankenlesen",
+  "mind_reading_explanation": "Wenn wir uns Sorgen darüber machen, was jemand anderes über uns denkt, versuchen wir, Gedanken zu lesen. Solange jemand dir nicht sagt, was er denkt, hast du keine Möglichkeit, es zu erfahren. Warum also das Schlimmste annehmen?",
+  "mind_reading_thought": "Ich glaube, ich war unhöflich zu George, ich wette, er hasst mich.",
+  "minimization_of_the_positive": "Minimierung des Positiven",
+  "minimization_of_the_positive_explanation": "Wenn wir die guten Dinge, die uns passieren, herunterspielen, minimieren wir das Positive. Selbst wenn unser Tag nicht zu 100 % wie geplant verlaufen ist, heißt das nicht, dass wir die 60 %, die gut gelaufen sind, ignorieren sollten.",
+  "minimization_of_the_positive_thought": "Vielen Leuten hat meine Präsentation gefallen, aber ich habe mich bei der Einführung verhaspelt, also war sie schlecht.",
   "other_blaming": "Andere Beschuldigen",
-  "other_blaming_explanation_1": "Wenn eine schlechte Situation die Schuld vom jemanden sein muss, beschuldigen wir Andere. Wenn du eine Prüfung nicht bestanden hast und du den Lehrer beschuldigst, verschwendest du deine Energie an der falschen Stelle. Jemand hat die die Vorfahrt genommen? du hupst, überholst and den Übertäter festsetzt, wie hilfst dir das? Dir wurde die Vorfahrt genommen und du Ärgerst dich!",
-  "other_blaming_explanation_2": "Das heißt nicht, dass du dich selbst beschuldigen solltest für jede negative Situation. Du musst niemanden beschuldigen. Niemand muss Schuld haben, wenn du die Situation hinter dir lässt ohne Schuld zuzuweisen.",
-  "other_blaming_thought": "Der Depp braucht zu lange in der Schlange und ich werde mich verspäten!",
-  "over_generalization": "Verallgemeinern",
-  "over_generalization_explanation": "Wenn wir basierend auf einer Situation Schlüsse ziehen, verallgemeinern wir. Wenn du eine Präsentation schlecht gehalten hast und vermutest das heißt du bist \"schlecht\" beim Presentieren, bist du am Verallgemeinern.",
-  "over_generalization_thought": "Niemand bat mich um einen Tanz, also wird nie jemals jemand mit mir Tanzen wollen.",
-  "self_blaming": "Sich selbst Beschuldigen",
-  "self_blaming_explanation": "Wenn du dir eine negative Situation vollständig selbst zurechnest, beschuldigst du dich. Du bist nicht für jede negative Situation welche passiert verantwortlich. Wenn du in einen Stau gerätst und dich selbst nieder machst weil du nicht früher Losgefahren bist, beschuldigst du dich selbst. Würdest du jemand anderes so behandeln?",
+  "other_blaming_explanation_1": "Wenn eine schlechte Situation die Schuld von jemandem sein muss, geben wir anderen die Schuld. Wenn du eine Prüfung nicht bestanden hast und dem Lehrer die Schuld gibst, richtest du deine Energie an die falsche Adresse. Jemand hat dich auf der Autobahn geschnitten? Was hilft es dir, wenn du hupst, vorbeiziehst und schmollst? Jetzt bist du beides: geschnitten worden UND dazu noch sauer.",
+  "other_blaming_explanation_2": "Das bedeutet nicht, dass du dir für jede negative Situation die Schuld geben musst. Du musst niemandem die Schuld geben. Niemand muss schuld sein, wenn du die Situation vorbeigehen lässt, ohne ihr die Schuld zu geben.",
+  "other_blaming_thought": "Der Depp braucht zu lange in der Schlange und ich werde wegen ihm zu spät kommen!",
+  "over_generalization": "Über-Verallgemeinerung",
+  "over_generalization_explanation": "Wenn wir aufgrund eines einzigen Beispiels Schlussfolgerungen ziehen, verallgemeinern wir zu stark. Wenn du eine Präsentation vergeigt hast und annimmst, dass das bedeutet, dass du „schlecht“ im Präsentieren bist, verallgemeinerst du zu stark.",
+  "over_generalization_thought": "Niemand hat mich zum Tanzen aufgefordert, also wird das auch nie jemand tun.",
+  "self_blaming": "Selbstvorwürfe",
+  "self_blaming_explanation": "Wenn du eine negative Situation ausschließlich auf dich selbst zurückführst, gibst du dir selbst die Schuld. Du musst nicht für alles Schlechte verantwortlich sein, was passiert. Wenn du im Stau steckst und dir vorwirfst, dass du nicht früher losgefahren bist, gibst du dir selbst die Schuld. Würdest du jemand anderen so behandeln?",
   "self_blaming_thought": "Mein Sohn fällt in der Schule durch, ich war nicht für ihn da.",
-  "should_statements": "Sollte Aussagen",
-  "should_statements_explanation_1": "Wenn du jemanden nicht vorhandene Fähigkeiten zusprichst, benutzt du falsche \"sollte\" Aussagen. Als Beispiel, wenn du Flugangst hast und dir selbst einredest \"Ich sollte nicht Angst haben, es ist nichts falsch mir dem Flugzeug!\" legst du eine unnötige Last auf dich. Du hast Flugangst! Es ist normal für Menschen welche Angst vor dem Fliegen haben Angst beim Fliegen zu haben!",
-  "should_statements_explanation_2": "Sollte Aussagen klingen manchmal unsinnig, wenn du diese Laut aussprichst; das ist der Punkt! Sie sind unlogisch!",
+  "should_statements": "Sollte-Aussagen",
+  "should_statements_explanation_1": "Wenn du jemanden nicht-vorhandene Fähigkeiten zusprichst, benutzt du falsche \"sollte\"-Aussagen. Als Beispiel: wenn du Flugangst hast und du dir selbst einredest \"Ich sollte keine Angst haben, es ist nichts falsch mit dem Flugzeug!\", dann legst du eine unnötige Last auf dich. Du hast Flugangst. Es ist normal für Menschen, die Angst vor dem Fliegen haben, Angst beim Fliegen zu haben.",
+  "should_statements_explanation_2": "Soll-Aussagen können unsinnig erscheinen, wenn man sie laut ausspricht; das ist der Punkt! Sie sind unlogisch!",
   "should_statements_thought": "Ich bin Erwachsen, ich sollte diese mentalen Probleme nicht haben.",
+  "accessibility": {
+    "help_button": "Hilfe",
+    "list_button": "Gedanken auflisten",
+    "new_thought_button": "Neuer Gedanke",
+    "settings_button": "Einstellungen",
+    "delete_thought_button": "Gedanken löschen",
+    "close_button": "Schließen"
+  },
   "payment": {
     "ios_explanation": "Die Zahlung wird Ihrem Apple ID-Konto bei Bestätigung des Kaufs belastet. Das Abonnement verlängert sich automatisch, es sei denn, es wird mindestens 24 Stunden vor dem Ende des aktuellen Zeitraums gekündigt. Ihr Konto wird innerhalb von 24 Stunden vor Ablauf des aktuellen Zeitraums mit der Verlängerung belastet. Sie können Ihre Abonnements verwalten und kündigen, indem Sie nach dem Kauf die Einstellungen Ihres App Store-Kontos aufrufen."
+  },
+  "reminder_notification": {
+    "1": {
+      "title": "Wenn etwas passiert ist, schreibe es auf.",
+      "body": "Lass deine Gedanken nicht verpuffen, sondern bearbeite sie so schnell wie möglich."
+    },
+    "2": {
+      "title": "Wenn du Probleme hast, kann FreeCBT dir helfen.",
+      "body": "Nimm dir jetzt einen Moment Zeit, um deine Gedanken durchzugehen"
+    },
+    "intro": {
+      "title": "Wenn du Probleme hast, kann FreeCBT dir helfen.",
+      "body": "Du erhältst einmal pro Tag eine Erinnerung wie diese"
+    }
+  },
+  "all_or_nothing_thinking_one_liner": "z. B.: \"Das war reine Zeitverschwendung\"",
+  "overgeneralization_one_liner": "z. B.: \"Jeder wird mich enttäuschen\"",
+  "mind_reading_one_liner": "z. B.: \"Ich wette, er hasst mich jetzt.\"",
+  "fortune_telling_one_liner": "z. B.: \"Auf der Party werde ich krank werden.\"",
+  "magnification_of_the_negative_one_liner": "Sich nur auf das konzentrieren, was schief gelaufen ist",
+  "minimization_of_the_positive_one_liner": "Ignorieren der guten Dinge, die passiert sind",
+  "catastrophizing_one_liner": "Fokussierung auf das schlimmstmögliche Szenario",
+  "emotional_reasoning_one_liner": "z. B.: \"Ich habe Angst, also werde ich eine Panikattacke bekommen.\"",
+  "should_statements_one_liner": "z. B.: \"Ich hätte besser sein sollen\"",
+  "labeling_one_liner": "z. B.: \"Er ist ein Idiot\"",
+  "self_blaming_one_liner": "Die ganze Schuld auf sich nehmen",
+  "other_blaming_one_liner": "Jemandem die ganze Schuld zuschieben",
+  "backup_screen": {
+    "header": "FreeCBT<-",
+    "export": {
+      "description": "Um deine FreeCBT-Daten zu sichern, \"teile\" sie an einem sicheren und privaten Ort, z. B. indem du sie per E-Mail an dich selbst sendest. Später kannst du diese Datei unten laden, um deine Daten wiederherzustellen. Jeder, der diese Datei hat, kann deine FreeCBT-Übungen lesen, also sei sehr vorsichtig, wohin du sie schickst!",
+      "clipboard": {
+        "button": "Exportiere deine FreeCBT-Daten in den Zwischenspeicher",
+        "success": "In Zwischenspeicher kopiert!"
+      },
+      "file": {
+        "button": "Exportiere deine FreeCBT-Daten in eine Datei",
+        "success": "In Datei kopiert!"
+      },
+      "share": {
+        "button": "Exportiere und teile deine FreeCBT-Daten"
+      }
+    },
+    "import": {
+      "description": "Bei der Wiederherstellung einer Sicherungsdatei werden alle vorhandenen FreeCBT-Daten gelöscht und durch die Daten aus der Sicherung ersetzt, daher solltest du zunächst eine weitere Sicherung erstellen.",
+      "clipboard": {
+        "button": "Importiere deine FreeCBT-Daten aus dem Zwischenspeicher",
+        "failure": "Import fehlgeschlagen. Bist du dir sicher, dass du den gesamten FreeCBT Backuptext eingefügt hast?"
+      },
+      "file": {
+        "button": "Importiere deine FreeCBT-Daten",
+        "failure": "Import fehlgeschlagen. Bist du dir sicher, dass es sich um eine FreeCBT-Backupdatei handelt?"
+      },
+      "noop": "Import erfolgreich - aber es hat sich nichts geändert! Du solltest deinen Sicherungstext für später merken und ihn dann hier einfügen, falls die App jemals die Daten verliert.",
+      "success": "Import erfolgreich!"
+    }
+  },
+  "export_screen": {
+    "header": "FreeCBT->",
+    "description": "Zeige die FreeCBT-Daten in anderen Formaten an. Du kannst diese Dateien später nicht wieder zu FreeCBT importieren.",
+    "markdown": {
+      "button": "Export als Markdown/einfacher Text"
+    },
+    "csv": {
+      "button": "Export als CSV"
+    },
+    "json": {
+      "button": "Export als JSON"
+    }
   }
 }

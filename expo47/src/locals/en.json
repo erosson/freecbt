@@ -148,6 +148,7 @@
       "contribute": "Help translate FreeCBT",
       "// list": "translator note: use each language's native translation here; don't translate this list in other file. initial list based on https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes",
       "list": {
+        "bg": "български",
         "de": "Deutsch",
         "en": "English",
         "es": "Español",
