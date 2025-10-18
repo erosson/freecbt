@@ -7,8 +7,8 @@
     // Features to add to the dev container. More info: https://containers.dev/features.
     "features": {
         "ghcr.io/devcontainers/features/java:1": {},
-        "ghcr.io/akhildevelops/devcontainer-features/android-cli:0": {},
-        "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+        "ghcr.io/devcontainers/features/docker-in-docker:2": {},
+        "ghcr.io/nordcominc/devcontainer-features/android-sdk:1": {}
     },
     // expose ports from this image to the local network, so my phone can see the expo go server.
     // `yarn start --host tunnel` would work too, but this adds a dependency on ngrok, and is also much slower.
