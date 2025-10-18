@@ -116,7 +116,7 @@
     "header": "FreeCBT*",
     "reminders": {
       "header": "*reminders",
-      "description": "Wenn du möchtest, kannst du Benachrichtigungserinnerungen einschalten, die dir helfen können, dir das Überdenken von Gedanken zur Gewohnheit zu machen.",
+      "description": "Wenn du möchtest, kannst du Erinnerungen durch Benachrichtigungen einschalten, die dir helfen können, dir das Überdenken von Gedanken zur Gewohnheit zu machen.",
       "button": {
         "yes": "Bitte erinnere mich",
         "no": "Keine Erinnerungen, danke"
@@ -180,7 +180,7 @@
     "new": "Neu",
     "save": "Speichern",
     "submit": "Speichern & Beenden",
-    "auto_thought_placeholder": "z. B.: 'Das Flugzeug könnte abstürzen'",
+    "auto_thought_placeholder": "z. B.: „Das Flugzeug könnte abstürzen“",
     "cog_distortion": "Kognitive Verzerrung",
     "challenged": "Challenge",
     "changed_placeholder": "Es stimmt vielleicht nicht, dass...",
@@ -195,7 +195,7 @@
     "header": "FreeCBT"
   },
   "all_or_nothing_thinking": "Alles-oder-Nichts-Denken",
-  "all_or_nothing_thinking_explanation": "Diese Verzerrung tritt auf, wenn wir keinen Raum für einen Mittelweg sehen. Wenn wir denken, dass ein kleiner Fehler in uns selbst bedeutet, dass wir grundsätzlich schlecht oder anderweitig schrecklich sind, dann denken wir wahrscheinlich in alles-oder-nichts.",
+  "all_or_nothing_thinking_explanation": "Diese Verzerrung tritt auf, wenn wir keinen Raum für einen Mittelweg sehen. Wenn wir denken, dass ein kleiner Fehler in uns selbst bedeutet, dass wir grundsätzlich schlecht oder anderweitig schrecklich sind, dann denken wir wahrscheinlich in Alles-oder-Nichts.",
   "all_or_nothing_thinking_thought": "Ich habe das Vorstellungsgespräch vermasselt, ich bin uneinstellbar.",
   "catastrophizing": "Katastrophisieren",
   "catastrophizing_explanation": "Wenn wir ein kleines Problem nehmen und es künstlich aufbauschen, dann katastrophieren wir. Hast du bei der Arbeit einen kleinen Fehler gemacht und fürchtest dich davor, dass jemand davon erfährt, obwohl es nichts Schlimmes war? Dann katastrophierst du vermutlich gerade.",
@@ -206,7 +206,7 @@
   "emotional_reasoning_thought": "Ich fühle mich schuldig, also muss ich etwas Schlimmes getan haben.",
   "fortune_telling": "Zukunft vorhersehen",
   "fortune_telling_explanation": "Diese Verzerrung tritt auf, wenn wir versuchen die Zukunft vorherzusagen. Wir überschätzen oft unsere Fähigkeiten, vorherzusehen, was passieren wird. Häufig machen wir uns Sorgen, dass etwas passieren könnte, und suchen dann nach Beweisen dafür, dass es eintreten wird.",
-  "fortune_telling_thought": "Das Flugzeug, das ich gleich boarden werde, wird abstürzen.",
+  "fortune_telling_thought": "Das Flugzeug, mit dem ich gleich fliege, wird abstürzen.",
   "labeling": "Schubladendenken",
   "labeling_explanation": "Wenn wir eine Eigenschaft einer Person auf die ganze Person übertragen, dann ist das eine Art Schubladendenken. Wenn uns jemand abblitzen lässt, ist er vielleicht kein „Idiot“, sondern hat es nur eilig. Das gilt auch für uns selbst; nur weil wir einen Fehler machen, heißt das nicht, dass wir ein „Versager“ sind.",
   "labeling_thought": "Ich habe den Test nicht bestanden, also bin ich ein schlechter Schüler.",
@@ -230,7 +230,7 @@
   "self_blaming_explanation": "Wenn du eine negative Situation ausschließlich auf dich selbst zurückführst, gibst du dir selbst die Schuld. Du musst nicht für alles Schlechte verantwortlich sein, was passiert. Wenn du im Stau steckst und dir vorwirfst, dass du nicht früher losgefahren bist, gibst du dir selbst die Schuld. Würdest du jemand anderen so behandeln?",
   "self_blaming_thought": "Mein Sohn fällt in der Schule durch, ich war nicht für ihn da.",
   "should_statements": "Sollte-Aussagen",
-  "should_statements_explanation_1": "Wenn du jemanden nicht-vorhandene Fähigkeiten zusprichst, benutzt du falsche \"sollte\"-Aussagen. Als Beispiel: wenn du Flugangst hast und du dir selbst einredest \"Ich sollte keine Angst haben, es ist nichts falsch mit dem Flugzeug!\", dann legst du eine unnötige Last auf dich. Du hast Flugangst. Es ist normal für Menschen, die Angst vor dem Fliegen haben, Angst beim Fliegen zu haben.",
+  "should_statements_explanation_1": "Wenn du jemanden nicht-vorhandene Fähigkeiten zusprichst, benutzt du falsche „sollte“-Aussagen. Als Beispiel: wenn du Flugangst hast und du dir selbst einredest „Ich sollte keine Angst haben, es ist nichts falsch mit dem Flugzeug!“, dann legst du eine unnötige Last auf dich. Du hast Flugangst. Es ist normal für Menschen, die Angst vor dem Fliegen haben, Angst beim Fliegen zu haben.",
   "should_statements_explanation_2": "Soll-Aussagen können unsinnig erscheinen, wenn man sie laut ausspricht; das ist der Punkt! Sie sind unlogisch!",
   "should_statements_thought": "Ich bin Erwachsen, ich sollte diese mentalen Probleme nicht haben.",
   "accessibility": {
@@ -273,7 +273,7 @@
   "backup_screen": {
     "header": "FreeCBT<-",
     "export": {
-      "description": "Um deine FreeCBT-Daten zu sichern, \"teile\" sie an einem sicheren und privaten Ort, z. B. indem du sie per E-Mail an dich selbst sendest. Später kannst du diese Datei unten laden, um deine Daten wiederherzustellen. Jeder, der diese Datei hat, kann deine FreeCBT-Übungen lesen, also sei sehr vorsichtig, wohin du sie schickst!",
+      "description": "Um deine FreeCBT-Daten zu sichern, „teile“ sie an einem sicheren und privaten Ort, z. B. indem du sie per E-Mail an dich selbst sendest. Später kannst du diese Datei unten laden, um deine Daten wiederherzustellen. Jeder, der diese Datei hat, kann deine FreeCBT-Übungen lesen, also sei sehr vorsichtig, wohin du sie schickst!",
       "clipboard": {
         "button": "Exportiere deine FreeCBT-Daten in den Zwischenspeicher",
         "success": "In Zwischenspeicher kopiert!"
