@@ -3,7 +3,6 @@
     "icon": "./assets/ios.png",
     "name": "FreeCBT",
     "slug": "freecbt",
-    "privacy": "unlisted",
     "platforms": [
       "android",
       "ios"
