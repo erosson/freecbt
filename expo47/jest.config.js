@@ -9,6 +9,8 @@ module.exports = {
       },
     }],
   },
+  // https://stackoverflow.com/questions/73203367/jest-syntaxerror-unexpected-token-export-with-uuid-library
+  moduleNameMapper:{"^uuid$": "uuid"},
   testMatch: ["**/__tests__/**/*.ts?(x)", "**/?(*.)+(spec|test).ts?(x)"],
   transformIgnorePatterns: [
     // (some?) transformed modules must be listed explicitly. this line is from the

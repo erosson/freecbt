@@ -9,7 +9,7 @@
   },
   {
     "command": ["yarn", "--cwd", "www", "start"],
-    "title": "http://localhost:3000  - web server, https://freecbt.erosson.org",
+    "title": "http://localhost:3000 - web server, https://freecbt.erosson.org",
     "status": {
       "Serving!": null
     },
