@@ -1,5 +1,4 @@
 {
-    "workspaces": ["expo47", "www"],
     "private": true,
     "scripts": {
         "start": "run-pty run-pty.json",
