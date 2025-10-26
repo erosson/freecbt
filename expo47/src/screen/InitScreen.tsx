@@ -6,7 +6,7 @@ import { useAsyncEffect } from "../async-state"
 
 type Props = ScreenProps<Screen.INIT>
 
-export default function InitScreen(props: Props): JSX.Element {
+export default function InitScreen(props: Props): React.JSX.Element {
   useAsyncEffect(async () => {
     // If we're locked, go to the lock instead
     // Check if we should show a pincode

@@ -59,7 +59,8 @@ const i18n = new I18n({
 })
 
 i18n.enableFallback = true
-i18n.locale = Localization.locale
+// i18n.locale = Localization.locale
+i18n.locale = Localization.getLocales()[0].languageTag
 
 async function loadLocaleSetting() {
   const locale = await getSetting(LOCALE_KEY)

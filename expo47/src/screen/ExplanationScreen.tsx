@@ -26,7 +26,7 @@ function Distortion(props: {
   distortion: D.Distortion
   selected: boolean
   toggle: (d: D.Distortion) => void
-}): JSX.Element {
+}): React.JSX.Element {
   const style = Style.useStyle()
   const selectable = Feature.useFeature.extendedDistortions()
   const selected = selectable && props.selected
@@ -77,7 +77,7 @@ function Distortion(props: {
   )
 }
 
-export default function ExplanationScreen(props: Props): JSX.Element {
+export default function ExplanationScreen(props: Props): React.JSX.Element {
   const style = Style.useStyle()
   const [selected, setSelected] = React.useState<Set<D.Distortion>>(
     new Set(props.route.params.distortions.map((d) => D.bySlug[d]))

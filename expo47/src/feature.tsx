@@ -61,7 +61,9 @@ export const Context = React.createContext<Context>({
   updateFeature: (action: object) => {},
 })
 
-export function State({ children }: React.PropsWithChildren<{}>): JSX.Element {
+export function State({
+  children,
+}: React.PropsWithChildren<{}>): React.JSX.Element {
   const [feature, updateFeature] = React.useReducer(
     (state: Feature, newState: Partial<Feature>): Feature => ({
       ...state,

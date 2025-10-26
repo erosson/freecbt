@@ -69,7 +69,8 @@ export async function setLocaleSetting(
     i18n.locale = locale
     return await setSetting(LOCALE_KEY, locale)
   } else {
-    i18n.locale = Localization.locale
+    // i18n.locale = Localization.locale
+    i18n.locale = Localization.getLocales()[0].languageTag
     return await removeSetting(LOCALE_KEY)
   }
 }
@@ -142,7 +143,7 @@ async function registerForLocalNotificationsAsync() {
 
 type Props = ScreenProps<Screen.SETTING>
 
-export default function SettingScreen(props: Props): JSX.Element {
+export default function SettingScreen(props: Props): React.JSX.Element {
   const [refresh, setRefresh] = React.useState(0)
   const historyButtonLabel =
     AsyncState.useAsyncState<HistoryButtonLabelSetting>(getHistoryButtonLabel, [

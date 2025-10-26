@@ -22,7 +22,7 @@ import { Archive } from "../io-ts/archive"
 
 type Props = ScreenProps<Screen.EXPORT>
 
-export default function ExportScreen(props: Props): JSX.Element {
+export default function ExportScreen(props: Props): React.JSX.Element {
   const thoughts = AsyncState.useAsyncState(TS.getValidExercises)
   const archive = AsyncState.useAsyncState(TS.readArchive)
 
@@ -85,7 +85,7 @@ export default function ExportScreen(props: Props): JSX.Element {
   )
 }
 
-function Markdown(props: { thoughts: Thought.Thought[] }): JSX.Element {
+function Markdown(props: { thoughts: Thought.Thought[] }): React.JSX.Element {
   return (
     <ExportButton
       title={i18n.t("export_screen.markdown.button")}
@@ -99,7 +99,7 @@ function Markdown(props: { thoughts: Thought.Thought[] }): JSX.Element {
   )
 }
 
-function CSV(props: { thoughts: Thought.Thought[] }): JSX.Element {
+function CSV(props: { thoughts: Thought.Thought[] }): React.JSX.Element {
   return (
     <ExportButton
       title={i18n.t("export_screen.csv.button")}
@@ -113,7 +113,7 @@ function CSV(props: { thoughts: Thought.Thought[] }): JSX.Element {
   )
 }
 
-function JSON_(props: { archive: Archive }): JSX.Element {
+function JSON_(props: { archive: Archive }): React.JSX.Element {
   return (
     <ExportButton
       title={i18n.t("export_screen.json.button")}
@@ -132,7 +132,7 @@ function ExportButton(props: {
   body: () => string
   ext: string
   opts: Sharing.SharingOptions
-}): JSX.Element {
+}): React.JSX.Element {
   const isSharable = AsyncState.useAsyncState(Sharing.isAvailableAsync)
   const path: string = `${FS.documentDirectory}FreeCBT.${props.ext}`
 

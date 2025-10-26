@@ -34,8 +34,10 @@ interface FormViewProps {
   onChangeDistortion: (selected: string) => void
 }
 
-export default function FormView(props: FormViewProps): JSX.Element {
-  function _renderItem(item: CarouselRenderItemInfo<string>): JSX.Element {
+export default function FormView(props: FormViewProps): React.JSX.Element {
+  function _renderItem(
+    item: CarouselRenderItemInfo<string>
+  ): React.JSX.Element {
     switch (item.item) {
       case "automatic-thought":
         return (

@@ -22,7 +22,7 @@ import * as Picker from "expo-document-picker"
 
 type Props = ScreenProps<Screen.BACKUP>
 
-export default function BackupScreen(props: Props): JSX.Element {
+export default function BackupScreen(props: Props): React.JSX.Element {
   const archive = AsyncState.useAsyncState<string>(TS.readArchiveString)
 
   return (
@@ -68,7 +68,7 @@ export default function BackupScreen(props: Props): JSX.Element {
   )
 }
 
-function Export(props: { archive: string }): JSX.Element {
+function Export(props: { archive: string }): React.JSX.Element {
   const [isCopied, setIsCopied] = React.useState<string | null>(null)
   const isSharable = AsyncState.useAsyncState(Sharing.isAvailableAsync)
   const writePath: string = FS.documentDirectory + "FreeCBT-backup.txt"
@@ -171,7 +171,7 @@ function Export(props: { archive: string }): JSX.Element {
   )
 }
 
-function Import(props: { archive: string }): JSX.Element {
+function Import(props: { archive: string }): React.JSX.Element {
   const [archiveWrite, setArchiveWrite] = React.useState<
     AsyncState.RemoteData<null, T.Errors>
   >({

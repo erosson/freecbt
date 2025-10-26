@@ -204,7 +204,7 @@ const RemindersStep = ({ onContinue }: { onContinue: () => void }) => {
   )
 }
 
-export default function OnboardingScreen(props: Props): JSX.Element {
+export default function OnboardingScreen(props: Props): React.JSX.Element {
   const [slide, setSlide] = React.useState<number>(0)
   function stopOnBoarding() {
     haptic.notification(Haptic.NotificationFeedbackType.Success)
@@ -213,7 +213,7 @@ export default function OnboardingScreen(props: Props): JSX.Element {
     })
   }
 
-  function renderItem({ item }: { item: string }): JSX.Element {
+  function renderItem({ item }: { item: string }): React.JSX.Element {
     switch (item) {
       case "record":
         return <RecordStep />

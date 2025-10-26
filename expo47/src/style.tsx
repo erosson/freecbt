@@ -156,7 +156,7 @@ export const Context = React.createContext<Context_>({
   updateStyle: () => {},
 })
 
-export function State(props: { children: React.ReactNode }): JSX.Element {
+export function State(props: { children: React.ReactNode }): React.JSX.Element {
   const [s, updateStyle] = React.useReducer(
     (_: Style, action: Style | ThemeName): Style => {
       return typeof action === "string" ? style[action] : action

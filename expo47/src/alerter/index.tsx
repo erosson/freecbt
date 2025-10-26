@@ -26,7 +26,7 @@ interface AlertViewProps {
   onHide: () => void
 }
 
-function AlertView(props: AlertViewProps): JSX.Element {
+function AlertView(props: AlertViewProps): React.JSX.Element {
   const [view, setView] = React.useState("hidden")
   React.useEffect(() => {
     setTimeout(() => {
@@ -109,7 +109,7 @@ interface AlerterProps {
   alerts: Alert[]
 }
 
-export default function Alerter(props: AlerterProps): JSX.Element | null {
+export default function Alerter(props: AlerterProps): React.JSX.Element | null {
   const [shown, setShown] = React.useState<Alert | null>(null)
 
   AsyncState.useAsyncEffect(async () => {

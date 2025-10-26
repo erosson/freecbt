@@ -6,7 +6,6 @@ import {
   ImageSourcePropType,
   Image,
 } from "react-native"
-import PropTypes from "prop-types"
 import theme from "./theme"
 import { Feather } from "@expo/vector-icons"
 
@@ -19,7 +18,7 @@ export interface Component {
   style?: object
 }
 
-export const Row = ({ children, style }: { children: any; style?: any }) => (
+export const Row = ({ children, style }: { children: any; style?: object }) => (
   <View
     style={{
       flexDirection: "row",
@@ -31,11 +30,6 @@ export const Row = ({ children, style }: { children: any; style?: any }) => (
   </View>
 )
 
-Row.propTypes = {
-  children: PropTypes.any.isRequired,
-  style: PropTypes.object,
-}
-
 export const FormContainer = ({ children, ...style }: { children: any }) => (
   <View
     style={{
@@ -46,11 +40,6 @@ export const FormContainer = ({ children, ...style }: { children: any }) => (
     {children}
   </View>
 )
-
-FormContainer.propTypes = {
-  children: PropTypes.any.isRequired,
-  style: PropTypes.object,
-}
 
 export const Header = ({
   children,
@@ -71,11 +60,6 @@ export const Header = ({
     {children}
   </Text>
 )
-
-Header.propTypes = {
-  children: PropTypes.any.isRequired,
-  style: PropTypes.object,
-}
 
 export const SubHeader = ({ children, style }: ParentComponent) => (
   <Text
@@ -180,12 +164,6 @@ export const SelectorTextItem = ({
     </View>
   </TouchableOpacity>
 )
-
-SelectorTextItem.propTypes = {
-  text: PropTypes.string.isRequired,
-  selected: PropTypes.bool,
-  onPress: PropTypes.func.isRequired,
-}
 
 export const RoundedSelectorButton = ({
   title,
@@ -446,12 +424,6 @@ export const IconButton = ({
   </TouchableOpacity>
 )
 
-IconButton.propTypes = {
-  featherIconName: PropTypes.string.isRequired,
-  onPress: PropTypes.func.isRequired,
-  style: PropTypes.any,
-}
-
 export const Paragraph = ({ children, style }: ParentComponent) => (
   <Text
     style={{
@@ -464,10 +436,6 @@ export const Paragraph = ({ children, style }: ParentComponent) => (
     {children}
   </Text>
 )
-
-Paragraph.propTypes = {
-  children: PropTypes.any.isRequired,
-}
 
 export const Container = ({ children, style }: ParentComponent) => (
   <View
@@ -483,10 +451,6 @@ export const Container = ({ children, style }: ParentComponent) => (
     {children}
   </View>
 )
-
-Container.propTypes = {
-  children: PropTypes.any,
-}
 
 export const Label = ({
   children,

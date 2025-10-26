@@ -34,7 +34,7 @@ async function shouldShowRatingComponent(): Promise<boolean> {
   return true
 }
 
-export default function Feedback(): JSX.Element | null {
+export default function Feedback(): React.JSX.Element | null {
   const shouldShowRate = AsyncState.useAsyncState<boolean>(
     shouldShowRatingComponent
   )

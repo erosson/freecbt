@@ -24,7 +24,7 @@ type Props = ScreenProps<Screen.CBT_VIEW>
 
 function ParseErrorView(props: {
   error: ThoughtStore.ParseError
-}): JSX.Element {
+}): React.JSX.Element {
   const subject = "Parse Error"
   // cause: ${props.error.error.cause}
   const body = `uuid: ${props.error.id}
@@ -62,7 +62,7 @@ json: ${props.error.raw}`
   )
 }
 
-export default function CBTViewScreen(props: Props): JSX.Element {
+export default function CBTViewScreen(props: Props): React.JSX.Element {
   const thought: AsyncState.RemoteData<Thought, ThoughtStore.ParseError> =
     AsyncState.useAsyncResultState(() =>
       ThoughtStore.readResult(props.route.params.thoughtID)

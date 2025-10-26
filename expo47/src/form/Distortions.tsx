@@ -4,7 +4,6 @@ import { View, ScrollView, Text, Switch, TouchableOpacity } from "react-native"
 import i18n from "../i18n"
 import * as Distortion from "../io-ts/distortion"
 import theme from "../theme"
-import PropTypes from "prop-types"
 import * as Bubbles from "../imgs/Bubbles"
 import * as Style from "../style"
 
@@ -69,7 +68,7 @@ function RoundedSelector(props: {
   items: { selected: boolean; distortion: Distortion.Distortion }[]
   extended?: boolean
   onPress: (slug: string) => void
-  style: any
+  style?: object
 }) {
   const style = Style.useStyle()
   return (
@@ -111,10 +110,4 @@ function RoundedSelector(props: {
       })}
     </View>
   )
-}
-
-RoundedSelector.propTypes = {
-  items: PropTypes.array.isRequired,
-  onPress: PropTypes.func.isRequired,
-  style: PropTypes.object,
 }

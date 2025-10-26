@@ -76,7 +76,7 @@ const writeThoughts: { [name: string]: () => Promise<void> } = {
   },
 }
 
-const constItems: [string, string | JSX.Element][] = [
+const constItems: [string, string | React.JSX.Element][] = [
   ["Update.channel", ExpoUpdates.channel ?? "-"],
   [
     "Update.createdAt",
@@ -144,7 +144,7 @@ const constItems: [string, string | JSX.Element][] = [
     />,
   ],
 ]
-export default function DebugScreen(props: Props): JSX.Element {
+export default function DebugScreen(props: Props): React.JSX.Element {
   // const storage = useAsyncState<KeyValuePair[]>(async () => {
   const storage = useAsyncState<readonly KeyValuePair[]>(async () => {
     const keys = await AsyncStorage.getAllKeys()
@@ -153,12 +153,12 @@ export default function DebugScreen(props: Props): JSX.Element {
   const [dump, setDump] = React.useState<boolean>(false)
   const { feature, updateFeature } = React.useContext(Feature.Context)
 
-  const items: [string, string | JSX.Element][] = [
+  const items: [string, string | React.JSX.Element][] = [
     ...constItems,
     ...Object.entries(feature)
       // @ts-ignore: sort features by name. I promise key in [key, value] is a string
       .sort((a, b) => a[0] > b[0])
-      .map(([key, val]: [string, boolean]): [string, JSX.Element] => [
+      .map(([key, val]: [string, boolean]): [string, React.JSX.Element] => [
         key,
         <Switch
           value={val}
@@ -191,9 +191,9 @@ export default function DebugScreen(props: Props): JSX.Element {
 }
 
 function renderEntry(
-  [key, val]: [string, string | JSX.Element],
+  [key, val]: [string, string | React.JSX.Element],
   i: number
-): JSX.Element {
+): React.JSX.Element {
   if (typeof val === "string") {
     return (
       <View

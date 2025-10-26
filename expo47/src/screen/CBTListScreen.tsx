@@ -206,7 +206,7 @@ const ParseErrorList = (props: {
   parseErrors: ThoughtStore.ParseError[]
   navigateToViewer: (t: ThoughtStore.ParseError) => void
   onItemDelete: (t: ThoughtStore.ParseError) => void
-}): JSX.Element | null => {
+}): React.JSX.Element | null => {
   if (props.parseErrors.length === 0) {
     return null
   }
@@ -228,7 +228,9 @@ const ParseErrorList = (props: {
 
 type Props = ScreenProps<Screen.CBT_LIST>
 
-export default function CBTListScreen({ navigation }: Props): JSX.Element {
+export default function CBTListScreen({
+  navigation,
+}: Props): React.JSX.Element {
   const [reload, setReload] = React.useState(0)
   const historyButtonLabel = AsyncState.useAsyncState(getHistoryButtonLabel)
   const thoughtRes = AsyncState.useAsyncState<
