@@ -30,6 +30,8 @@
     "expo-symbols": "~1.0.7",
     "expo-system-ui": "~6.0.8",
     "expo-web-browser": "~15.0.8",
+    "i18n-js": "^4.5.1",
+    "lodash": "^4.17.21",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-native": "0.81.5",
@@ -43,6 +45,7 @@
     "zod": "^4.1.12"
   },
   "devDependencies": {
+    "@types/lodash": "^4.17.20",
     "@types/react": "~19.1.0",
     "eslint": "^9.25.0",
     "eslint-config-expo": "~10.0.0",

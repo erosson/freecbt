@@ -1,3 +1,4 @@
+import i18n from "@/src/i18n";
 import { C, S } from "@/src/style";
 import React from "react";
 import {
@@ -73,7 +74,7 @@ function CBTCarousel() {
             case "automatic": {
               return (
                 <View style={[S.carouselItem]}>
-                  <Text style={[S.header]}>Automatic thought</Text>
+                  <Text style={[S.header]}>{i18n.t("auto_thought")}</Text>
                   <TextInput style={[S.textInput]} multiline={true} />
                 </View>
               );
@@ -81,7 +82,7 @@ function CBTCarousel() {
             case "distortions": {
               return (
                 <View style={[S.carouselItem]}>
-                  <Text style={[S.header]}>Distortions</Text>
+                  <Text style={[S.header]}>{i18n.t("cog_distortion")}</Text>
                   <Text style={[S.text]}>TODO</Text>
                 </View>
               );
@@ -89,7 +90,7 @@ function CBTCarousel() {
             case "challenge": {
               return (
                 <View style={[S.carouselItem]}>
-                  <Text style={[S.header]}>Challenge</Text>
+                  <Text style={[S.header]}>{i18n.t("challenge")}</Text>
                   <TextInput style={[S.textInput]} multiline={true} />
                 </View>
               );
@@ -97,10 +98,12 @@ function CBTCarousel() {
             case "alternative": {
               return (
                 <View style={[S.carouselItem]}>
-                  <Text style={[S.header]}>Alternative</Text>
+                  <Text style={[S.header]}>{i18n.t("alt_thought")}</Text>
                   <TextInput style={[S.textInput]} multiline={true} />
                   <TouchableOpacity style={[S.button]}>
-                    <Text style={[S.buttonText]}>Submit</Text>
+                    <Text style={[S.buttonText]}>
+                      {i18n.t("cbt_form.submit")}
+                    </Text>
                   </TouchableOpacity>
                 </View>
               );

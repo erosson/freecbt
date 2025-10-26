@@ -1,0 +1,312 @@
+{
+  "onboarding_screen": {
+    "readme": "Les dette først.",
+    "header": "The FreeCBT Guide",
+    "block1": {
+      "header": "FreeCBT er en øvingssak",
+      "body": "Det krever en innsats, men å lære deg å bruke FreeCBT kan hjelpe deg å få det mye bedre."
+    },
+    "block2": {
+      "header": "Bruk FreeCBT her og nå.",
+      "body": "Bruk FreeCBT når du føler deg nervøs, sint eller deprimert."
+    },
+    "auto_thought_ex": "Jeg gikk glipp av festen til Nikita, hen hater meg sikkert nå.",
+    "challenge_ex": "Nikita vet at sånn livet mitt er nå klarer jeg ikke alltid å delta på sosiale sammenkomster. Jeg hadde ikke hatet hen hvis hen ikke kom på noe jeg arrangerte.\n\nJeg skal ikke være hardere mot meg selv enn jeg hadde vært mot andre.",
+    "alt_thought_ex": "Ja, jeg gikk glipp av festen, men hvis jeg forklarer hvorfor til Nikita, tilgir hen meg sikkert.",
+    "cog_distortion": {
+      "label": "Tankelesing",
+      "slug": "tankelesing"
+    },
+    "intro": {
+      "line1": "Velkommen til",
+      "emphasis1": "FreeCBT",
+      "line2": ", ",
+      "emphasis2": "Kognitiv adferdsterapi (CBT)",
+      "line3": "Appen."
+    },
+    "crash_course": {
+      "line1": "Dette er en",
+      "emphasis1": "rask innføring",
+      "line2": "i kognitiv adferdsterapi, og",
+      "emphasis2": "ikke en erstatning",
+      "line3": "for en kvalifisert behandler."
+    },
+    "mood_thoughts": {
+      "line1": "Først:",
+      "emphasis1": "tankene dine former hvordan du har det."
+    },
+    "thoughts_arent_thoughts": {
+      "line1": "Videre: tankene dine kan være",
+      "emphasis1": "automatiske."
+    },
+    "your_distorted": {
+      "line1": "For det tredje: automatiske tanker er ofte",
+      "emphasis1": "forvrengt."
+    },
+    "cbt_overview": {
+      "line1": "Målet med kognitiv adfersterapi (CBT) er å gjenkjenne de",
+      "emphasis1": "forvrengte tankene",
+      "line2": "og",
+      "emphasis2": "erstatte dem",
+      "line3": "med rasjonelle tanker."
+    },
+    "ready": {
+      "emphasis1": "Klar?",
+      "line1": "La oss gå gjennom det steg for steg."
+    },
+    "catch": {
+      "line1": "Vi starter med å",
+      "emphasis1": "bare skrive ned",
+      "line2": "de automatiske tankene når de dukker opp."
+    },
+    "bad_thought_note": {
+      "line1": "Merk deg tanken:",
+      "line2": "Jeg gikk glipp av festen til Nikita, hen hater meg sikkert nå."
+    },
+    "identify_distortions": {
+      "line1": "Se etter",
+      "emphasis1": "kognitive forvrengninger"
+    },
+    "bad_distortions": {
+      "line1": "Vet vi virkelig at Nikita kommer til å hate oss? Hvis ikke, driver vi med",
+      "emphasis1": "🧠 Tankelesing",
+      "line2": "Jeg gikk glipp av festen til Nikita, hen hater meg sikkert nå."
+    },
+    "challenge_screen": {
+      "line1": "Hvorfor er ikke denne tanken sann?",
+      "emphasis1": "Utfordre den."
+    },
+    "write_challenge": {
+      "line1": "Vi skriver noe som dette:"
+    },
+    "alt_thought": {
+      "line1": "Til slutt skriver vi en",
+      "emphasis1": "alternativ tanke."
+    },
+    "show_off": {
+      "line1": "Finn det senere:"
+    },
+    "got_it": {
+      "line1": "Du er klar!",
+      "btn_title": "Kjør på!"
+    },
+    "reminders": {
+      "header": "Vi kan også sende deg påminnelser om du ønsker det.",
+      "disabled": "Du kan styre påminnelser fra innstillings-menyen",
+      "button": {
+        "yes": "Ja takk!",
+        "no": "Fortsett uten påminnelser",
+        "continue": "Fortsett"
+      }
+    }
+  },
+  "auto_thought": "Automatisk Tanke",
+  "cog_distortion": "Velg forvreninger du kan identifisere.",
+  "challenge": "Utfordre tanken.",
+  "alt_thought": "Skriv en alternativ tanke.",
+  "alt_thought_description": "Dette er ikke en prøve, det er en måte å manifestere en alternativ tanke på.",
+  "cbt_list": {
+    "header": ".FreeCBT",
+    "today": "I dag",
+    "empty": "Ingen tanker ennå!"
+  },
+  "settings": {
+    "header": "FreeCBT*",
+    "reminders": {
+      "header": "*påminnelser",
+      "description": "Hvis du vil, kan du skru på påminnelser for å hjelpe deg å gjøre utfordring av tanker til en vane. .",
+      "button": {
+        "yes": "Minn meg på det",
+        "no": "Nei takk, ingen påminnelser"
+      }
+    },
+    "pincode": {
+      "header": "*lås med PIN 🔒",
+      "description": "Lås appen med en PIN-kode. Ikke glem koden, den eneste måten å nullstille en glemt kode på er å slette alle data.",
+      "button": {
+        "update": "Oppdater PIN",
+        "clear": "Slett PIN",
+        "set": "Lag PIN"
+      }
+    },
+    "history": {
+      "header": "*standard tanke for historikk ",
+      "description": "Som standard vises Alternativ Tanke i historikk-visningen. Dette understreker at tanken er \"endret.\"",
+      "button": {
+        "alternative": "Alternativ Tanke",
+        "automatic": "Automatisk Tanke"
+      }
+    },
+    "backup": {
+      "header": "*sikkerhetskopi",
+      "button": "Sikkerhetskopier FreeCBT-dataene",
+      "export-button": "Eksporter FreeCBT-dataene"
+    },
+    "locale": {
+      "header": "*språk ",
+      "default": "Standard for systemet",
+      "contribute": "Hjelp til med å oversette FreeCBT",
+      "// list": "translator note: use each language's native translation here; don't translate this list in other file. initial list based on https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes",
+      "list": {
+        "de": "Deutsch",
+        "en": "English",
+        "es": "Español",
+        "fi": "Suomi",
+        "fr": "Français",
+        "hi": "हिंदी",
+        "it": "Italiano",
+        "ko": "한국어",
+        "nb": "Norsk Bokmål",
+        "nl": "Nederlands",
+        "pl": "język polski",
+        "pt-BR": "Português do Brasil",
+        "pt-PT": "Português",
+        "ro": "Română",
+        "ru": "русский",
+        "sv": "Svenska",
+        "zh-Hans": "中文",
+        "fa": "فارسی",
+        "_test": ")tset( hsilgnE-esreveR"
+      }
+    },
+    "privacy": "Personvernerklæring",
+    "terms": "Vilkår for bruk"
+  },
+  "cbt_form": {
+    "header": "FreeCBT",
+    "edit": "Rediger",
+    "new": "Ny",
+    "save": "Lagre",
+    "submit": "Lagre & Fullfør",
+    "auto_thought_placeholder": "eksempel: 'Flyet kommer til å kræsje'",
+    "cog_distortion": "Kognitiv Forvrenging",
+    "challenged": "Utfordring",
+    "changed_placeholder": "eksempel: Det stemmer kanskje ikke at...",
+    "alt_thought_placeholder": "Hva kan du tenke i stedet?",
+    "show_details": "Vis detaljerte beskrivelser"
+  },
+  "explanation_screen": {
+    "header": "FreeCBT.",
+    "intro": "Introduksjon"
+  },
+  "finished_screen": {
+    "header": "FreeCBT"
+  },
+  "all_or_nothing_thinking": "Svart/hvit-tenking",
+  "all_or_nothing_thinking_explanation": "Du tenker at noe enten er veldig bra eller veldig dårlig, og at ting er mislykkede hvis de ikke er perfekte.",
+  "all_or_nothing_thinking_thought": "\"Det er ikke vits å begynne å lese til prøven nå, jeg ligger uansett så dårlig an\" eller \"Jeg er stygg hvis jeg ikke er like pen som de peneste\"",
+  "catastrophizing": "Katastrofetenking",
+  "catastrophizing_explanation": "Du har en forutanelse av at ting vil gå galt, og du føler deg overbevist om at dine antakelser er et faktum.",
+  "catastrophizing_thought": "Jeg kommer til å få sammenbrudd.",
+  "emotional_reasoning": "Følelsesmessig resonnering",
+  "emotional_reasoning_explanation_1": "Du antar at de negative følelsene dine alltid gjenspeiler fakta. Fordi du føler noe, tror du at det må være sånn virkeligheten er. Kanskje er du i en situasjon sammen med noen du gjerne vil skal like deg, men du kjenner deg dum og usikker.",
+  "emotional_reasoning_explanation_2": "Hvis du da tenker: \"Jeg kjenner meg så dum, de andre synes sikkert jeg er dum\", er dette et eksempel på det vi kaller følelsesmessig resonnering.",
+  "emotional_reasoning_thought": "Jeg kjenner meg så dum, de andre synes sikkert jeg er dum.",
+  "fortune_telling": "Spå om framtiden",
+  "fortune_telling_explanation": "Du føler deg sikker på hvordan framtida vil bli, ofte i negativ retning",
+  "fortune_telling_thought": "\"Jeg kommer aldri til å få meg kjæreste\" eller \"Jeg kommer aldri til å klare å fullføre skolen, jeg bare vet det.\"",
+  "labeling": "Merkelapper",
+  "labeling_explanation": "Du setter negative merkelapper på en selv eller andre. Ofte er det snakk om globale merkelapper.",
+  "labeling_thought": "Jeg er en taper.",
+  "magnification_of_the_negative": "Maksimering av det negative",
+  "magnification_of_the_negative_explanation": "Du overdriver betydningen av en negativ hendelse. For eksempel at en liten feil du har gjort på jobben har ødelagt karrieren din, eller at en uenighet med vennen din betyr at vennskapet er over.",
+  "magnification_of_the_negative_thought": "Etter uenigheten vår er sikkert vennskapet slutt.",
+  "mind_reading": "Tankelesing",
+  "mind_reading_explanation": "Du tror du vet akkurat hva andre tenker om deg, uten at du egentlig har sjekket om det stemmer. Du sitter kanskje i kantina og er overbevist om at alle rundt bordet synes du er kjedelig, eller du skal holde framføring og tenker: \"Alle kan se at jeg er nervøs.\"",
+  "mind_reading_thought": "Alle kan se at jeg er nervøs.",
+  "minimization_of_the_positive": "Nedvurdering av det positive",
+  "minimization_of_the_positive_explanation": "Du vurderer det positive du selv eller andre gjør som helt selvfølgelig, og derfor betyr det ikke noe. Du tenker at årsaken til at noe går bra for deg, er noe annet enn din egen innsats. For eksempel: \"Den oppgaven var jo så lett\", \"Jeg var heldig, neste gang går det dårligere\" eller \"Jeg må ha hatt en god dag\".",
+  "minimization_of_the_positive_thought": "Jeg var heldig, neste gang går det dårligere.",
+  "other_blaming": "Offertenking",
+  "other_blaming_explanation": "Du legger skylden for at du ikke har det bra over på andre mennesker, verden eller tidligere hendelser i livet.",
+  "other_blaming_thought": "Det er ikke min feil at det gikk dårlig, læreren er for dårlig til å forklare.",
+  "over_generalization": "Overgeneralisering",
+  "over_generalization_explanation": "Du trekker negative konklusjoner ut fra en enkel hendelse i stedet for å ta all din erfaring med i betrakting.",
+  "over_generalization_thought": "Hun ville ikke treffe meg, det er sikkert ingen som vil treffe meg.",
+  "self_blaming": "Personalisering",
+  "self_blaming_explanation": "Du tar på seg skylden når ting går galt eller at andre mennesker ikke har det bra, selv om det logisk sett er vanskelig å se en slik sammenheng.",
+  "self_blaming_thought": "Stemningen ble dårlig fordi jeg var tilstede.",
+  "should_statements": "Burde-tenking",
+  "should_statements_explanation_1": "Du pålegger deg selv for mange krav til hva du bør, skal og må, noe som ofte fører til at du ikke klarer å leve opp til dine egne høye standarder. For eksempel: \"Jeg burde være en bedre venn\" eller \"Jeg burde være mer utadvendt og selvsikker.\"",
+  "should_statements_thought": "Jeg burde være mer utadvendt og selvsikker.",
+  "accessibility": {
+    "help_button": "hjelp",
+    "list_button": "vis tanker",
+    "new_thought_button": "ny tanke",
+    "settings_button": "innstillinger",
+    "delete_thought_button": "slett tanke",
+    "close_button": "lukk"
+  },
+  "payment": {
+    "ios_explanation": "Payment will be charged to your Apple ID account at the confirmation of purchase. The subscription automatically renews unless it is canceled at least 24 hours before the end of the current period. Your account will be charged for renewal within 24 hours prior to the end of the current period. You can manage and cancel your subscriptions by going to your App Store account settings after purchase."
+  },
+  "reminder_notification": {
+    "1": {
+      "title": "Hvis noe skjer - skriv det ned.",
+      "body": "Ikke la tankene dine kjøre på, gjør noe med dem så fort som mulig."
+    },
+    "2": {
+      "title": "Bruk FreeCBT hvis du har det vanskelig.",
+      "body": "Ta deg tid til å utfordre tankene dine."
+    },
+    "intro": {
+      "title": "Bruk FreeCBT hvis du har det vanskelig.",
+      "body": "En gang om dagen får du en påminnelse som dette."
+    }
+  },
+  "all_or_nothing_thinking_one_liner": "\"Det er ikke vits å begynne å lese til prøven nå, jeg ligger uansett så dårlig an.\"",
+  "overgeneralization_one_liner": "\"Hun ville ikke treffe meg, det er sikkert ingen som vil treffe meg.\"",
+  "mind_reading_one_liner": "\"Alle kan se at jeg er nervøs.\"",
+  "fortune_telling_one_liner": "\"Jeg kommer aldri til å klare å fullføre skolen, jeg bare vet det.\"",
+  "magnification_of_the_negative_one_liner": "\"Etter uenigheten vår er sikkert vennskapet slutt.\"",
+  "minimization_of_the_positive_one_liner": "\"Jeg var heldig, neste gang går det dårligere.\"",
+  "catastrophizing_one_liner": "\"Jeg kommer til å få sammenbrudd.\"",
+  "emotional_reasoning_one_liner": "\"Jeg kjenner meg så dum, de andre synes sikkert jeg er dum.\"",
+  "should_statements_one_liner": "\"Jeg burde være mer utadvendt og selvsikker.\"",
+  "labeling_one_liner": "\"Jeg er en taper.\"",
+  "self_blaming_one_liner": "\"Stemningen ble dårlig fordi jeg var tilstede.\"",
+  "other_blaming_one_liner": "\"Det er ikke min feil at det gikk dårlig, læreren er for dårlig til å forklare.\"",
+  "backup_screen": {
+    "header": "FreeCBT<-",
+    "export": {
+      "description": "Ta en sikkerhetskopi av dataene ved å \"dele\" dem til et sikkert sted, for eksempel send dem på epost til deg selv. Da kan du senere laste inn filen for å gjenopprette dataene dine. OBS! Alle med denne filen kan lese alle registrerte tankene dine, så pass på hvor du lagrer den eller hvem du sender den til!",
+      "clipboard": {
+        "button": "Eksporter FreeCBT-dataene til utklippstavlen",
+        "success": "Kopiert til utklippstavlen!"
+      },
+      "file": {
+        "button": "Eksporter FreeCBT-dataene til en fil",
+        "success": "Kopiert til en fil!"
+      },
+      "share": {
+        "button": "Eksporter og del FreeCBT-dataene dine"
+      }
+    },
+    "import": {
+      "description": "Når du gjenoppretter en sikkerhetskopi vil alle eksisterende data slettes og erstattes av dataene i sikkerhetskopien.",
+      "clipboard": {
+        "button": "Gjenopprett FreeCBT-dataene fra utklippstavlen",
+        "failure": "Gjenoppretting mislyktes. Er du sikker på at du har eksportert dataene til utklippstavlen?"
+      },
+      "file": {
+        "button": "Importer FreeCBT-dataene fra en fil",
+        "failure": "Gjenoppretting mislyktes. Er du sikker på at dette er en FreeCBT-sikkerhetskopi?"
+      },
+      "noop": "Gjenoppretting ble fullført - men ingenting endret seg! Ta vare på sikkerhetskopien til senere, og gjenopprett den ved behov.",
+      "success": "Gjenoppretting fullført!"
+    }
+  },
+  "export_screen": {
+    "header": "FreeCBT->",
+    "description": "Se FreeCBT-dataene dine i andre filformater. Disse fungerer ikke som en sikkehetskopi, og kan ikke gjenopprettes/importeres tilbake til FreeCBT!",
+    "markdown": {
+      "button": "Eksporter som Markdown/ren tekst"
+    },
+    "csv": {
+      "button": "Eksporter som CSV"
+    },
+    "json": {
+      "button": "Eksporter som JSON"
+    }
+  }
+}
