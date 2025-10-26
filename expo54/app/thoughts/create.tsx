@@ -29,6 +29,8 @@ function CBTCarousel() {
     "challenge",
     "alternative",
   ] as const;
+  // "Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.":
+  // I can't fix this logged error, it's up to the react-native-reanimated-carousel maintainers
   const ref = React.useRef<ICarouselInstance>(null);
   const progress = useSharedValue<number>(0);
   const onPressPagination = (index: number) => {
@@ -97,7 +99,9 @@ function CBTCarousel() {
                 <View style={[S.carouselItem]}>
                   <Text style={[S.header]}>Alternative</Text>
                   <TextInput style={[S.textInput]} multiline={true} />
-                  <TouchableOpacity style={[S.button]}>Submit</TouchableOpacity>
+                  <TouchableOpacity style={[S.button]}>
+                    <Text style={[S.buttonText]}>Submit</Text>
+                  </TouchableOpacity>
                 </View>
               );
             }

@@ -56,7 +56,7 @@ export const S = StyleSheet.create({
   },
   button: {
     backgroundColor: C.button,
-    color: C.buttonText,
+    // color: C.buttonText,
     fontWeight: 700,
     fontSize: 16,
     padding: 12,
@@ -66,5 +66,8 @@ export const S = StyleSheet.create({
     alignItems: "center",
     maxHeight: 48,
     width: 120,
+  },
+  buttonText: {
+    color: C.buttonText,
   },
 });
