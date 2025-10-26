@@ -1,4 +1,5 @@
 import i18n from "@/src/i18n";
+import { DistortionData } from "@/src/model";
 import { C, S } from "@/src/style";
 import React from "react";
 import {
@@ -83,7 +84,29 @@ function CBTCarousel() {
               return (
                 <View style={[S.carouselItem]}>
                   <Text style={[S.header]}>{i18n.t("cog_distortion")}</Text>
-                  <Text style={[S.text]}>TODO</Text>
+                  <View style={[S.flexColumn]}>
+                    {DistortionData.list.map((dist) => {
+                      const selected = true;
+                      const textStyle = selected
+                        ? S.formDistortionItemSelectedText
+                        : S.text;
+                      return (
+                        <TouchableOpacity
+                          style={[
+                            S.formDistortionItem,
+                            selected ? S.formDistortionItemSelected : null,
+                          ]}
+                        >
+                          <Text style={[textStyle]}>
+                            {dist.emojis[0]} {i18n.t(dist.labelKey)}
+                          </Text>
+                          <Text style={[textStyle]}>
+                            {i18n.t(dist.descriptionKey)}
+                          </Text>
+                        </TouchableOpacity>
+                      );
+                    })}
+                  </View>
                 </View>
               );
             }

@@ -7,6 +7,9 @@ export const DarkColors = {
   button: "cyan",
   buttonText: "black",
   paginationDot: "rgba(255,255,255,0.2)",
+  selectedText: "white",
+  selectedBackground: "blue",
+  selectedBorder: "darkblue",
 };
 export const LightColors: typeof DarkColors = {
   text: "black",
@@ -15,6 +18,9 @@ export const LightColors: typeof DarkColors = {
   button: "blue",
   buttonText: "white",
   paginationDot: "rgba(0,0,0,0.2)",
+  selectedText: "white",
+  selectedBackground: "blue",
+  selectedBorder: "darkblue",
 };
 export const C =
   Appearance.getColorScheme() === "dark" ? DarkColors : LightColors;
@@ -69,5 +75,26 @@ export const S = StyleSheet.create({
   },
   buttonText: {
     color: C.buttonText,
+  },
+  flexColumn: {
+    flexDirection: "column",
+  },
+  formDistortionItem: {
+    backgroundColor: C.background,
+    borderColor: C.border,
+    borderBottomWidth: 2,
+    paddingTop: 8,
+    paddingBottom: 4,
+    borderRadius: 8,
+    borderWidth: 1,
+    marginBottom: 4,
+    marginTop: 1,
+  },
+  formDistortionItemSelected: {
+    backgroundColor: C.selectedBackground,
+    borderColor: C.selectedBorder,
+  },
+  formDistortionItemSelectedText: {
+    color: C.selectedText,
   },
 });
