@@ -1,6 +1,8 @@
 import * as T from "io-ts"
 import { setFromArray, DateFromISOString } from "io-ts-types"
 import * as Distortion from "../distortion"
+// import this polyfill before `uuid`: https://www.npmjs.com/package/uuid#user-content-getrandomvalues-not-supported
+import "react-native-get-random-values"
 import { v4 as uuidv4 } from "uuid"
 import { VERSION } from "./persist"
 
@@ -46,10 +48,11 @@ export function create(args: CreateArgs): Thought {
       return d
     })
   )
+  const uuid = args.uuid ?? getThoughtKey(uuidv4())
   return {
     ...args,
     cognitiveDistortions,
-    uuid: args.uuid ?? getThoughtKey(uuidv4()),
+    uuid,
     createdAt: args.createdAt ?? new Date(),
     updatedAt: args.updatedAt ?? new Date(),
     v: VERSION,

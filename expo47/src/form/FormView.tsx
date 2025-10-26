@@ -107,8 +107,9 @@ export default function FormView(props: FormViewProps): React.JSX.Element {
         parallaxScrollingOffset: Math.round(sliderWidth * 0.15),
       }}
       // fix vertical scrolling for distortions
-      panGestureHandlerProps={{
-        activeOffsetX: [-10, 10],
+      onConfigurePanGesture={(gesture) => {
+        "worklet"
+        gesture.activeOffsetX([-10, 10])
       }}
     />
   )
