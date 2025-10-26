@@ -1,28 +1,44 @@
 import _ from "lodash";
 import { z } from "zod";
+import { type_assert } from "../type-utils";
 
-export interface Spec {
-  readonly slug: string;
-  readonly emoji: readonly string[];
-  readonly labelKey?: string;
-  readonly descriptionKey?: string;
-  readonly explanationKeys?: number | readonly string[];
-  readonly explanationThoughtKey?: string;
-}
+/**
+ * A human-maintained cognitive distortion definition.
+ *
+ * This is what's listed in `distortion-data.ts`. It's missing translation ids needed in other code, but we can autogenerate them.
+ */
+export const Spec = z.object({
+  slug: z.string(),
+  emoji: z.string().array().readonly(),
+  labelKey: z.string().optional(),
+  descriptionKey: z.string().optional(),
+  explanationKeys: z.string().array().optional(),
+  explanationKeyCount: z.number().optional(),
+  explanationThoughtKey: z.string().optional(),
+});
+export type Spec = z.infer<typeof Spec>;
+
+/**
+ * Distortion identifier.
+ */
 export const Slug = z.string().brand("distortion.slug");
 export type Slug = z.infer<typeof Slug>;
 
-export interface Distortion {
-  readonly slug: Slug;
-  readonly emojis: readonly string[];
-  readonly labelKey: string;
-  readonly descriptionKey: string;
-  readonly explanationKeys: readonly string[];
-  readonly explanationThoughtKey: string;
-}
+/**
+ * A complete cognitive distortion definition.
+ */
+export const Distortion = z.object({
+  slug: Slug,
+  emojis: z.string().array().readonly(),
+  labelKey: z.string(),
+  descriptionKey: z.string(),
+  explanationKeys: z.string().array().readonly(),
+  explanationThoughtKey: z.string(),
+});
+export type Distortion = z.infer<typeof Distortion>;
 
-export function fromSpec(spec: Spec): Distortion {
-  const slug = Slug.parse(spec.slug);
+export const fromSpec = Spec.transform((spec: Spec): Distortion => {
+  const slug = Slug.decode(spec.slug);
   const emojis = spec.emoji;
   const labelKey = spec.labelKey ?? _.snakeCase(slug);
   const descriptionKey =
@@ -43,4 +59,35 @@ export function fromSpec(spec: Spec): Distortion {
     explanationKeys,
     explanationThoughtKey,
   };
+});
+type_assert<z.input<typeof fromSpec> extends Spec ? true : false>;
+type_assert<z.infer<typeof fromSpec> extends Distortion ? true : false>;
+
+/**
+ * A list of cognitive distortions. Usually we use the one in `distortion-data.ts`, but you could test with some other list.
+ */
+export interface Data {
+  list: readonly Distortion[];
+  bySlug: ReadonlyMap<string, Distortion>;
+}
+
+/**
+ * Given a list of cognitive distortions, create parsers/validators for that data.
+ */
+export function createParsers(data: Data) {
+  const validSlug = Slug.refine((slug) => data.bySlug.has(slug), {
+    error: "no such Distortion.Slug",
+  });
+  const fromSlug = z.codec(validSlug, Distortion, {
+    // decode is guaranteed not-null from validSlug's refinement
+    decode: (slug: Slug) => data.bySlug.get(slug)!,
+    encode: (d: z.input<typeof Distortion>) => Slug.parse(d.slug),
+  });
+  type_assert<z.input<typeof fromSlug> extends string ? true : false>;
+  type_assert<z.infer<typeof fromSlug> extends Distortion ? true : false>;
+
+  const fromSlugList = fromSlug.array();
+  const fromSlugSet = z.set(fromSlug);
+
+  return { validSlug, fromSlug, fromSlugList, fromSlugSet };
 }

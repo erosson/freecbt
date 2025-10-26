@@ -42,12 +42,12 @@ export const specList: readonly Distortion.Spec[] = [
   {
     slug: "emotional-reasoning",
     emoji: ["🎭"],
-    explanationKeys: 2,
+    explanationKeyCount: 2,
   },
   {
     slug: "should-statements",
     emoji: ["✨"],
-    explanationKeys: 2,
+    explanationKeyCount: 2,
   },
   {
     slug: "labeling",
@@ -60,10 +60,11 @@ export const specList: readonly Distortion.Spec[] = [
   {
     slug: "other-blaming",
     emoji: ["🧛‍", "👺"],
-    explanationKeys: 2,
+    explanationKeyCount: 2,
   },
 ] as const;
 
-export const list: readonly Distortion.Distortion[] = specList.map(
-  Distortion.fromSpec
+export const list: readonly Distortion.Distortion[] = specList.map((spec) =>
+  Distortion.fromSpec.decode(spec)
 );
+export const bySlug = new Map(list.map((d) => [d.slug as string, d]));
