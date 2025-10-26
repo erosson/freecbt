@@ -16,7 +16,7 @@ import i18n from "../i18n"
 import { FadesIn } from "../animations"
 import * as TS from "../io-ts/thought/store"
 import * as T from "io-ts"
-import * as FS from "expo-file-system"
+import * as FS from "expo-file-system/legacy"
 import * as Sharing from "expo-sharing"
 import * as Picker from "expo-document-picker"
 
