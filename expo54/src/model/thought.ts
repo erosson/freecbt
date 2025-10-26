@@ -9,10 +9,11 @@ export const Json = z.object({
   alternativeThought: z.string(),
   createdAt: z.iso.datetime(),
   updatedAt: z.iso.datetime(),
-  uuid: z.uuidv4(),
+  uuid: z.string(),
 });
 export type Json = z.infer<typeof Json>;
 
+export const ID_PREFIX = `@Quirk:thoughts:`;
 export const Thought = z.object({
   automaticThought: z.string(),
   cognitiveDistortions: z.set(Distortion.Distortion),
@@ -20,7 +21,7 @@ export const Thought = z.object({
   alternativeThought: z.string(),
   createdAt: z.date(),
   updatedAt: z.date(),
-  uuid: z.uuidv4(),
+  uuid: z.string(),
 });
 export type Thought = z.infer<typeof Thought>;
 
@@ -67,6 +68,6 @@ export type Spec = Pick<
 export function create(spec: Spec, now: Date): Thought {
   const createdAt = now;
   const updatedAt = now;
-  const uuid = uuidv4();
+  const uuid = `${ID_PREFIX}${uuidv4()}`;
   return { ...spec, createdAt, updatedAt, uuid };
 }
