@@ -1,4 +1,4 @@
-import { S } from "@/src/style";
+import { C, S } from "@/src/style";
 import React from "react";
 import {
   Dimensions,
@@ -80,7 +80,7 @@ function CBTCarousel() {
               return (
                 <View style={[S.carouselItem]}>
                   <Text style={[S.header]}>Distortions</Text>
-                  <Text>TODO</Text>
+                  <Text style={[S.text]}>TODO</Text>
                 </View>
               );
             }
@@ -111,7 +111,13 @@ function CBTCarousel() {
       <Pagination.Basic
         progress={progress}
         data={[...data]}
-        dotStyle={{ backgroundColor: "rgba(0,0,0,0.2)", borderRadius: 50 }}
+        activeDotStyle={{
+          backgroundColor: C.text,
+        }}
+        dotStyle={{
+          backgroundColor: C.paginationDot,
+          borderRadius: 50,
+        }}
         containerStyle={{ gap: 5, marginTop: 10 }}
         onPress={onPressPagination}
       />
