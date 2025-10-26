@@ -25,6 +25,24 @@ export const Thought = z.object({
 });
 export type Thought = z.infer<typeof Thought>;
 
+export function isKey(key: string): boolean {
+  return key.startsWith(ID_PREFIX);
+}
+
+export type Spec = Pick<
+  Thought,
+  | "automaticThought"
+  | "cognitiveDistortions"
+  | "challenge"
+  | "alternativeThought"
+>;
+export function create(spec: Spec, now: Date): Thought {
+  const createdAt = now;
+  const updatedAt = now;
+  const uuid = `${ID_PREFIX}${uuidv4()}`;
+  return { ...spec, createdAt, updatedAt, uuid };
+}
+
 /**
  * Thought-parsing enforces valid distortions, but parameterize the distortion-data until later.
  */
@@ -55,19 +73,10 @@ export function createParsers(data: Distortion.Data) {
       return Json.decode({ ...t, cognitiveDistortions, createdAt, updatedAt });
     },
   });
-  return { fromJson };
-}
 
-export type Spec = Pick<
-  Thought,
-  | "automaticThought"
-  | "cognitiveDistortions"
-  | "challenge"
-  | "alternativeThought"
->;
-export function create(spec: Spec, now: Date): Thought {
-  const createdAt = now;
-  const updatedAt = now;
-  const uuid = `${ID_PREFIX}${uuidv4()}`;
-  return { ...spec, createdAt, updatedAt, uuid };
+  const fromString = z.codec(z.string(), fromJson, {
+    decode: (enc: string) => JSON.parse(enc),
+    encode: (dec: Json) => JSON.stringify(dec),
+  });
+  return { fromJson, fromString };
 }
