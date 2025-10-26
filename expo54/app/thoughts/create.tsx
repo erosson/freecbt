@@ -1,7 +1,7 @@
 import i18n from "@/src/i18n";
-import { DistortionData } from "@/src/model";
+import { Distortion, DistortionData } from "@/src/model";
 import { C, S } from "@/src/style";
-import React from "react";
+import React, { useState } from "react";
 import {
   Dimensions,
   Keyboard,
@@ -81,12 +81,15 @@ function CBTCarousel() {
               );
             }
             case "distortions": {
+              const [selecteds, setSelecteds] = useState(
+                new Set<Distortion.Slug>()
+              );
               return (
                 <View style={[S.carouselItem]}>
                   <Text style={[S.header]}>{i18n.t("cog_distortion")}</Text>
                   <View style={[S.flexColumn]}>
                     {DistortionData.list.map((dist) => {
-                      const selected = true;
+                      const selected = selecteds.has(dist.slug);
                       const textStyle = selected
                         ? S.formDistortionItemSelectedText
                         : S.text;
@@ -96,6 +99,11 @@ function CBTCarousel() {
                             S.formDistortionItem,
                             selected ? S.formDistortionItemSelected : null,
                           ]}
+                          onPress={() => {
+                            const s = new Set(selecteds);
+                            selected ? s.delete(dist.slug) : s.add(dist.slug);
+                            setSelecteds(s);
+                          }}
                         >
                           <Text style={[textStyle]}>
                             {dist.emojis[0]} {i18n.t(dist.labelKey)}
