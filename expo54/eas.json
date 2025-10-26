@@ -1,0 +1,35 @@
+{
+  "cli": {
+    "version": ">= 16.24.1",
+    "appVersionSource": "remote"
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal"
+    },
+    "preview": {
+      "distribution": "internal"
+    },
+    "production": {
+      "channel": "production",
+      "autoincrement": false
+    }
+  },
+  "submit": {
+    "production": {
+      "android": {
+        "serviceAccountKeyPath": "../secrets/android/api-8973054243569294648-99738-365ad35f4cc4.json",
+        "changesNotSentForReview": false
+      },
+      "ios": {
+        "appleId": "apple@erosson.org",
+        "ascAppId": "1516063390",
+        "appleTeamId": "3HKV6P33M6",
+        "ascApiKeyId": "DLK4FD42VZ",
+        "ascApiKeyIssuerId": "17160876-a2bf-4839-bfda-56cae3e94d8f",
+        "ascApiKeyPath": "../secrets/ios/AuthKey_DLK4FD42VZ.p8"
+      }
+    }
+  }
+}
