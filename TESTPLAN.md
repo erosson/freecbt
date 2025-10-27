@@ -1,8 +1,10 @@
 # Manual test plan
 
-After big changes, test these things manually, in both ios and android:
+After big changes, test these things manually, in both ios and android.
 
-* [ ] is saved data persisted from the old version?
+* With a preview build, not in Expo Go:
+  * [ ] is saved data persisted from the old version? (Expo Go's behavior is inconsistent here)
+  * [ ] does the splash screen work? (Expo Go uses a fake one after expo53)
 * From the create-thought form:
   * [ ] create an empty thought
   * [ ] create a non-empty thought
@@ -10,7 +12,7 @@ After big changes, test these things manually, in both ios and android:
   * [ ] open the help screen
 * From the help screen:
   * [ ] view the onboarding screen
-  * [ ] ios: enable reminders from the onboarding screen 
+  * [ ] ios: enable reminders from the onboarding screen
 * from the finished-thought screen:
   * [ ] edit the thought
   * [ ] close the thought and view the list
