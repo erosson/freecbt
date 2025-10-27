@@ -1,21 +1,28 @@
 {
   "cli": {
-    "version": ">= 2.7.0"
+    "version": ">= 16.25.0"
   },
   "build": {
+    "base": {
+      "node": "22.16.0"
+    },
     "apk": {
+      "extends": "base",
       "android": {
         "buildType": "apk"
       }
     },
     "development": {
+      "extends": "base",
       "developmentClient": true,
       "distribution": "internal"
     },
     "preview": {
+      "extends": "base",
       "distribution": "internal"
     },
     "production": {
+      "extends": "base",
       "channel": "production"
     }
   },
