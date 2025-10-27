@@ -15,15 +15,14 @@ jobs:
           node-version: 22.x
       # https://github.com/expo/expo-github-action
       # using their action logs us in, and avoids ENOSPC: https://github.com/expo/expo-github-action/issues/20
-      - uses: expo/expo-github-action@v5
+      - uses: expo/expo-github-action@8.2.1
         with:
-          expo-version: 3.x
-          expo-username: erosson
-          expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
+          expo-version: 6.x
+          token: ${{ secrets.EXPO_TOKEN }}
       - run: yarn --dev --frozen-lockfile
       # TODO: tests temporarily disabled. I have a plan. 2025/10/27
       # - run: yarn test
-      # working-directory: expo47
+      #   working-directory: expo47
       - run: npm install -g eas-cli # this one doesn't like local installs for some reason
 
       # submitting builds to the app stores requires some auth files, stored as github secrets
