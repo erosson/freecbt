@@ -1,6 +1,7 @@
 {
     "private": true,
     "scripts": {
+        "install": "cd expo47 && yarn install --frozen-lockfile",
         "start": "run-pty run-pty.json",
         "start:expo": "cd expo47 && yarn start",
         "build": "cd expo47 && yarn build",
