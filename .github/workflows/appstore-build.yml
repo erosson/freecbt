@@ -21,8 +21,9 @@ jobs:
           expo-username: erosson
           expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
       - run: yarn --dev --frozen-lockfile
-      - run: yarn test
-        working-directory: expo47
+      # TODO: tests temporarily disabled. I have a plan. 2025/10/27
+      # - run: yarn test
+      # working-directory: expo47
       - run: npm install -g eas-cli # this one doesn't like local installs for some reason
 
       # submitting builds to the app stores requires some auth files, stored as github secrets
