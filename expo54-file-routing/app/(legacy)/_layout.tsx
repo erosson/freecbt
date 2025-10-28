@@ -4,8 +4,8 @@ import LockScreen from "@/src/legacy/screen/LockScreen";
 import * as Style from "@/src/legacy/style";
 import { PromiseRender } from "@/src/use-promise-state";
 import { Stack } from "expo-router";
-import React, { useState } from "react";
-import { Text } from "react-native";
+import React, { useEffect, useState } from "react";
+import { AppState, Text } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 export default function RootLayout() {
@@ -25,6 +25,14 @@ export default function RootLayout() {
 function AuthState(props: { children: React.ReactNode }): React.JSX.Element {
   const p = hasPincode();
   const [authed, setAuthed] = useState<boolean>(false);
+  // remove auth if the app is in the background, because it's easy to not close it all the way
+  useEffect(() => {
+    AppState.addEventListener("change", (st) => {
+      if (st !== "active") {
+        setAuthed(false);
+      }
+    });
+  });
   return (
     <PromiseRender
       promise={p}
