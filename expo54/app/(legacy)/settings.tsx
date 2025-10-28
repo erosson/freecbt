@@ -403,6 +403,7 @@ export default function SettingScreen(): React.JSX.Element {
               >
                 <SubHeader>{i18n.t("settings.locale.header")}</SubHeader>
                 <Picker
+                  itemStyle={{ color: "black" }}
                   selectedValue={locale}
                   onValueChange={async (val) => {
                     await setLocaleSetting(val);
