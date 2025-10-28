@@ -1,0 +1,23 @@
+#!/bin/bash
+# build and submit an updated app to apple's app store.
+
+set -eux
+# 2025/10/28: for some unknown reason, `eas build` is ignoring my ios credential config in eas.json. Here we use env vars instead.
+# - docs claim that `submit.[profile].ios.ascApiKeyPath` and friends still exist; they used to work: https://docs.expo.dev/eas/json/#ascapikeypath
+# - docs for the env vars we're using instead: https://docs.expo.dev/build/building-on-ci/#optional-provide-an-asc-api-token-for-your-apple-team
+# - what auth certificates/provisioning profiles does expo/eas know about?: https://expo.dev/accounts/erosson/settings/credentials
+# - what auth certificates/provisioning profiles exist, according to apple?: https://developer.apple.com/account/resources
+export EXPO_ASC_API_KEY_PATH=../secrets/ios/AuthKey_DLK4FD42VZ.p8
+export EXPO_ASC_KEY_ID=DLK4FD42VZ
+export EXPO_ASC_ISSUER_ID=17160876-a2bf-4839-bfda-56cae3e94d8f
+export EXPO_APPLE_TEAM_ID=3HKV6P33M6
+export EXPO_APPLE_TEAM_TYPE=INDIVIDUAL
+
+eas build --platform ios --profile production --auto-submit --non-interactive
+
+# if credentials have expired, you might need to run this manually without --non-interactive:
+# eas build --platform ios --profile production --auto-submit
+
+# resubmit a successful build to apple without rebuilding
+# for example, submit failed -> update legal stuff on https://developer.apple.com -> resubmit:
+# eas submit --platform ios --profile production --latest

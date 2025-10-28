@@ -1,0 +1,9 @@
+#!/bin/bash
+# build and submit an updated app to google's app store.
+
+set -eux
+eas build --platform android --profile production --auto-submit --non-interactive
+
+# resubmit a successful build to google without rebuilding.
+# for example, submit failed -> update legal stuff on https://play.google.com/console -> resubmit:
+# eas submit --platform android --profile production --latest
