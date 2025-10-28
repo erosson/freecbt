@@ -1,5 +1,3 @@
 {
-    "recommendations": [
-        "esbenp.prettier-vscode"
-    ]
+  "recommendations": ["expo.vscode-expo-tools", "esbenp.prettier-vscode"]
 }
