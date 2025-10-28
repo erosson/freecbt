@@ -6,7 +6,7 @@ on:
       - appstore-build
 
 jobs:
-  deploy:
+  deploy-android:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -20,25 +20,46 @@ jobs:
           expo-version: 6.x
           token: ${{ secrets.EXPO_TOKEN }}
       - run: yarn --dev --frozen-lockfile
-      # TODO: tests temporarily disabled. I have a plan. 2025/10/27
-      # - run: yarn test
-      #   working-directory: expo47
+        working-directory: expo54
+      - run: yarn test
+        working-directory: expo54
       - run: npm install -g eas-cli # this one doesn't like local installs for some reason
 
       # submitting builds to the app stores requires some auth files, stored as github secrets
-      - run: mkdir -p ./secrets/android ./secrets/ios
+      - run: mkdir -p ./secrets/android
       - env:
           EXPO_ANDROID_SERVICE_ACCOUNT_KEY_BASE64: ${{ secrets.EXPO_ANDROID_SERVICE_ACCOUNT_KEY_BASE64 }}
         # path below must match `eas.json:android.serviceAccountKeyPath`
         run: |
           echo $EXPO_ANDROID_SERVICE_ACCOUNT_KEY_BASE64 | base64 --ignore-garbage --decode > ./secrets/android/api-8973054243569294648-99738-365ad35f4cc4.json
+      # - run: cat ./secrets/android/*.json
+      - run: ./expo54/scripts/eas-buildsubmit-android
+
+  deploy-ios:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 22.x
+      # https://github.com/expo/expo-github-action
+      # using their action logs us in, and avoids ENOSPC: https://github.com/expo/expo-github-action/issues/20
+      - uses: expo/expo-github-action@8.2.1
+        with:
+          expo-version: 6.x
+          token: ${{ secrets.EXPO_TOKEN }}
+      - run: yarn --dev --frozen-lockfile
+        working-directory: expo54
+      - run: yarn test
+        working-directory: expo54
+      - run: npm install -g eas-cli # this one doesn't like local installs for some reason
+
+      # submitting builds to the app stores requires some auth files, stored as github secrets
+      - run: mkdir -p ./secrets/ios
       - env:
           EXPO_IOS_API_KEY_BASE64: ${{ secrets.EXPO_IOS_API_KEY_BASE64 }}
         # path below must match `eas.json:ios.ascApiKeyPath`
         run: |
           echo $EXPO_IOS_API_KEY_BASE64 | base64 --ignore-garbage --decode > ./secrets/ios/AuthKey_DLK4FD42VZ.p8
-      - run: cat ./secrets/android/*.json
-      - run: cat ./secrets/ios/*.p8
-
-      - run: yarn appstore-build
-        working-directory: expo47
+      #- run: cat ./secrets/ios/*.p8
+      - run: ./expo54/scripts/eas-buildsubmit-ios

@@ -1,5 +1,5 @@
 {
-  "name": "freecbt",
+  "name": "@freecbt/app",
   "main": "expo-router/entry",
   "version": "1.0.0",
   "scripts": {

@@ -1,6 +1,6 @@
 [
   {
-    "command": ["yarn", "--cwd", "expo47", "start"],
+    "command": ["yarn", "--cwd", "expo54", "start"],
     "title": "http://localhost:8081 - expo dev server",
     "status": {
       "Metro waiting on": null
@@ -16,13 +16,13 @@
     "defaultStatus": ["⏳", "S"]
   },
   {
-    "command": ["yarn", "--cwd", "expo47", "test", "--watch"],
+    "command": ["yarn", "--cwd", "expo54", "test:watch"],
     "title": "tests",
     "status": {
       " RUNS  src/": ["⏳", "S"],
       "No tests found related to files changed since last commit.": null,
-      "Tests: +\\d failed,": ["🚨", "E"],
-      "Tests: +\\d passed,": null
+      "Test Suites: +\\d+ failed,": ["🚨", "E"],
+      "Test Suites: +\\d+ passed,": null
     },
     "defaultStatus": ["⏳", "S"]
   }

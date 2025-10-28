@@ -9,7 +9,7 @@ COPY www/package.json /app/
 RUN yarn --frozen-lockfile
 # copying from a parent dir requires special docker context; we use translation files from a parent dir
 # docker-compose.yml and .github/workflows/build-docker-image.yml both set this context, but be careful if you're trying to do something new
-COPY expo47/src/locals /expo47/src/locals
+COPY expo54/src/locals /expo54/src/locals
 # `.dockerignore` is important to cache this copy properly
 COPY www /app/
 # RUN yarn test run

@@ -1,7 +1,7 @@
 version: 2
 updates:
   - package-ecosystem: npm
-    directory: "/expo47"
+    directory: "/expo54"
     schedule:
       interval: monthly
     open-pull-requests-limit: 10

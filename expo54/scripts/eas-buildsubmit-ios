@@ -2,6 +2,7 @@
 # build and submit an updated app to apple's app store.
 
 set -eux
+cd "$(dirname "$0")/.."
 # 2025/10/28: for some unknown reason, `eas build` is ignoring my ios credential config in eas.json. Here we use env vars instead.
 # - docs claim that `submit.[profile].ios.ascApiKeyPath` and friends still exist; they used to work: https://docs.expo.dev/eas/json/#ascapikeypath
 # - docs for the env vars we're using instead: https://docs.expo.dev/build/building-on-ci/#optional-provide-an-asc-api-token-for-your-apple-team

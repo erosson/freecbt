@@ -2,6 +2,7 @@
 # build and submit an updated app to google's app store.
 
 set -eux
+cd "$(dirname "$0")/.."
 eas build --platform android --profile production --auto-submit --non-interactive
 
 # resubmit a successful build to google without rebuilding.

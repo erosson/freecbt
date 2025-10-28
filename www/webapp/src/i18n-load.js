@@ -1,21 +1,21 @@
-import i18n from "i18n-js"
+import i18n from "i18n-js";
 
-import en from "../../../expo47/src/locals/en.json";
-import it from "../../../expo47/src/locals/it.json";
-import fr from "../../../expo47/src/locals/fr.json";
-import ko from "../../../expo47/src/locals/ko.json";
-import es from "../../../expo47/src/locals/es.json";
-import de from "../../../expo47/src/locals/de.json";
-import pl from "../../../expo47/src/locals/pl.json";
-import nl from "../../../expo47/src/locals/nl_NL.json";
-import fi from "../../../expo47/src/locals/fi.json";
-import ru from "../../../expo47/src/locals/ru.json";
-import zhHans from "../../../expo47/src/locals/zh-Hans.json";
-import ptPT from "../../../expo47/src/locals/pt-pt.json";
-import ptBR from "../../../expo47/src/locals/pt-br.json";
-import nb from "../../../expo47/src/locals/nb.json";
-import sv from "../../../expo47/src/locals/sv.json";
-import ro from "../../../expo47/src/locals/ro.json";
+import de from "../../../expo54/src/locals/de.json";
+import en from "../../../expo54/src/locals/en.json";
+import es from "../../../expo54/src/locals/es.json";
+import fi from "../../../expo54/src/locals/fi.json";
+import fr from "../../../expo54/src/locals/fr.json";
+import it from "../../../expo54/src/locals/it.json";
+import ko from "../../../expo54/src/locals/ko.json";
+import nb from "../../../expo54/src/locals/nb.json";
+import nl from "../../../expo54/src/locals/nl_NL.json";
+import pl from "../../../expo54/src/locals/pl.json";
+import ptBR from "../../../expo54/src/locals/pt-br.json";
+import ptPT from "../../../expo54/src/locals/pt-pt.json";
+import ro from "../../../expo54/src/locals/ro.json";
+import ru from "../../../expo54/src/locals/ru.json";
+import sv from "../../../expo54/src/locals/sv.json";
+import zhHans from "../../../expo54/src/locals/zh-Hans.json";
 
 function walkReverse(obj) {
   return Object.fromEntries(

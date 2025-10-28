@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# Publish typescript changes as an ota update.
+
+set -eux
+cd "$(dirname "$0")/.."
+eas update --branch production --auto

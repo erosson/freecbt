@@ -14,9 +14,8 @@ jobs:
         with:
           node-version: 22.x
       - run: yarn --dev --frozen-lockfile
-      # TODO: tests temporarily disabled. I have a plan. 2025/10/27
-      # - run: yarn test
-      #   working-directory: expo47
+      - run: yarn test
+        working-directory: expo54
 
       # https://github.com/expo/expo-github-action
       # login to expo. using their action avoids ENOSPC: https://github.com/expo/expo-github-action/issues/20
@@ -25,5 +24,4 @@ jobs:
           expo-version: 6.x
           token: ${{ secrets.EXPO_TOKEN }}
       - run: npm install -g eas-cli # this one doesn't like local installs for some reason
-      - run: yarn publish-ts # `expo publish` plus some prepublish chores, using eas-cli
-        working-directory: expo47
+      - run: ./expo54/scripts/publish-ts # `expo publish` plus some prepublish chores, using eas-cli

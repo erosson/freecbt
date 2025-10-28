@@ -1,11 +1,11 @@
 {
     "private": true,
+    "workspaces": ["expo54", "www"],
     "scripts": {
-        "install": "cd expo47 && yarn install --frozen-lockfile",
         "start": "run-pty run-pty.json",
-        "start:expo": "cd expo47 && yarn start",
-        "build": "cd expo47 && yarn build",
-        "test": "cd expo47 && yarn test"
+        "start:expo": "yarn --cwd expo54 start",
+        "build": "yarn --cwd expo54 build",
+        "test": "yarn --cwd expo54 test"
     },
     "devDependencies": {
         "run-pty": "^5.0.0"

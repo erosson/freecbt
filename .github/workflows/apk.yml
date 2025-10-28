@@ -1,3 +1,4 @@
+# TODO: this has been broken for a while
 name: Build and release Android APK
 
 on:

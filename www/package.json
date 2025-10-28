@@ -1,4 +1,6 @@
 {
+  "name": "@freecbt/www",
+  "version": "1.0.0",
   "packageManager": "yarn@1.22.19",
   "scripts": {
     "start": "serve public",
