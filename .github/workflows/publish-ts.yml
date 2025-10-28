@@ -24,4 +24,4 @@ jobs:
           expo-version: 6.x
           token: ${{ secrets.EXPO_TOKEN }}
       - run: npm install -g eas-cli # this one doesn't like local installs for some reason
-      - run: ./expo54/scripts/publish-ts # `expo publish` plus some prepublish chores, using eas-cli
+      - run: ./expo54/scripts/eas-ota-publish # `expo publish` plus some prepublish chores, using eas-cli
