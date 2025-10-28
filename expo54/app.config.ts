@@ -8,6 +8,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   version: "2.4.0",
   owner: "erosson",
   githubUrl: "https://github.com/erosson/freecbt",
+  platforms: ["android", "ios", "web"],
   orientation: "portrait",
   icon: "./assets/ios.png",
   scheme: "freecbt",
@@ -70,7 +71,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     [
       "expo-splash-screen",
       {
-        image: "./assets/splash.png",
+        image: "./assets/android.png",
         imageWidth: 200,
         resizeMode: "contain",
         backgroundColor: "#F8A5C2",
