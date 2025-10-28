@@ -1,38 +1,36 @@
-import React from "react"
+import { Routes } from "@/src";
+import * as Feature from "@/src/legacy/feature";
+import haptic from "@/src/legacy/haptic";
+import i18n from "@/src/legacy/i18n";
+import * as Bubbles from "@/src/legacy/imgs/Bubbles";
+import * as D from "@/src/legacy/io-ts/distortion";
+import * as Style from "@/src/legacy/style";
+import { Feather } from "@expo/vector-icons";
+import Constants from "expo-constants";
+import * as Haptic from "expo-haptics";
+import { useLocalSearchParams, useRouter } from "expo-router";
+import React from "react";
 import {
-  ScrollView,
-  View,
-  Linking,
-  TouchableOpacity,
   BackHandler,
+  Linking,
+  ScrollView,
   Text,
-} from "react-native"
-import Constants from "expo-constants"
-import * as Haptic from "expo-haptics"
-import theme from "../theme"
-import { Screen, ScreenProps } from "../screens"
-import i18n from "../i18n"
-import * as Bubbles from "../imgs/Bubbles"
-import haptic from "../haptic"
-import * as D from "../io-ts/distortion"
-import * as Feature from "../feature"
-import * as Style from "../style"
-import { Feather } from "@expo/vector-icons"
-
-type Props = ScreenProps<Screen.EXPLANATION>
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 function Distortion(props: {
-  index: number
-  distortion: D.Distortion
-  selected: boolean
-  toggle: (d: D.Distortion) => void
+  index: number;
+  distortion: D.Distortion;
+  selected: boolean;
+  toggle: (d: D.Distortion) => void;
 }): React.JSX.Element {
-  const style = Style.useStyle()
-  const selectable = Feature.useFeature.extendedDistortions()
-  const selected = selectable && props.selected
-  const d = props.distortion
-  const bubble = Bubbles.colors[props.index % Bubbles.colors.length]
-  const onPress = () => props.toggle(d)
+  const style = Style.useStyle();
+  const selectable = Feature.useFeature.extendedDistortions();
+  const selected = selectable && props.selected;
+  const d = props.distortion;
+  const bubble = Bubbles.colors[props.index % Bubbles.colors.length];
+  const onPress = () => props.toggle(d);
 
   const body = (
     <>
@@ -57,11 +55,11 @@ function Distortion(props: {
         {d.explanationThought()}
       </Bubbles.SelectableThought>
     </>
-  )
+  );
 
-  const styl = { marginBottom: 48 }
+  const styl = { marginBottom: 48 };
   if (!selectable) {
-    return <View style={[style.view, styl]}>{body}</View>
+    return <View style={[style.view, styl]}>{body}</View>;
   }
   return (
     <TouchableOpacity
@@ -74,44 +72,52 @@ function Distortion(props: {
     >
       {body}
     </TouchableOpacity>
-  )
+  );
 }
 
-export default function ExplanationScreen(props: Props): React.JSX.Element {
-  const style = Style.useStyle()
+export default function ExplanationScreen(): React.JSX.Element {
+  const router = useRouter();
+  const style = Style.useStyle();
+  const params = useLocalSearchParams<{ distortions?: string | string[] }>();
+  const initDistortions: readonly string[] =
+    typeof params.distortions === "string"
+      ? params.distortions === ""
+        ? []
+        : [params.distortions]
+      : params.distortions ?? [];
   const [selected, setSelected] = React.useState<Set<D.Distortion>>(
-    new Set(props.route.params.distortions.map((d) => D.bySlug[d]))
-  )
+    new Set(initDistortions.map((d) => D.bySlug[d]).filter((d) => !!d))
+  );
 
   function onBack() {
-    onClose()
-    return true
+    onClose();
+    return true;
   }
   React.useEffect(() => {
-    const sub = BackHandler.addEventListener("hardwareBackPress", onBack)
-    return () => sub.remove()
-  })
+    const sub = BackHandler.addEventListener("hardwareBackPress", onBack);
+    return () => sub.remove();
+  });
 
   function navigateToOnboardingScreen() {
-    props.navigation.navigate(Screen.ONBOARDING)
+    router.navigate(Routes.intro());
   }
   function onClose() {
-    haptic.impact(Haptic.ImpactFeedbackStyle.Light)
+    haptic.impact(Haptic.ImpactFeedbackStyle.Light);
     // props.navigation.pop()
-    props.navigation.navigate({
-      name: Screen.CBT_FORM,
-      params: { distortions: Array.from(selected).map((d) => d.slug) },
-      merge: true,
-    })
+    router.navigate(
+      Routes.thoughtCreate({
+        distortions: Array.from(selected).map((d) => d.slug),
+      })
+    );
   }
   function toggle(d: D.Distortion) {
-    const ret = new Set(selected)
+    const ret = new Set(selected);
     if (ret.has(d)) {
-      ret.delete(d)
+      ret.delete(d);
     } else {
-      ret.add(d)
+      ret.add(d);
     }
-    return setSelected(ret)
+    return setSelected(ret);
   }
 
   return (
@@ -213,6 +219,7 @@ export default function ExplanationScreen(props: Props): React.JSX.Element {
         >
           <TouchableOpacity
             style={[
+              // @ts-ignore
               style.buttonAction,
               {
                 flex: 1,
@@ -226,8 +233,8 @@ export default function ExplanationScreen(props: Props): React.JSX.Element {
               },
             ]}
             onPress={() => {
-              const url = "https://freecbt.erosson.org/explanation?ref=quirk"
-              Linking.canOpenURL(url).then(() => Linking.openURL(url))
+              const url = "https://freecbt.erosson.org/explanation?ref=quirk";
+              Linking.canOpenURL(url).then(() => Linking.openURL(url));
             }}
           >
             <Text
@@ -255,5 +262,5 @@ export default function ExplanationScreen(props: Props): React.JSX.Element {
         ))}
       </View>
     </ScrollView>
-  )
+  );
 }

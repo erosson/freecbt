@@ -3,14 +3,22 @@ import * as Haptic from "expo-haptics";
 import React from "react";
 import { Alert, Dimensions, Image, Linking, View } from "react-native";
 import Carousel from "react-native-reanimated-carousel";
-import { FadesIn } from "../animations";
-import * as Feature from "../feature";
-import haptic from "../haptic";
-import i18n from "../i18n";
-import { Screen, ScreenProps } from "../screens";
-import theme from "../theme";
-import { ActionButton, Container, Header, Paragraph, Row } from "../ui";
-import { setNotifications } from "./SettingsScreen";
+// import { FadesIn } from "@/src/legacy/animations";
+import { Routes } from "@/src";
+import * as Feature from "@/src/legacy/feature";
+import haptic from "@/src/legacy/haptic";
+import i18n from "@/src/legacy/i18n";
+import { Screen, ScreenProps } from "@/src/legacy/screens";
+import theme from "@/src/legacy/theme";
+import {
+  ActionButton,
+  Container,
+  Header,
+  Paragraph,
+  Row,
+} from "@/src/legacy/ui";
+import { useRouter } from "expo-router";
+import { setNotifications } from "./settings";
 
 type Props = ScreenProps<Screen.ONBOARDING>;
 
@@ -23,7 +31,7 @@ const RecordStep = () => (
     }}
   >
     <Image
-      source={require("../../../assets/looker/Looker.png")}
+      source={require("../../assets/looker/Looker.png")}
       style={{
         width: 156,
         height: 156,
@@ -70,7 +78,7 @@ const ChallengeStep = () => (
     }}
   >
     <Image
-      source={require("../../../assets/eater/eater.png")}
+      source={require("../../assets/eater/eater.png")}
       style={{
         width: 156,
         height: 156,
@@ -105,7 +113,7 @@ const ChangeStep = () => (
     }}
   >
     <Image
-      source={require("../../../assets/logo/logo.png")}
+      source={require("../../assets/logo/logo.png")}
       style={{
         width: 156,
         height: 156,
@@ -142,7 +150,7 @@ const RemindersStep = ({ onContinue }: { onContinue: () => void }) => {
       }}
     >
       <Image
-        source={require("../../../assets/notifications/notifications.png")}
+        source={require("../../assets/notifications/notifications.png")}
         style={{
           width: 256,
           height: 196,
@@ -204,13 +212,12 @@ const RemindersStep = ({ onContinue }: { onContinue: () => void }) => {
   );
 };
 
-export default function OnboardingScreen(props: Props): React.JSX.Element {
+export default function OnboardingScreen(): React.JSX.Element {
+  const router = useRouter();
   const [slide, setSlide] = React.useState<number>(0);
   function stopOnBoarding() {
     haptic.notification(Haptic.NotificationFeedbackType.Success);
-    props.navigation.replace(Screen.CBT_FORM, {
-      fromOnboarding: true,
-    });
+    router.navigate(Routes.thoughtCreate({ fromIntro: true }));
   }
 
   function renderItem({ item }: { item: string }): React.JSX.Element {
@@ -242,24 +249,24 @@ export default function OnboardingScreen(props: Props): React.JSX.Element {
         paddingBottom: 0,
       }}
     >
-      <FadesIn pose="visible">
-        <Carousel
-          // width={sliderWidth}
-          // height={Dimensions.get('window').width / 2}
-          width={width}
-          height={height}
-          data={["record", "challenge", "change", "reminders-or-continue"]}
-          renderItem={renderItem}
-          onSnapToItem={setSlide}
-          loop={false}
-          pagingEnabled={true}
-          mode="parallax"
-          modeConfig={{
-            parallaxScrollingScale: 0.9,
-            parallaxScrollingOffset: Math.round(width * 0.15),
-          }}
-        />
-      </FadesIn>
+      {/* <FadesIn pose="visible"> */}
+      <Carousel
+        // width={sliderWidth}
+        // height={Dimensions.get('window').width / 2}
+        width={width}
+        height={height}
+        data={["record", "challenge", "change", "reminders-or-continue"]}
+        renderItem={renderItem}
+        onSnapToItem={setSlide}
+        loop={false}
+        pagingEnabled={true}
+        mode="parallax"
+        modeConfig={{
+          parallaxScrollingScale: 0.9,
+          parallaxScrollingOffset: Math.round(width * 0.15),
+        }}
+      />
+      {/* </FadesIn> */}
     </Container>
   );
 }

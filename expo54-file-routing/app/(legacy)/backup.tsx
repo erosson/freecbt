@@ -1,94 +1,93 @@
-import React from "react"
-import { ScrollView, StatusBar, Text } from "react-native"
-import theme from "../theme"
-import Constants from "expo-constants"
-import * as AsyncState from "../async-state"
+import { Routes } from "@/src";
+import * as AsyncState from "@/src/legacy/async-state";
+import i18n from "@/src/legacy/i18n";
+import * as TS from "@/src/legacy/io-ts/thought/store";
+import theme from "@/src/legacy/theme";
 import {
-  Header,
-  Row,
-  Container,
-  IconButton,
   ActionButton,
+  Container,
+  Header,
+  IconButton,
   Paragraph,
-} from "../ui"
-import { Screen, ScreenProps } from "../screens"
-import i18n from "../i18n"
-import { FadesIn } from "../animations"
-import * as TS from "../io-ts/thought/store"
-import * as T from "io-ts"
-import * as FS from "expo-file-system/legacy"
-import * as Sharing from "expo-sharing"
-import * as Picker from "expo-document-picker"
+  Row,
+} from "@/src/legacy/ui";
+import Constants from "expo-constants";
+import * as Picker from "expo-document-picker";
+import * as FS from "expo-file-system/legacy";
+import { useRouter } from "expo-router";
+import * as Sharing from "expo-sharing";
+import * as T from "io-ts";
+import React from "react";
+import { ScrollView, StatusBar, Text } from "react-native";
 
-type Props = ScreenProps<Screen.BACKUP>
-
-export default function BackupScreen(props: Props): React.JSX.Element {
-  const archive = AsyncState.useAsyncState<string>(TS.readArchiveString)
+export default function BackupScreen(): React.JSX.Element {
+  const router = useRouter();
+  const archive = AsyncState.useAsyncState<string>(TS.readArchiveString);
 
   return (
-    <FadesIn style={{ backgroundColor: theme.lightOffwhite }} pose="visible">
-      <ScrollView
-        style={{
-          backgroundColor: theme.lightOffwhite,
-          marginTop: Constants.statusBarHeight,
-          paddingTop: 24,
-          height: "100%",
-        }}
-      >
-        <Container style={{ paddingBottom: 128 }}>
-          <StatusBar barStyle="dark-content" />
-          <Row style={{ marginBottom: 18 }}>
-            <Header>{i18n.t("backup_screen.header")}</Header>
-            <IconButton
-              featherIconName={"list"}
-              accessibilityLabel={i18n.t("accessibility.list_button")}
-              onPress={() => {
-                // props.navigation.pop()
-                props.navigation.push(Screen.CBT_LIST)
-              }}
-            />
-          </Row>
-          {AsyncState.fold(
-            archive,
-            () => null,
-            () => null,
-            (error) => (
-              <Text>{error}</Text>
-            ),
-            (a) => (
-              <>
-                <Export archive={a} />
-                <Import archive={a} />
-              </>
-            )
-          )}
-        </Container>
-      </ScrollView>
-    </FadesIn>
-  )
+    // <FadesIn style={{ backgroundColor: theme.lightOffwhite }} pose="visible">
+    <ScrollView
+      style={{
+        backgroundColor: theme.lightOffwhite,
+        marginTop: Constants.statusBarHeight,
+        paddingTop: 24,
+        height: "100%",
+      }}
+    >
+      <Container style={{ paddingBottom: 128 }}>
+        <StatusBar barStyle="dark-content" />
+        <Row style={{ marginBottom: 18 }}>
+          <Header>{i18n.t("backup_screen.header")}</Header>
+          <IconButton
+            featherIconName={"list"}
+            accessibilityLabel={i18n.t("accessibility.list_button")}
+            onPress={() => {
+              // props.navigation.pop()
+              router.navigate(Routes.thoughtList());
+            }}
+          />
+        </Row>
+        {AsyncState.fold(
+          archive,
+          () => null,
+          () => null,
+          (error) => (
+            <Text>{error}</Text>
+          ),
+          (a) => (
+            <>
+              <Export archive={a} />
+              <Import archive={a} />
+            </>
+          )
+        )}
+      </Container>
+    </ScrollView>
+    // </FadesIn>
+  );
 }
 
 function Export(props: { archive: string }): React.JSX.Element {
-  const [isCopied, setIsCopied] = React.useState<string | null>(null)
-  const isSharable = AsyncState.useAsyncState(Sharing.isAvailableAsync)
-  const writePath: string = FS.documentDirectory + "FreeCBT-backup.txt"
-  const sharePath: string = FS.cacheDirectory + "FreeCBT-backup.txt"
+  const [isCopied, setIsCopied] = React.useState<string | null>(null);
+  const isSharable = AsyncState.useAsyncState(Sharing.isAvailableAsync);
+  const writePath: string = FS.documentDirectory + "FreeCBT-backup.txt";
+  const sharePath: string = FS.cacheDirectory + "FreeCBT-backup.txt";
 
   //async function onExportClipboard() {
   //  const success = await Clipboard.setStringAsync(props.archive)
   //  setIsCopied(success ? "clipboard" : null)
   //}
   async function onExportFile() {
-    await FS.writeAsStringAsync(writePath, props.archive)
+    await FS.writeAsStringAsync(writePath, props.archive);
     // await Linking.openURL(writePath)
-    setIsCopied("file")
+    setIsCopied("file");
   }
   async function onExportShare() {
-    await FS.writeAsStringAsync(sharePath, props.archive)
+    await FS.writeAsStringAsync(sharePath, props.archive);
     await Sharing.shareAsync(sharePath, {
       UTI: "org.erosson.freecbt.backup",
       mimeType: "application/freecbt-backup",
-    })
+    });
   }
 
   return (
@@ -145,18 +144,20 @@ function Export(props: { archive: string }): React.JSX.Element {
                   onPress={onExportShare}
                 />
               </Row>
+              <Row style={{ marginBottom: 9 }}>
+                <ActionButton
+                  flex={1}
+                  title={i18n.t("backup_screen.export.file.button")}
+                  fillColor="#EDF0FC"
+                  textColor={theme.darkBlue}
+                  onPress={onExportFile}
+                />
+              </Row>
             </>
-          ) : null
+          ) : (
+            <Text>Error: sharing api not available</Text>
+          )
       )}
-      <Row style={{ marginBottom: 9 }}>
-        <ActionButton
-          flex={1}
-          title={i18n.t("backup_screen.export.file.button")}
-          fillColor="#EDF0FC"
-          textColor={theme.darkBlue}
-          onPress={onExportFile}
-        />
-      </Row>
       {isCopied === "file" ? (
         <>
           <Row style={{ marginBottom: 9 }}>
@@ -168,7 +169,7 @@ function Export(props: { archive: string }): React.JSX.Element {
         </>
       ) : null}
     </>
-  )
+  );
 }
 
 function Import(props: { archive: string }): React.JSX.Element {
@@ -176,8 +177,8 @@ function Import(props: { archive: string }): React.JSX.Element {
     AsyncState.RemoteData<null, T.Errors>
   >({
     status: "init",
-  })
-  const [importText, setImportText] = React.useState<string>("")
+  });
+  const [importText, setImportText] = React.useState<string>("");
 
   //async function onImportClipboard(): Promise<void> {
   //  const s = importText ? importText : await Clipboard.getStringAsync()
@@ -198,26 +199,26 @@ function Import(props: { archive: string }): React.JSX.Element {
     const res = await Picker.getDocumentAsync({
       // type: "application/freecbt-backup",
       type: "text/*",
-    })
+    });
     if (!res.canceled && res.assets) {
-      const s = await FS.readAsStringAsync(res.assets[0].uri)
-      if (s !== importText) setImportText(s)
-      const promise = TS.writeArchiveString(s)
+      const s = await FS.readAsStringAsync(res.assets[0].uri);
+      if (s !== importText) setImportText(s);
+      const promise = TS.writeArchiveString(s);
       setArchiveWrite({
         status: "pending",
         promise: promise.then(() => {}),
-      })
-      const result = await promise
+      });
+      const result = await promise;
       setArchiveWrite(
         result === null
           ? { status: "success", value: null }
           : { status: "failure", error: result }
-      )
+      );
     } else {
       setArchiveWrite({
         status: "failure",
         error: [{ value: res, context: [], message: "no document selected" }],
-      })
+      });
     }
   }
 
@@ -288,5 +289,5 @@ function Import(props: { archive: string }): React.JSX.Element {
           )
       )}
     </>
-  )
+  );
 }

@@ -1,25 +1,25 @@
-import React from "react"
-import { StatusBar } from "react-native"
-import { Container, Row, GhostButton, Header, IconButton } from "../ui"
-import theme from "../theme"
-import Constants from "expo-constants"
-import * as Haptic from "expo-haptics"
-import { FadesIn, BouncyBigOnActive } from "../animations"
-import { isCorrectPincode, setPincode } from "../lockstore"
-import { Screen, ScreenProps } from "../screens"
-import haptic from "../haptic"
-import * as AsyncState from "../async-state"
+import { Routes } from "@/src";
+import Constants from "expo-constants";
+import * as Haptic from "expo-haptics";
+import { useRouter } from "expo-router";
+import React from "react";
+import { StatusBar, View } from "react-native";
+import * as AsyncState from "../async-state";
+import haptic from "../haptic";
+import { isCorrectPincode, setPincode } from "../lockstore";
+import theme from "../theme";
+import { Container, GhostButton, Header, IconButton, Row } from "../ui";
 
-type Props = ScreenProps<Screen.LOCK>
+type Props = { isSettingCode: boolean };
 
 const KeypadButton = ({
   title,
   onPress,
   style = {},
 }: {
-  title: string
-  onPress: () => void
-  style?: { [s: string]: string }
+  title: string;
+  onPress: () => void;
+  style?: { [s: string]: string };
 }) => (
   <GhostButton
     title={title}
@@ -34,7 +34,7 @@ const KeypadButton = ({
     }}
     onPress={onPress}
   />
-)
+);
 
 const KeypadSideButton = ({
   icon,
@@ -42,10 +42,10 @@ const KeypadSideButton = ({
   onPress,
   style = {},
 }: {
-  icon: string
-  accessibilityLabel: string
-  onPress: () => void
-  style?: { [s: string]: string }
+  icon: string;
+  accessibilityLabel: string;
+  onPress: () => void;
+  style?: { [s: string]: string };
 }) => (
   <IconButton
     accessibilityLabel={accessibilityLabel}
@@ -57,74 +57,76 @@ const KeypadSideButton = ({
     }}
     onPress={onPress}
   />
-)
+);
 
 const Notifier = ({ isActive }: { isActive: boolean }) => (
-  <BouncyBigOnActive
-    style={{
-      width: 32,
-      height: 32,
-      borderRadius: 32,
-      backgroundColor: theme.pink,
-      borderColor: theme.darkPink,
-      borderWidth: 2,
-    }}
-    pose={isActive ? "active" : "inactive"}
-  />
-)
+  <View />
+  // <BouncyBigOnActive
+  //   style={{
+  //     width: 32,
+  //     height: 32,
+  //     borderRadius: 32,
+  //     backgroundColor: theme.pink,
+  //     borderColor: theme.darkPink,
+  //     borderWidth: 2,
+  //   }}
+  //   pose={isActive ? "active" : "inactive"}
+  // />
+);
 
-const BUTTON_SIZE = 96
+const BUTTON_SIZE = 96;
 
 export default function LockScreen(props: Props) {
-  const { navigation } = props
-  const { isSettingCode } = props.route.params ?? {}
-  const [code, setCode] = React.useState<string>("")
-  const isComplete = code.length >= 4
+  const { isSettingCode } = props;
+  const router = useRouter();
+  const [code, setCode] = React.useState<string>("");
+  const isComplete = code.length >= 4;
 
   async function onEnterCode(key: string) {
-    haptic.impact(Haptic.ImpactFeedbackStyle.Light)
+    haptic.impact(Haptic.ImpactFeedbackStyle.Light);
     if (!isComplete) {
-      setCode(code + key)
+      setCode(code + key);
     }
   }
 
   async function onBackspace() {
-    haptic.impact(Haptic.ImpactFeedbackStyle.Medium)
-    setCode(code.substring(0, code.length - 1))
+    haptic.impact(Haptic.ImpactFeedbackStyle.Medium);
+    setCode(code.substring(0, code.length - 1));
   }
 
   // run when a code is complete
   AsyncState.useAsyncEffect(async () => {
     if (!isComplete) {
-      return
+      return;
     }
     // settings: set a new code
     if (isSettingCode) {
-      await setPincode(code)
-      haptic.notification(Haptic.NotificationFeedbackType.Success)
-      props.navigation.replace(Screen.CBT_FORM)
+      await setPincode(code);
+      haptic.notification(Haptic.NotificationFeedbackType.Success);
+      router.navigate(Routes.thoughtCreate());
     }
     // try unlocking the screen
     else {
-      const isGood = await isCorrectPincode(code)
+      const isGood = await isCorrectPincode(code);
       if (isGood) {
-        haptic.notification(Haptic.NotificationFeedbackType.Success)
-        props.navigation.replace(Screen.CBT_FORM)
+        haptic.notification(Haptic.NotificationFeedbackType.Success);
+        router.navigate(Routes.thoughtCreate());
       } else {
-        setCode("")
-        haptic.notification(Haptic.NotificationFeedbackType.Error)
+        setCode("");
+        haptic.notification(Haptic.NotificationFeedbackType.Error);
       }
     }
-  }, [isComplete])
+  }, [isComplete]);
 
   return (
-    <FadesIn
-      style={{
-        backgroundColor: theme.pink,
-        height: "100%",
-      }}
-      pose="visible"
-    >
+    // <FadesIn
+    //   style={{
+    //     backgroundColor: theme.pink,
+    //     height: "100%",
+    //   }}
+    //   pose="visible"
+    // >
+    <>
       <StatusBar barStyle="dark-content" />
       <Container
         style={{
@@ -228,6 +230,7 @@ export default function LockScreen(props: Props) {
           />
         </Row>
       </Container>
-    </FadesIn>
-  )
+    </>
+    // </FadesIn>
+  );
 }

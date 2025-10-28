@@ -1,73 +1,77 @@
-import { Container, Row, Header, IconButton } from "../ui"
-import React from "react"
-import { StatusBar } from "react-native"
-import theme from "../theme"
-import Constants from "expo-constants"
-import i18n from "../i18n"
-import { Screen, ScreenProps } from "../screens"
-import * as flagstore from "../flagstore"
-import FormView, { Slides } from "../form/FormView"
-import * as Thought from "../io-ts/thought"
-import * as ThoughtStore from "../io-ts/thought/store"
-import * as Distortion from "../io-ts/distortion"
-import { getIsExistingUser, setIsExistingUser } from "../io-ts/thought/store"
-import * as Haptic from "expo-haptics"
-import haptic from "../haptic"
-import { FadesIn } from "../animations"
-import * as AsyncState from "../async-state"
+import { Routes } from "@/src";
+import Constants from "expo-constants";
+import * as Haptic from "expo-haptics";
+import { useRouter } from "expo-router";
+import React from "react";
+import { StatusBar } from "react-native";
+import * as AsyncState from "../async-state";
+import * as flagstore from "../flagstore";
+import FormView, { Slides } from "../form/FormView";
+import haptic from "../haptic";
+import i18n from "../i18n";
+import * as Distortion from "../io-ts/distortion";
+import * as Thought from "../io-ts/thought";
+import * as ThoughtStore from "../io-ts/thought/store";
+import { getIsExistingUser, setIsExistingUser } from "../io-ts/thought/store";
+import { Container, Header, IconButton, Row } from "../ui";
 
-type Props = ScreenProps<Screen.CBT_FORM>
+interface Props {
+  thoughtID?: string;
+  fromIntro?: boolean;
+  initDistortions?: readonly string[];
+  initSlide?: string;
+}
 
-export default function FormScreen(props: Props): React.JSX.Element {
-  const { thoughtID } = props.route.params ?? {}
-  const fromOnboarding = props.route.params?.fromOnboarding ?? false
+export default function FormScreen(props: Props = {}): React.JSX.Element {
+  const router = useRouter();
+  const { thoughtID, initDistortions, initSlide } = props;
+  const fromIntro = props.fromIntro ?? false;
   const showHelpBadge = AsyncState.useAsyncState(() =>
     flagstore.get("start-help-badge", "true")
-  )
+  );
 
-  const [automatic, setAutomatic] = React.useState("")
-  const [alternative, setAlternative] = React.useState("")
-  const [challenge, setChallenge] = React.useState("")
+  const [automatic, setAutomatic] = React.useState("");
+  const [alternative, setAlternative] = React.useState("");
+  const [challenge, setChallenge] = React.useState("");
   const [distortions, setDistortions] = React.useState(
     new Set<Distortion.Distortion>([])
-  )
+  );
   // TODO loading spinner
   const thought0 =
     AsyncState.useAsyncState<Thought.Thought | null>(async () => {
       if (thoughtID) {
-        const thought = await ThoughtStore.read(thoughtID)
-        setAutomatic(thought.automaticThought)
-        setAlternative(thought.alternativeThought)
-        setChallenge(thought.challenge)
-        setDistortions(thought.cognitiveDistortions)
-        return thought
+        const thought = await ThoughtStore.read(thoughtID);
+        setAutomatic(thought.automaticThought);
+        setAlternative(thought.alternativeThought);
+        setChallenge(thought.challenge);
+        setDistortions(thought.cognitiveDistortions);
+        return thought;
       }
-      return null
-    }, [thoughtID])
+      return null;
+    }, [thoughtID]);
   React.useEffect(() => {
-    if (props.route.params?.distortions) {
-      setDistortions(
-        new Set(props.route.params.distortions.map((d) => Distortion.bySlug[d]))
-      )
+    if (initDistortions) {
+      setDistortions(new Set(initDistortions.map((d) => Distortion.bySlug[d])));
     }
-  }, [props.route.params?.distortions])
+  }, [initDistortions]);
 
   // `slide` is set from props on init, props on update, or setSlide in this file
-  const slideProp = props.route.params?.slide
-  const [slide, setSlide] = React.useState<Slides>(slideProp ?? "automatic")
+  const [slide, setSlide] = React.useState<Slides>(
+    (initSlide as Slides) ?? "automatic"
+  );
   React.useEffect(() => {
-    if (slideProp) {
-      setSlide(slideProp)
+    if (initSlide) {
+      setSlide(initSlide as Slides);
     }
-  }, [slideProp])
+  }, [initSlide]);
 
   // redirect to onboarding if this is the first time opening the app
   AsyncState.useAsyncEffect(async () => {
     if (!(await getIsExistingUser())) {
-      await setIsExistingUser()
-      props.navigation.replace(Screen.ONBOARDING)
+      await setIsExistingUser();
+      router.replace(Routes.intro());
     }
-  })
+  });
 
   async function onSave() {
     const args = {
@@ -75,37 +79,38 @@ export default function FormScreen(props: Props): React.JSX.Element {
       alternativeThought: alternative,
       challenge: challenge,
       cognitiveDistortions: distortions,
-    }
+    };
     const thought0_: Thought.Thought | null = AsyncState.withDefault(
       thought0,
       null
-    )
+    );
     const thought: Thought.Thought = thought0_
       ? { ...thought0_, ...args, updatedAt: new Date() }
-      : Thought.create(args)
-    await ThoughtStore.write(thought)
-    haptic.notification(Haptic.NotificationFeedbackType.Success)
-    props.navigation.push(Screen.CBT_VIEW, { thoughtID: thought.uuid })
-    setSlide("automatic")
+      : Thought.create(args);
+    await ThoughtStore.write(thought);
+    haptic.notification(Haptic.NotificationFeedbackType.Success);
+    router.navigate(Routes.thoughtView(thought.uuid));
+    setSlide("automatic");
   }
 
   function onChangeDistortion(selected: string) {
-    haptic.selection() // iOS users get a selected buzz
-    const d = Distortion.bySlug[selected]
-    const ds = new Set(distortions)
+    haptic.selection(); // iOS users get a selected buzz
+    const d = Distortion.bySlug[selected];
+    const ds = new Set(distortions);
     // toggle
-    ds.has(d) ? ds.delete(d) : ds.add(d)
-    setDistortions(ds)
+    ds.has(d) ? ds.delete(d) : ds.add(d);
+    setDistortions(ds);
   }
 
   return (
-    <FadesIn
-      style={{
-        backgroundColor: theme.lightOffwhite,
-        height: "100%",
-      }}
-      pose="visible"
-    >
+    //<FadesIn
+    //  style={{
+    //    backgroundColor: theme.lightOffwhite,
+    //    height: "100%",
+    //  }}
+    //  pose="visible"
+    //>
+    <>
       <StatusBar barStyle="dark-content" />
       <Container
         style={{
@@ -128,10 +133,12 @@ export default function FormScreen(props: Props): React.JSX.Element {
             featherIconName={"help-circle"}
             accessibilityLabel={i18n.t("accessibility.help_button")}
             onPress={async () => {
-              await flagstore.setFalse("start-help-badge")
-              props.navigation.push(Screen.EXPLANATION, {
-                distortions: Array.from(distortions).map((d) => d.slug),
-              })
+              await flagstore.setFalse("start-help-badge");
+              router.navigate(
+                Routes.help({
+                  distortions: Array.from(distortions).map((d) => d.slug),
+                })
+              );
             }}
             hasBadge={AsyncState.withDefault(showHelpBadge, false)}
           />
@@ -140,7 +147,7 @@ export default function FormScreen(props: Props): React.JSX.Element {
             accessibilityLabel={i18n.t("accessibility.list_button")}
             featherIconName={"list"}
             onPress={() => {
-              props.navigation.push(Screen.CBT_LIST)
+              router.navigate(Routes.thoughtList());
             }}
           />
         </Row>
@@ -151,13 +158,14 @@ export default function FormScreen(props: Props): React.JSX.Element {
           challenge={challenge}
           distortions={distortions}
           slideToShow={slide}
-          shouldShowInFlowOnboarding={fromOnboarding}
+          shouldShowInFlowOnboarding={fromIntro}
           onChangeAlternativeThought={setAlternative}
           onChangeAutomaticThought={setAutomatic}
           onChangeChallenge={setChallenge}
           onChangeDistortion={onChangeDistortion}
         />
       </Container>
-    </FadesIn>
-  )
+    </>
+    // </FadesIn>
+  );
 }

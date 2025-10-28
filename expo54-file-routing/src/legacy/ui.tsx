@@ -1,21 +1,21 @@
-import React from "react"
+import { Feather } from "@expo/vector-icons";
+import React from "react";
 import {
-  Text,
-  View,
-  TouchableOpacity,
-  ImageSourcePropType,
   Image,
-} from "react-native"
-import theme from "./theme"
-import { Feather } from "@expo/vector-icons"
+  ImageSourcePropType,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import theme from "./theme";
 
 export interface ParentComponent {
-  children: any
-  style?: object
+  children: any;
+  style?: object;
 }
 
 export interface Component {
-  style?: object
+  style?: object;
 }
 
 export const Row = ({ children, style }: { children: any; style?: object }) => (
@@ -28,7 +28,7 @@ export const Row = ({ children, style }: { children: any; style?: object }) => (
   >
     {children}
   </View>
-)
+);
 
 export const FormContainer = ({ children, ...style }: { children: any }) => (
   <View
@@ -39,7 +39,7 @@ export const FormContainer = ({ children, ...style }: { children: any }) => (
   >
     {children}
   </View>
-)
+);
 
 export const Header = ({
   children,
@@ -59,7 +59,7 @@ export const Header = ({
   >
     {children}
   </Text>
-)
+);
 
 export const SubHeader = ({ children, style }: ParentComponent) => (
   <Text
@@ -73,7 +73,7 @@ export const SubHeader = ({ children, style }: ParentComponent) => (
   >
     {children}
   </Text>
-)
+);
 
 export const SelectorTextItem = ({
   text,
@@ -82,11 +82,11 @@ export const SelectorTextItem = ({
   selected = false,
   onPress,
 }: {
-  text: any
-  emoji: any
-  description: any
-  selected: boolean
-  onPress: () => void
+  text: any;
+  emoji: any;
+  description: any;
+  selected: boolean;
+  onPress: () => void;
 }) => (
   <TouchableOpacity
     onPress={onPress}
@@ -163,16 +163,16 @@ export const SelectorTextItem = ({
       </View>
     </View>
   </TouchableOpacity>
-)
+);
 
 export const RoundedSelectorButton = ({
   title,
   selected = false,
   onPress,
 }: {
-  title: string
-  selected?: boolean
-  onPress: () => void
+  title: string;
+  selected?: boolean;
+  onPress: () => void;
 }) => (
   <TouchableOpacity
     onPress={onPress}
@@ -206,14 +206,14 @@ export const RoundedSelectorButton = ({
 
     {selected && <Feather name={"check"} size={16} color={"white"} />}
   </TouchableOpacity>
-)
+);
 
 export const FloatingCard = ({
   children,
   style,
 }: {
-  children: any
-  style?: any
+  children: any;
+  style?: any;
 }) => (
   <View
     style={{
@@ -233,7 +233,7 @@ export const FloatingCard = ({
   >
     {children}
   </View>
-)
+);
 
 export const GhostButtonWithGuts = ({
   onPress,
@@ -243,12 +243,12 @@ export const GhostButtonWithGuts = ({
   children,
   style,
 }: {
-  onPress: () => void
-  borderColor: string
-  disabled?: boolean
-  flex?: number
-  children: any
-  style?: any
+  onPress: () => void;
+  borderColor: string;
+  disabled?: boolean;
+  flex?: number;
+  children: any;
+  style?: any;
 }) => (
   <TouchableOpacity
     style={{
@@ -265,7 +265,7 @@ export const GhostButtonWithGuts = ({
   >
     {children}
   </TouchableOpacity>
-)
+);
 
 export const GhostButton = ({
   title,
@@ -279,16 +279,16 @@ export const GhostButton = ({
   fontSize,
   style,
 }: {
-  title: string
-  onPress: () => void
-  borderColor: string
-  textColor: string
-  width?: number | string
-  height?: number
-  disabled?: boolean
-  flex?: number
-  fontSize?: number
-  style?: any
+  title: string;
+  onPress: () => void;
+  borderColor: string;
+  textColor: string;
+  width?: number | string;
+  height?: number;
+  disabled?: boolean;
+  flex?: number;
+  fontSize?: number;
+  style?: any;
 }) => (
   <TouchableOpacity
     style={{
@@ -319,7 +319,7 @@ export const GhostButton = ({
       {title}
     </Text>
   </TouchableOpacity>
-)
+);
 
 export const ActionButton = ({
   title,
@@ -332,19 +332,19 @@ export const ActionButton = ({
   flex,
   opacity,
 }: {
-  title: string
-  onPress: () => void
-  fillColor?: string
-  textColor?: string
-  width?: number | string
-  height?: number
-  disabled?: boolean
-  flex?: number
-  opacity?: number
+  title: string;
+  onPress: () => void;
+  fillColor?: string;
+  textColor?: string;
+  width?: number | string;
+  height?: number;
+  disabled?: boolean;
+  flex?: number;
+  opacity?: number;
 }) => (
   <TouchableOpacity
     style={{
-      backgroundColor: fillColor,
+      backgroundColor: fillColor ?? theme.blue,
       padding: 12,
       borderRadius: 10,
       // @ts-ignore
@@ -352,7 +352,7 @@ export const ActionButton = ({
       justifyContent: "center",
       alignItems: "center",
       maxHeight: 48,
-      width,
+      width: width ?? 120,
       height,
       flex,
       opacity,
@@ -363,7 +363,7 @@ export const ActionButton = ({
     <Text
       style={{
         textAlign: "center",
-        color: textColor,
+        color: textColor ?? "white",
         fontWeight: "700",
         fontSize: 16,
       }}
@@ -371,13 +371,7 @@ export const ActionButton = ({
       {title}
     </Text>
   </TouchableOpacity>
-)
-
-ActionButton.defaultProps = {
-  fillColor: theme.blue,
-  textColor: "white",
-  width: 120,
-}
+);
 
 export const IconButton = ({
   featherIconName,
@@ -386,11 +380,11 @@ export const IconButton = ({
   style,
   hasBadge,
 }: {
-  featherIconName: any
-  accessibilityLabel: string
-  onPress: () => void
-  style?: object
-  hasBadge?: boolean
+  featherIconName: any;
+  accessibilityLabel: string;
+  onPress: () => void;
+  style?: object;
+  hasBadge?: boolean;
 }) => (
   <TouchableOpacity
     style={{
@@ -422,7 +416,7 @@ export const IconButton = ({
     )}
     <Feather name={featherIconName} size={24} color={theme.veryLightText} />
   </TouchableOpacity>
-)
+);
 
 export const Paragraph = ({ children, style }: ParentComponent) => (
   <Text
@@ -435,7 +429,7 @@ export const Paragraph = ({ children, style }: ParentComponent) => (
   >
     {children}
   </Text>
-)
+);
 
 export const Container = ({ children, style }: ParentComponent) => (
   <View
@@ -450,14 +444,14 @@ export const Container = ({ children, style }: ParentComponent) => (
   >
     {children}
   </View>
-)
+);
 
 export const Label = ({
   children,
   ...style
 }: {
-  children: any
-  [style: string]: any
+  children: any;
+  [style: string]: any;
 }) => (
   <Text
     style={{
@@ -470,11 +464,11 @@ export const Label = ({
   >
     {children}
   </Text>
-)
+);
 
 export interface IllustrationComponent {
-  style?: object
-  source: ImageSourcePropType
+  style?: object;
+  source: ImageSourcePropType;
 }
 
 export const Illustration = ({ style, source }: IllustrationComponent) => (
@@ -482,19 +476,19 @@ export const Illustration = ({ style, source }: IllustrationComponent) => (
     source={source}
     style={{ width: 200, height: 150, alignSelf: "center", ...style }}
   />
-)
+);
 
 export const ThoughtDook = ({ style, source }: IllustrationComponent) => (
   <Image
     source={source}
     style={{ width: 48, height: 48, alignSelf: "center", ...style }}
   />
-)
+);
 
 export const I = ({ children }: { children: any }) => (
   <Text style={{ fontStyle: "italic" }}>{children}</Text>
-)
+);
 
 export const B = ({ children }: { children: any }) => (
   <Text style={{ fontWeight: "bold" }}>{children}</Text>
-)
+);

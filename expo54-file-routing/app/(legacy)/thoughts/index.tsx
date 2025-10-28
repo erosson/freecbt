@@ -1,5 +1,24 @@
+import Alerter from "@/src/legacy/alerter";
+import alerts from "@/src/legacy/alerts";
+// import { FadesIn } from "@/src/legacy/animations";
+import { Routes } from "@/src";
+import * as AsyncState from "@/src/legacy/async-state";
+import universalHaptic from "@/src/legacy/haptic";
+import i18n from "@/src/legacy/i18n";
+import * as Thought from "@/src/legacy/io-ts/thought";
+import * as ThoughtStore from "@/src/legacy/io-ts/thought/store";
+import theme from "@/src/legacy/theme";
+import {
+  Container,
+  Header,
+  IconButton,
+  Label,
+  Paragraph,
+  Row,
+} from "@/src/legacy/ui";
 import Constants from "expo-constants";
 import * as Haptic from "expo-haptics";
+import { useRouter } from "expo-router";
 import { take } from "lodash";
 import React from "react";
 import {
@@ -9,21 +28,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import Alerter from "../alerter";
-import alerts from "../alerts";
-import { FadesIn } from "../animations";
-import * as AsyncState from "../async-state";
-import universalHaptic from "../haptic";
-import i18n from "../i18n";
-import * as Thought from "../io-ts/thought";
-import * as ThoughtStore from "../io-ts/thought/store";
-import { Screen, ScreenProps } from "../screens";
-import theme from "../theme";
-import { Container, Header, IconButton, Label, Paragraph, Row } from "../ui";
-import {
-  HistoryButtonLabelSetting,
-  getHistoryButtonLabel,
-} from "./SettingsScreen";
+import { HistoryButtonLabelSetting, getHistoryButtonLabel } from "../settings";
 
 const ThoughtItem = (props: {
   thought: Thought.Thought;
@@ -226,11 +231,8 @@ const ParseErrorList = (props: {
   );
 };
 
-type Props = ScreenProps<Screen.CBT_LIST>;
-
-export default function CBTListScreen({
-  navigation,
-}: Props): React.JSX.Element {
+export default function CBTListScreen(): React.JSX.Element {
+  const router = useRouter();
   const [reload, setReload] = React.useState(0);
   const historyButtonLabel = AsyncState.useAsyncState(getHistoryButtonLabel);
   const thoughtRes = AsyncState.useAsyncState<
@@ -270,7 +272,7 @@ export default function CBTListScreen({
             <View style={{ flexDirection: "row" }}>
               <IconButton
                 featherIconName={"settings"}
-                onPress={() => navigation.push(Screen.SETTING)}
+                onPress={() => router.navigate(Routes.settings())}
                 accessibilityLabel={i18n.t("accessibility.settings_button")}
                 style={{ marginRight: 18 }}
               />
@@ -278,69 +280,65 @@ export default function CBTListScreen({
                 featherIconName={"x"}
                 onPress={() => {
                   universalHaptic.impact(Haptic.ImpactFeedbackStyle.Light);
-                  navigation.push(Screen.CBT_FORM, {});
+                  router.navigate(Routes.thoughtCreate());
                 }}
                 accessibilityLabel={i18n.t("accessibility.new_thought_button")}
               />
             </View>
           </Row>
 
-          <FadesIn pose={AsyncState.isResult(groups) ? "visible" : "hidden"}>
-            {AsyncState.fold(
-              groups,
-              () => null,
-              () => null,
-              (error) => (
-                <Paragraph>{JSON.stringify(error)}</Paragraph>
-              ),
-              (gs) => (
-                <ThoughtItemList
-                  groups={gs}
-                  navigateToViewer={(thought: Thought.Thought) => {
-                    navigation.push(Screen.CBT_VIEW, {
-                      thoughtID: thought.uuid,
-                    });
-                  }}
-                  onItemDelete={async (thought: Thought.Thought) => {
-                    universalHaptic.notification(
-                      Haptic.NotificationFeedbackType.Success
-                    );
-                    await ThoughtStore.remove(thought.uuid);
-                    setReload(reload + 1);
-                  }}
-                  historyButtonLabel={AsyncState.withDefault(
-                    historyButtonLabel,
-                    "alternative-thought"
-                  )}
-                />
-              )
-            )}
-          </FadesIn>
-          <FadesIn pose={AsyncState.isResult(failures) ? "visible" : "hidden"}>
-            {AsyncState.fold(
-              failures,
-              () => null,
-              () => null,
-              (_) => null, // it's the same error as `groups`, no need to show it twice
-              (parseErrors) => (
-                <ParseErrorList
-                  parseErrors={parseErrors}
-                  navigateToViewer={(pe: ThoughtStore.ParseError) => {
-                    navigation.push(Screen.CBT_VIEW, {
-                      thoughtID: pe.id,
-                    });
-                  }}
-                  onItemDelete={async (pe: ThoughtStore.ParseError) => {
-                    universalHaptic.notification(
-                      Haptic.NotificationFeedbackType.Success
-                    );
-                    await ThoughtStore.remove(pe.id);
-                    setReload(reload + 1);
-                  }}
-                />
-              )
-            )}
-          </FadesIn>
+          {/* <FadesIn pose={AsyncState.isResult(groups) ? "visible" : "hidden"}> */}
+          {AsyncState.fold(
+            groups,
+            () => null,
+            () => null,
+            (error) => (
+              <Paragraph>{JSON.stringify(error)}</Paragraph>
+            ),
+            (gs) => (
+              <ThoughtItemList
+                groups={gs}
+                navigateToViewer={(thought: Thought.Thought) => {
+                  router.navigate(Routes.thoughtView(thought.uuid));
+                }}
+                onItemDelete={async (thought: Thought.Thought) => {
+                  universalHaptic.notification(
+                    Haptic.NotificationFeedbackType.Success
+                  );
+                  await ThoughtStore.remove(thought.uuid);
+                  setReload(reload + 1);
+                }}
+                historyButtonLabel={AsyncState.withDefault(
+                  historyButtonLabel,
+                  "alternative-thought"
+                )}
+              />
+            )
+          )}
+          {/* </FadesIn> */}
+          {/* <FadesIn pose={AsyncState.isResult(failures) ? "visible" : "hidden"}> */}
+          {AsyncState.fold(
+            failures,
+            () => null,
+            () => null,
+            (_) => null, // it's the same error as `groups`, no need to show it twice
+            (parseErrors) => (
+              <ParseErrorList
+                parseErrors={parseErrors}
+                navigateToViewer={(pe: ThoughtStore.ParseError) => {
+                  router.navigate(Routes.thoughtView(pe.id));
+                }}
+                onItemDelete={async (pe: ThoughtStore.ParseError) => {
+                  universalHaptic.notification(
+                    Haptic.NotificationFeedbackType.Success
+                  );
+                  await ThoughtStore.remove(pe.id);
+                  setReload(reload + 1);
+                }}
+              />
+            )
+          )}
+          {/* </FadesIn> */}
         </Container>
       </ScrollView>
       <Alerter alerts={alerts} />

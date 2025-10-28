@@ -34,16 +34,16 @@
  *       <AppComponent />
  *     </Feature.State>
  */
-import React from "react"
-import { Platform } from "react-native"
+import React from "react";
+import { Platform } from "react-native";
 
 export interface Feature {
-  debugVisible: boolean
-  reminders: boolean
-  remindersEachMinute: boolean
-  localeSetting: boolean
-  testLocalesVisible: boolean
-  extendedDistortions: boolean
+  debugVisible: boolean;
+  reminders: boolean;
+  remindersEachMinute: boolean;
+  localeSetting: boolean;
+  testLocalesVisible: boolean;
+  extendedDistortions: boolean;
 }
 export const defaults: Feature = {
   debugVisible: false,
@@ -53,43 +53,35 @@ export const defaults: Feature = {
   testLocalesVisible: false,
   extendedDistortions: false,
   // extendedDistortions: true,
-}
+};
 
-export type Context = { feature: Feature; updateFeature: (a: object) => void }
+export type Context = { feature: Feature; updateFeature: (a: object) => void };
 export const Context = React.createContext<Context>({
   feature: defaults,
   updateFeature: (action: object) => {},
-})
+});
 
 export function State({
   children,
-}: React.PropsWithChildren<{}>): React.JSX.Element {
+}: React.PropsWithChildren<object>): React.JSX.Element {
   const [feature, updateFeature] = React.useReducer(
     (state: Feature, newState: Partial<Feature>): Feature => ({
       ...state,
       ...newState,
     }),
     defaults
-  )
+  );
   return (
     <Context.Provider value={{ feature, updateFeature }}>
       {children}
     </Context.Provider>
-  )
+  );
 }
-export function withState(Component: React.ComponentType) {
-  return () => (
-    <State>
-      <Component />
-    </State>
-  )
-}
-
 export function useFeatureContext(): Context {
-  return React.useContext(Context)
+  return React.useContext(Context);
 }
 
-const featureKeys = Object.keys(defaults) as (keyof Feature)[]
+const featureKeys = Object.keys(defaults) as (keyof Feature)[];
 export const useFeature = Object.fromEntries(
   featureKeys.map((k) => [k, () => useFeatureContext().feature[k]])
-) as { [f in keyof Feature]: () => Feature[f] }
+) as { [f in keyof Feature]: () => Feature[f] };

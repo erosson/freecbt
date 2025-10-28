@@ -1,26 +1,22 @@
-import React from "react"
+import { useAsyncState, withDefault } from "@/src/legacy/async-state";
+import * as Feature from "@/src/legacy/feature";
+import * as Thought from "@/src/legacy/io-ts/thought";
+import * as ThoughtStore from "@/src/legacy/io-ts/thought/store";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { KeyValuePair } from "@react-native-async-storage/async-storage/lib/typescript/types";
+import Constants from "expo-constants";
+import * as ExpoUpdates from "expo-updates";
+import React from "react";
 import {
-  ScrollView,
-  View,
-  Text,
-  Switch,
-  Platform,
-  Button,
   Alert,
-} from "react-native"
-import AsyncStorage from "@react-native-async-storage/async-storage"
-import Constants from "expo-constants"
-import * as Feature from "../feature"
-import { useAsyncState, withDefault } from "../async-state"
-import { Screen, ScreenProps } from "../screens"
-import { KeyValuePair } from "@react-native-async-storage/async-storage/lib/typescript/types"
-import * as Thought from "../io-ts/thought"
-import * as ThoughtStore from "../io-ts/thought/store"
-import * as ExpoUpdates from "expo-updates"
+  Button,
+  Platform,
+  ScrollView,
+  Switch,
+  Text,
+  View,
+} from "react-native";
 // import version from "@freecbt/schema/dist/version.json"
-
-// type KeyValuePair = [string, string]
-type Props = ScreenProps<Screen.DEBUG>
 
 function exampleThought(): Thought.Thought {
   return Thought.create({
@@ -28,7 +24,7 @@ function exampleThought(): Thought.Thought {
     alternativeThought: "A simple alternative thought",
     challenge: "A simple challenge",
     cognitiveDistortions: ["all-or-nothing"],
-  })
+  });
 }
 function symbolsThought(): Thought.Thought {
   return Thought.create({
@@ -48,33 +44,33 @@ newlines
 and other special CSV symbols`,
     challenge: `{"a": "thought", "with": ["JSON", "symbols"]} ]}]}"`,
     cognitiveDistortions: ["all-or-nothing"],
-  })
+  });
 }
 const writeThoughts: { [name: string]: () => Promise<void> } = {
   example: async () => {
-    await ThoughtStore.write(exampleThought())
-    console.log("write example")
+    await ThoughtStore.write(exampleThought());
+    console.log("write example");
   },
   symbols: async () => {
-    await ThoughtStore.write(symbolsThought())
-    console.log("write symbols")
+    await ThoughtStore.write(symbolsThought());
+    console.log("write symbols");
   },
   legacy: async () => {
-    const t = exampleThought()
-    const enc = Thought.FromLegacy.encode(t)
-    const raw = JSON.stringify(enc)
-    await AsyncStorage.setItem(t.uuid, raw)
-    console.log("write legacy")
+    const t = exampleThought();
+    const enc = Thought.FromLegacy.encode(t);
+    const raw = JSON.stringify(enc);
+    await AsyncStorage.setItem(t.uuid, raw);
+    console.log("write legacy");
   },
   invalid: async () => {
-    const t = exampleThought()
-    const enc = Thought.FromLegacy.encode(t)
-    ;(enc as any)["automaticThought"] = false
-    const raw = JSON.stringify(enc)
-    await AsyncStorage.setItem(t.uuid, raw)
-    console.log("write invalid")
+    const t = exampleThought();
+    const enc = Thought.FromLegacy.encode(t);
+    (enc as any)["automaticThought"] = false;
+    const raw = JSON.stringify(enc);
+    await AsyncStorage.setItem(t.uuid, raw);
+    console.log("write invalid");
   },
-}
+};
 
 const constItems: [string, string | React.JSX.Element][] = [
   ["Update.channel", ExpoUpdates.channel ?? "-"],
@@ -89,50 +85,70 @@ const constItems: [string, string | React.JSX.Element][] = [
   [
     "Test exception reporting",
     <Button
+      key="exception"
       title="Oops"
       onPress={() => {
-        throw new Error("oops")
+        throw new Error("oops");
       }}
     />,
   ],
   [
     "Test console.error reporting",
     <Button
+      key="console.error"
       title="Oops"
       onPress={() => {
-        console.error("oops")
+        console.error("oops");
       }}
     />,
   ],
   [
     "Test console.warn reporting",
     <Button
+      key="console.warn"
       title="Oops"
       onPress={() => {
-        console.warn("oops")
+        console.warn("oops");
       }}
     />,
   ],
   ["OS", Platform.OS],
   [
     "Test: create a simple thought",
-    <Button title="Simple" onPress={() => writeThoughts.example()} />,
+    <Button
+      key="create-simple"
+      title="Simple"
+      onPress={() => writeThoughts.example()}
+    />,
   ],
   [
     "Test: create a symbols thought",
-    <Button title="Symbols" onPress={() => writeThoughts.symbols()} />,
+    <Button
+      key="create-symbols"
+      title="Symbols"
+      onPress={() => writeThoughts.symbols()}
+    />,
   ],
   [
     "Test: create a legacy thought",
-    <Button title="Legacy" onPress={() => writeThoughts.legacy()} />,
+    <Button
+      key="create-legacy"
+      title="Legacy"
+      onPress={() => writeThoughts.legacy()}
+    />,
   ],
   [
     "Test: create an invalid thought",
-    <Button title="Invalid" onPress={() => writeThoughts.invalid()} />,
+    <Button
+      key="create-invalid"
+      title="Invalid"
+      onPress={() => writeThoughts.invalid()}
+    />,
   ],
   [
     "Delete all user data",
     <Button
+      key="clear-all-data"
       title="Delete"
       onPress={() =>
         Alert.alert(
@@ -143,15 +159,15 @@ const constItems: [string, string | React.JSX.Element][] = [
       }
     />,
   ],
-]
-export default function DebugScreen(props: Props): React.JSX.Element {
+];
+export default function DebugScreen(): React.JSX.Element {
   // const storage = useAsyncState<KeyValuePair[]>(async () => {
   const storage = useAsyncState<readonly KeyValuePair[]>(async () => {
-    const keys = await AsyncStorage.getAllKeys()
-    return await AsyncStorage.multiGet(keys)
-  })
-  const [dump, setDump] = React.useState<boolean>(false)
-  const { feature, updateFeature } = React.useContext(Feature.Context)
+    const keys = await AsyncStorage.getAllKeys();
+    return await AsyncStorage.multiGet(keys);
+  });
+  const [dump, setDump] = React.useState<boolean>(false);
+  const { feature, updateFeature } = React.useContext(Feature.Context);
 
   const items: [string, string | React.JSX.Element][] = [
     ...constItems,
@@ -161,15 +177,20 @@ export default function DebugScreen(props: Props): React.JSX.Element {
       .map(([key, val]: [string, boolean]): [string, React.JSX.Element] => [
         key,
         <Switch
+          key={key}
           value={val}
           onValueChange={() => updateFeature({ [key]: !val })}
         />,
       ]),
     [
       "Dump AsyncStorage?",
-      <Switch value={dump} onValueChange={() => setDump(!dump)} />,
+      <Switch
+        key="dump-storage"
+        value={dump}
+        onValueChange={() => setDump(!dump)}
+      />,
     ],
-  ]
+  ];
   return (
     <ScrollView>
       <Text style={{ fontSize: 24, borderBottomWidth: 1 }}>Debug</Text>
@@ -187,7 +208,7 @@ export default function DebugScreen(props: Props): React.JSX.Element {
         )}
       </View>
     </ScrollView>
-  )
+  );
 }
 
 function renderEntry(
@@ -207,7 +228,7 @@ function renderEntry(
         <Text>{key}: </Text>
         <Text style={{ alignSelf: "flex-end" }}>{val}</Text>
       </View>
-    )
+    );
   } else if (React.isValidElement(val)) {
     return (
       <View
@@ -221,7 +242,7 @@ function renderEntry(
         <Text>{key}: </Text>
         <View>{val}</View>
       </View>
-    )
+    );
   } else {
     return (
       <View
@@ -234,6 +255,6 @@ function renderEntry(
       >
         <Text>{key}</Text>
       </View>
-    )
+    );
   }
 }

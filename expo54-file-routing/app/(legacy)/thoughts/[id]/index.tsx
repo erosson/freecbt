@@ -1,37 +1,35 @@
-import React from "react"
+import { Routes } from "@/src";
+import * as AsyncState from "@/src/legacy/async-state";
+import CBTView from "@/src/legacy/form/CBTView";
+import { Slides } from "@/src/legacy/form/FormView";
+import haptic from "@/src/legacy/haptic";
+import i18n from "@/src/legacy/i18n";
+import { Thought } from "@/src/legacy/io-ts/thought";
+import * as ThoughtStore from "@/src/legacy/io-ts/thought/store";
+import theme from "@/src/legacy/theme";
 import {
+  ActionButton,
   Container,
-  Row,
   Header,
   IconButton,
-  Paragraph,
-  ActionButton,
-} from "../ui"
-import { View, StatusBar, Text, ScrollView, Linking } from "react-native"
-import theme from "../theme"
-import Constants from "expo-constants"
-import * as Haptic from "expo-haptics"
-import i18n from "../i18n"
-import CBTView from "../form/CBTView"
-import { Thought } from "../io-ts/thought"
-import * as ThoughtStore from "../io-ts/thought/store"
-import haptic from "../haptic"
-import { Screen, ScreenProps } from "../screens"
-import { Slides } from "../form/FormView"
-import * as AsyncState from "../async-state"
-
-type Props = ScreenProps<Screen.CBT_VIEW>
+  Row,
+} from "@/src/legacy/ui";
+import Constants from "expo-constants";
+import * as Haptic from "expo-haptics";
+import { useLocalSearchParams, useRouter } from "expo-router";
+import React from "react";
+import { Linking, ScrollView, StatusBar, Text, View } from "react-native";
 
 function ParseErrorView(props: {
-  error: ThoughtStore.ParseError
+  error: ThoughtStore.ParseError;
 }): React.JSX.Element {
-  const subject = "Parse Error"
+  const subject = "Parse Error";
   // cause: ${props.error.error.cause}
   const body = `uuid: ${props.error.id}
 
 error: ${props.error.error}
 
-json: ${props.error.raw}`
+json: ${props.error.raw}`;
   return (
     <ScrollView>
       <Header>{subject}</Header>
@@ -54,26 +52,23 @@ json: ${props.error.raw}`
               )}&body=${encodeURIComponent(
                 `Feel free to add your comments here: \n\n\n\n\n\n\n---\nPlease don't change below this line!\n\n${body}`
               )}`
-            )
+            );
           }}
         />
       </Row>
     </ScrollView>
-  )
+  );
 }
 
-export default function CBTViewScreen(props: Props): React.JSX.Element {
+export default function CBTViewScreen(): React.JSX.Element {
+  const router = useRouter();
+  const { id: thoughtID } = useLocalSearchParams<{ id: string }>();
   const thought: AsyncState.RemoteData<Thought, ThoughtStore.ParseError> =
-    AsyncState.useAsyncResultState(() =>
-      ThoughtStore.readResult(props.route.params.thoughtID)
-    )
+    AsyncState.useAsyncResultState(() => ThoughtStore.readResult(thoughtID));
 
   function onEdit(_: string, slide: Slides) {
     if (AsyncState.isSuccess(thought)) {
-      props.navigation.push(Screen.CBT_FORM, {
-        thoughtID: thought.value.uuid,
-        slide,
-      })
+      router.navigate(Routes.thoughtEdit(thought.value.uuid, { slide }));
     }
   }
 
@@ -107,8 +102,8 @@ export default function CBTViewScreen(props: Props): React.JSX.Element {
             accessibilityLabel={i18n.t("accessibility.close_button")}
             featherIconName={"x"}
             onPress={() => {
-              haptic.impact(Haptic.ImpactFeedbackStyle.Light)
-              props.navigation.push(Screen.CBT_LIST)
+              haptic.impact(Haptic.ImpactFeedbackStyle.Light);
+              router.navigate(Routes.thoughtList());
             }}
           />
         </Row>
@@ -125,13 +120,13 @@ export default function CBTViewScreen(props: Props): React.JSX.Element {
               thought={t}
               onEdit={onEdit}
               onNew={() => {
-                haptic.impact(Haptic.ImpactFeedbackStyle.Light)
-                props.navigation.push(Screen.CBT_FORM, {})
+                haptic.impact(Haptic.ImpactFeedbackStyle.Light);
+                router.navigate(Routes.thoughtCreate());
               }}
             />
           )
         )}
       </Container>
     </View>
-  )
+  );
 }
