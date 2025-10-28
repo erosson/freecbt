@@ -411,7 +411,7 @@ export default function SettingScreen(): React.JSX.Element {
                 >
                   <Picker.Item
                     label={i18n.t("settings.locale.default")}
-                    value={null}
+                    value={""}
                   />
                   {Object.entries(i18n.translations)
                     .map(([locale, translation]) => ({

@@ -19,7 +19,6 @@ import ro from "../locals/ro.json";
 import ru from "../locals/ru.json";
 import sv from "../locals/sv.json";
 import zhHans from "../locals/zh-Hans.json";
-import { isPlatformSupported } from "./legacy-util";
 import { LOCALE_KEY } from "./setting";
 import { getSetting } from "./setting/settingstore";
 
@@ -64,7 +63,9 @@ i18n.enableFallback = true;
 i18n.locale = Localization.getLocales()[0].languageTag;
 
 async function loadLocaleSetting() {
-  const locale = isPlatformSupported() ? await getSetting(LOCALE_KEY) : null;
+  // const locale = isPlatformSupported() ? await getSetting(LOCALE_KEY) : null;
+  const locale =
+    typeof window !== "undefined" ? await getSetting(LOCALE_KEY) : null;
   if (locale) {
     i18n.locale = locale;
   }
