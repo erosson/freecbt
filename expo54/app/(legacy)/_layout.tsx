@@ -23,13 +23,15 @@ export default function RootLayout() {
 }
 
 function AuthState(props: { children: React.ReactNode }): React.JSX.Element {
-  const p = hasPincode();
+  const [p, setHasPincode] = useState<Promise<boolean>>(hasPincode());
   const [authed, setAuthed] = useState<boolean>(false);
   // remove auth if the app is in the background, because it's easy to not close it all the way
   useEffect(() => {
     AppState.addEventListener("change", (st) => {
       if (st !== "active") {
         setAuthed(false);
+        // also, refresh has-pincode: we might have changed settings after the app was loaded
+        setHasPincode(hasPincode());
       }
     });
   });
