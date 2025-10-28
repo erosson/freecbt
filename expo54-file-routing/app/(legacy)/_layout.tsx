@@ -1,6 +1,11 @@
 import * as Feature from "@/src/legacy/feature";
+import { hasPincode } from "@/src/legacy/lockstore";
+import LockScreen from "@/src/legacy/screen/LockScreen";
 import * as Style from "@/src/legacy/style";
+import { PromiseRender } from "@/src/use-promise-state";
 import { Stack } from "expo-router";
+import React, { useState } from "react";
+import { Text } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 export default function RootLayout() {
@@ -8,9 +13,41 @@ export default function RootLayout() {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <Feature.State>
         <Style.State>
-          <Stack screenOptions={{ headerShown: false }} />
+          <AuthState>
+            <Stack screenOptions={{ headerShown: false }} />
+          </AuthState>
         </Style.State>
       </Feature.State>
     </GestureHandlerRootView>
+  );
+}
+
+function AuthState(props: { children: React.ReactNode }): React.JSX.Element {
+  const p = hasPincode();
+  const [authed, setAuthed] = useState<boolean>(false);
+  return (
+    <PromiseRender
+      promise={p}
+      pending={() => <></>}
+      failure={(e) => <Text>error: {e.message}</Text>}
+      success={(p) => {
+        if (p) {
+          // a pincode is required. have we already entered it?
+          if (authed) {
+            return props.children;
+          } else {
+            return (
+              <LockScreen
+                isSettingCode={false}
+                onCorrectEntry={() => setAuthed(true)}
+              />
+            );
+          }
+        } else {
+          // no pincode is required
+          return props.children;
+        }
+      }}
+    />
   );
 }

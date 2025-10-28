@@ -10,7 +10,10 @@ import { isCorrectPincode, setPincode } from "../lockstore";
 import theme from "../theme";
 import { Container, GhostButton, Header, IconButton, Row } from "../ui";
 
-type Props = { isSettingCode: boolean };
+type Props = {
+  isSettingCode: boolean;
+  onCorrectEntry?: () => void;
+};
 
 const KeypadButton = ({
   title,
@@ -77,8 +80,10 @@ const Notifier = ({ isActive }: { isActive: boolean }) => (
 const BUTTON_SIZE = 96;
 
 export default function LockScreen(props: Props) {
-  const { isSettingCode } = props;
   const router = useRouter();
+  const { isSettingCode } = props;
+  const onCorrectEntry =
+    props.onCorrectEntry ?? (() => router.navigate(Routes.thoughtCreate()));
   const [code, setCode] = React.useState<string>("");
   const isComplete = code.length >= 4;
 
@@ -110,7 +115,7 @@ export default function LockScreen(props: Props) {
       const isGood = await isCorrectPincode(code);
       if (isGood) {
         haptic.notification(Haptic.NotificationFeedbackType.Success);
-        router.navigate(Routes.thoughtCreate());
+        onCorrectEntry();
       } else {
         setCode("");
         haptic.notification(Haptic.NotificationFeedbackType.Error);
