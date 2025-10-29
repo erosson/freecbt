@@ -1,7 +1,5 @@
 import { ConfigContext, ExpoConfig } from "expo/config";
 
-const BUILD_VERSION = 34;
-
 export default ({ config }: ConfigContext): ExpoConfig => ({
   name: "FreeCBT",
   slug: "freecbt",
@@ -24,7 +22,6 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       // `app.config.ts is missing ios.infoPlist.ITSAppUsesNonExemptEncryption boolean. Manual configuration is required in App Store Connect before the app can be tested.`
       usesNonExemptEncryption: false,
     },
-    // buildNumber: "35",
   },
   android: {
     package: "org.erosson.freecbt",
@@ -40,7 +37,6 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     },
     edgeToEdgeEnabled: true,
     predictiveBackGestureEnabled: false,
-    // versionCode: 35,
   },
   web: {
     output: "static",
