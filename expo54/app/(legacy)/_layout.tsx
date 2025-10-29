@@ -1,8 +1,8 @@
+import { PromiseRender } from "@/src/hooks/use-promise-state";
 import * as Feature from "@/src/legacy/feature";
 import { hasPincode } from "@/src/legacy/lockstore";
 import LockScreen from "@/src/legacy/screen/LockScreen";
 import * as Style from "@/src/legacy/style";
-import { PromiseRender } from "@/src/use-promise-state";
 import { Stack } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { AppState, Text } from "react-native";
