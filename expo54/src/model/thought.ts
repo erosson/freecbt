@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
-import z from "zod";
-import { Distortion } from ".";
+import { z } from "zod";
+import * as Distortion from "./distortion";
 
 export const Json = z.object({
   automaticThought: z.string(),

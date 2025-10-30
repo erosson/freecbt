@@ -1,4 +1,4 @@
-import { Distortion } from ".";
+import * as Distortion from "./distortion";
 
 /**
  * hardcoded distortion data
