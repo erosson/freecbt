@@ -1,10 +1,12 @@
 import { Distortion, Thought } from "@/src/model";
-import { AsyncStorageStatic } from "@react-native-async-storage/async-storage";
+import AsyncStorage, {
+  AsyncStorageStatic,
+} from "@react-native-async-storage/async-storage";
 import { z } from "zod";
 
 export function useThoughtStorage(
   data: Distortion.Data,
-  storage: AsyncStorageStatic
+  storage: AsyncStorageStatic = AsyncStorage
 ) {
   const T = Thought.createParsers(data);
 

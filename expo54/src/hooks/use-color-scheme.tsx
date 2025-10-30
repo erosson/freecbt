@@ -4,7 +4,7 @@ import { Appearance } from "react-native";
 export type ColorScheme = "light" | "dark";
 
 type Ctx = [ColorScheme, (c: ColorScheme) => void];
-const Ctx = createContext<Ctx>(undefined as any as Ctx);
+const Ctx = createContext<Ctx | null>(null);
 
 export function ColorSchemeProvider(props: { children: React.ReactNode }) {
   return (
@@ -20,5 +20,11 @@ export function ColorSchemeProvider(props: { children: React.ReactNode }) {
 }
 
 export function useColorScheme(): Ctx {
-  return useContext(Ctx);
+  const c = useContext(Ctx);
+  if (c === null) {
+    throw new Error(
+      "You must use <ColorSchemeProvider> before useColorScheme()"
+    );
+  }
+  return c;
 }

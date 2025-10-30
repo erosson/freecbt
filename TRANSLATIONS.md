@@ -18,18 +18,18 @@ Go through as much as you can and translate into your language. If you can't tra
 
 For consistency, the FreeCBT app should be called "FreeCBT" in all languages, even if your language has a different acronym for "CBT".
 
-## Open up `expo54/src/legacy/i18n.ts` and add your language
+## Open up `expo54/src/locals/index.ts` and add your language
 
 In the file, add an import line:
 
 ```
-import fi from '../locals/fi.json'
+import fi from './fi.json'
 ```
 
 And then add it to the translations object:
 
 ```
-i18n.translations = { fr, en };
+export default { fi, en };
 ```
 
 ## Save your code and open up a new PR
