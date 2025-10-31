@@ -1,4 +1,3 @@
-import { ColorSchemeProvider } from "@/src/hooks/use-color-scheme";
 import { Stack } from "expo-router";
 import { createContext, useReducer } from "react";
 
@@ -34,10 +33,8 @@ export default function Layout() {
   const [model, dispatch] = useReducer(update, init());
   // return props.children;
   return (
-    <ColorSchemeProvider>
-      <Ctx.Provider value={[model, dispatch]}>
-        <Stack screenOptions={{ headerShown: false }} />
-      </Ctx.Provider>
-    </ColorSchemeProvider>
+    <Ctx.Provider value={[model, dispatch]}>
+      <Stack screenOptions={{ headerShown: false }} />
+    </Ctx.Provider>
   );
 }

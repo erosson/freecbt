@@ -1,33 +1,32 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Localization from "expo-localization";
 import { I18n } from "i18n-js";
-import { createContext, useContext, useEffect } from "react";
+import { createContext, useContext } from "react";
 import { z } from "zod";
 import locals0 from "../locals";
 import en from "../locals/en.json";
-import {
-  LOCALE_KEY,
-  SettingsStorage,
-  useSettingsStorage,
-} from "./use-settings-storage";
 
 // Type-safe, autocompletable translation keys!
 export function useTranslate() {
   const i18n = useI18n();
   return (k: TranslateKey) => i18n.t(k);
 }
+export type TranslateFn = ReturnType<typeof useTranslate>;
 
-export function I18nProvider(props: { children: React.ReactNode }) {
+export function I18nProvider(props: {
+  locale: LocaleTag;
+  children: React.ReactNode;
+}) {
   const i18n = new I18n(locals);
   i18n.enableFallback = true;
-  i18n.locale = defaultLocale();
+  // i18n.locale = defaultLocale();
+  i18n.locale = props.locale;
 
-  const settings = useSettingsStorage(AsyncStorage);
-  useEffect(() => {
-    (async () => {
-      i18n.locale = (await loadLocaleSetting(settings)) ?? i18n.locale;
-    })();
-  });
+  // const settings = useSettingsStorage(AsyncStorage);
+  //useEffect(() => {
+  //  (async () => {
+  //    i18n.locale = (await loadLocaleSetting(settings)) ?? i18n.locale;
+  //  })();
+  //});
   return <Ctx value={i18n}>{props.children}</Ctx>;
 }
 
@@ -65,7 +64,7 @@ function walkReverse<T extends object>(obj: T): T {
   ) as T;
 }
 
-function defaultLocale(): LocaleTag {
+export function defaultLocale(): LocaleTag {
   // use one of the user's preferred locale by default
   for (const loc of Localization.getLocales()) {
     // parsing fails if the user prefers a language we don't have a translation for
@@ -78,17 +77,17 @@ function defaultLocale(): LocaleTag {
   return "en";
 }
 
-async function loadLocaleSetting(
-  settings: SettingsStorage
-): Promise<LocaleTag | null> {
-  // const locale = isPlatformSupported() ? await getSetting(LOCALE_KEY) : null;
-  if (typeof window !== "undefined") {
-    return null;
-  }
-  const setting = LocaleTag.safeParse(await settings.read(LOCALE_KEY));
-  // error reporting isn't worth it here, fallback to the system default
-  return setting.success ? setting.data : null;
-}
+//async function loadLocaleSetting(
+//  settings: SettingsStorage
+//): Promise<LocaleTag | null> {
+//  // const locale = isPlatformSupported() ? await getSetting(LOCALE_KEY) : null;
+//  if (typeof window !== "undefined") {
+//    return null;
+//  }
+//  const setting = LocaleTag.safeParse(await settings.read(LOCALE_KEY));
+//  // error reporting isn't worth it here, fallback to the system default
+//  return setting.success ? setting.data : null;
+//}
 
 // json {"a": {"b": "c", "d": "e"}} -> type "a.b" | "a.d"
 // stolen from https://www.raygesualdo.com/posts/flattening-object-keys-with-typescript-types/

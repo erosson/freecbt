@@ -1,9 +1,14 @@
-import { StyleSheet } from "react-native";
-import { useColorScheme } from "./use-color-scheme";
+import { Model } from "@/src/model";
+import { Appearance, StyleSheet } from "react-native";
 
-export function useTheme(): Theme {
-  const [c] = useColorScheme();
-  console.log("usecolorscheme", c);
+export function useStyle(c: Model.ColorScheme) {
+  return style(useTheme(c));
+}
+export function useDefaultStyle() {
+  return useStyle(Appearance.getColorScheme() ?? "light");
+}
+
+export function useTheme(c: Model.ColorScheme): Theme {
   switch (c) {
     case "dark":
       return DarkTheme;
@@ -14,9 +19,6 @@ export function useTheme(): Theme {
       throw new Error(`unknown color scheme: ${e}`);
     }
   }
-}
-export function useStyle() {
-  return style(useTheme());
 }
 
 export const DarkTheme = {
@@ -176,3 +178,4 @@ function style(c: Theme) {
     },
   });
 }
+export type Style = ReturnType<typeof style>;

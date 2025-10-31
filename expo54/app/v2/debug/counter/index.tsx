@@ -1,10 +1,10 @@
-import { useStyle } from "@/src/hooks/use-style";
+import { useDefaultStyle } from "@/src/hooks/use-style";
 import { useContext, useReducer } from "react";
 import { Button, Text, TouchableOpacity, View } from "react-native";
 import * as Layout from "./_layout";
 
 export default function Index() {
-  const S = useStyle();
+  const S = useDefaultStyle();
   const [modelA, dispatchA] = useContext(Layout.Ctx);
   const [modelB, dispatchB] = useReducer(Layout.update, Layout.init());
   return (
