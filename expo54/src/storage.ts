@@ -1,5 +1,6 @@
 import { Distortion, Model, Settings, Thought } from "@/src/model";
 import { AsyncStorageStatic } from "@react-native-async-storage/async-storage";
+import { z } from "zod";
 
 export function settings(storage: AsyncStorageStatic) {
   async function read(): Promise<Settings.Settings> {
@@ -32,11 +33,19 @@ export function thoughts(data: Distortion.Data, storage: AsyncStorageStatic) {
   > {
     const keys = await readKeys();
     const pairs = await storage.multiGet(keys);
-    const parsed = pairs.map(([, enc]) => T.fromString.safeParse(enc));
-    const thoughts = parsed.filter((t) => t.success).map((t) => t.data);
-    const thoughtParseErrors = parsed
-      .filter((t) => !t.success)
-      .map((t) => t.error);
+    const parsed = pairs.map(
+      ([k, enc]) => [Thought.idFromKey(k), T.fromString.safeParse(enc)] as const
+    );
+    const thoughts = new Map(
+      parsed
+        .filter(([, t]) => t.success)
+        .map(([id, t]) => [id, t.data] as const)
+    ) as ReadonlyMap<string, Thought.Thought>;
+    const thoughtParseErrors = new Map(
+      parsed
+        .filter(([id, t]) => [id, !t.success])
+        .map(([id, t]) => [id, t.error] as const)
+    ) as ReadonlyMap<string, z.ZodError<Thought.Thought>>;
     return { thoughts, thoughtParseErrors };
   }
   async function write(t: Thought.Thought): Promise<void> {

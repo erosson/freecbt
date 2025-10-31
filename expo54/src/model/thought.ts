@@ -28,6 +28,9 @@ export type Thought = z.infer<typeof Thought>;
 export function isKey(key: string): boolean {
   return key.startsWith(ID_PREFIX);
 }
+export function idFromKey(key: string): string {
+  return isKey(key) ? key.substring(ID_PREFIX.length) : key;
+}
 
 export type Spec = Pick<
   Thought,

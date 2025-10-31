@@ -10,8 +10,8 @@ export type Loading = typeof loading;
 export type ColorScheme = "light" | "dark";
 export interface Ready {
   status: "ready";
-  thoughts: readonly Thought.Thought[];
-  thoughtParseErrors: readonly z.ZodError<Thought.Thought>[];
+  thoughts: ReadonlyMap<string, Thought.Thought>;
+  thoughtParseErrors: ReadonlyMap<string, z.ZodError<Thought.Thought>>;
   settings: Settings.Settings;
   deviceColorScheme: ColorScheme | null;
   deviceLocale: LocaleTag;

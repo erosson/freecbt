@@ -1,11 +1,15 @@
+import { useModel } from "@/src/hooks/use-model";
 import { useStyle } from "@/src/hooks/use-style";
+import { Model } from "@/src/model";
 import { Text, View } from "react-native";
 
 export default function Index() {
-  const S = useStyle();
+  const [model] = useModel();
+  const s = useStyle(Model.colorScheme(model));
+  // const t = useTranslate();
   return (
-    <View style={[S.view, S.itemsCenter]}>
-      <Text style={[S.text]}>hi!</Text>
+    <View style={[s.view, s.itemsCenter]}>
+      <Text style={[s.text]}>hi!</Text>
     </View>
   );
 }
