@@ -17,6 +17,7 @@ import ptPT from "./pt-pt.json";
 import ro from "./ro.json";
 import ru from "./ru.json";
 import sv from "./sv.json";
+import uk from "./uk.json";
 import zhHans from "./zh-Hans.json";
 
 export default {
@@ -38,5 +39,6 @@ export default {
   ro,
   ru,
   sv,
+  uk
   "zh-Hans": zhHans,
 };
