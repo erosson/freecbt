@@ -46,3 +46,11 @@ export function backup(): Href {
 export function export_(): Href {
   return "/export";
 }
+
+export function thoughtCreateV2(): Href {
+  return "/v2/thoughts/create";
+}
+export function thoughtListV2(): Href {
+  // return "/v2/thoughts";
+  return "/v2";
+}

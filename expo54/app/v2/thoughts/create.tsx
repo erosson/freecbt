@@ -1,4 +1,5 @@
 import { LoadModel, ModelLoadedProps } from "@/src/hooks/use-model";
+import { Action, Thought } from "@/src/model";
 import { useState } from "react";
 import { Button, Keyboard, Text, TextInput, View } from "react-native";
 import Carousel from "react-native-reanimated-carousel";
@@ -20,7 +21,6 @@ export default function Create() {
 
 function Ready({ model, dispatch, style: s, translate: t }: ModelLoadedProps) {
   const [value, setValue] = useState(emptyForm());
-  console.log("value", value);
   return (
     <View style={[s.view]}>
       <Text style={[s.header]}>{t("cbt_form.header")}</Text>
@@ -30,22 +30,16 @@ function Ready({ model, dispatch, style: s, translate: t }: ModelLoadedProps) {
         translate={t}
         value={value}
         onChange={setValue}
-        onSubmit={console.log}
+        onSubmit={() => dispatch(Action.createThought(value))}
       />
     </View>
   );
 }
 
-interface CBTForm {
-  automaticThought: string;
-  cognitiveDistortions: readonly string[];
-  challenge: string;
-  alternativeThought: string;
-}
-function emptyForm(): CBTForm {
+function emptyForm(): Thought.Spec {
   return {
     automaticThought: "",
-    cognitiveDistortions: [],
+    cognitiveDistortions: new Set(),
     challenge: "",
     alternativeThought: "",
   };
@@ -53,9 +47,9 @@ function emptyForm(): CBTForm {
 
 export function CBTForm(
   props: Pick<ModelLoadedProps, "model" | "style" | "translate"> & {
-    value: CBTForm;
-    onChange?: (t: CBTForm) => void;
-    onSubmit?: (t: CBTForm) => void;
+    value: Thought.Spec;
+    onChange?: (t: Thought.Spec) => void;
+    onSubmit?: () => void;
   }
 ) {
   const { model, style: s, translate: t, value } = props;
@@ -129,10 +123,7 @@ export function CBTForm(
                     onChange({ ...value, alternativeThought: v })
                   }
                 />
-                <Button
-                  onPress={() => onSubmit(value)}
-                  title={t("cbt_form.submit")}
-                />
+                <Button onPress={onSubmit} title={t("cbt_form.submit")} />
               </>
               // <>
               //   <AlternativeThought

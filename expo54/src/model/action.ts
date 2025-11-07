@@ -1,4 +1,5 @@
 import type { LocaleTag } from "@/src/hooks/use-i18n";
+import { Thought } from ".";
 import * as Model from "./model";
 import * as Settings from "./settings";
 
@@ -10,6 +11,8 @@ export type Action = ReturnType<
   | typeof setTheme
   | typeof setDeviceColorScheme
   | typeof setDeviceWindow
+  | typeof setNow
+  | typeof createThought
 >;
 export type Dispatch = (a: Action) => void;
 
@@ -33,4 +36,10 @@ export function setDeviceColorScheme(value: Model.Ready["deviceColorScheme"]) {
 }
 export function setDeviceWindow(value: Model.Ready["deviceWindow"]) {
   return { action: "set-device-window", value } as const;
+}
+export function setNow(value: Date) {
+  return { action: "set-now", value } as const;
+}
+export function createThought(value: Thought.Spec) {
+  return { action: "create-thought", value } as const;
 }

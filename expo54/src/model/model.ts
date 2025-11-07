@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { Routes } from "..";
 import type { LocaleTag } from "../hooks/use-i18n";
 import * as Action from "./action";
 import * as Cmd from "./cmd";
@@ -10,6 +11,7 @@ export type Loading = typeof loading;
 export type ColorScheme = "light" | "dark";
 export interface Ready {
   status: "ready";
+  now: Date;
   thoughts: ReadonlyMap<string, Thought.Thought>;
   thoughtParseErrors: ReadonlyMap<string, z.ZodError<Thought.Thought>>;
   settings: Settings.Settings;
@@ -63,10 +65,26 @@ export function update(m: Model, a: Action.Action): readonly [Model, Cmd.List] {
       return updateSettings(m, { theme: a.value });
     }
     case "set-device-color-scheme": {
-      return updateIfReady(m, { deviceColorScheme: a.value });
+      return updateFieldsIfReady(m, { deviceColorScheme: a.value });
     }
     case "set-device-window": {
-      return updateIfReady(m, { deviceWindow: a.value });
+      return updateFieldsIfReady(m, { deviceWindow: a.value });
+    }
+    case "set-now": {
+      return updateFieldsIfReady(m, { now: a.value });
+    }
+    case "create-thought": {
+      if (m.status === "loading") return [m, []];
+      console.log("create-thought");
+      const thought = Thought.create(a.value, m.now);
+      const thoughts = new Map(m.thoughts);
+      thoughts.set(thought.uuid, thought);
+      const m2: Model = { ...m, thoughts };
+      const cmds = [
+        Cmd.writeThought(thought),
+        Cmd.navigate(Routes.thoughtListV2()),
+      ];
+      return [m2, cmds];
     }
     default: {
       const _e: never = a;
@@ -82,7 +100,7 @@ function updateSettings(
   const m2: Model = { ...m, settings: { ...m.settings, ...s } };
   return [m2, [Cmd.writeSettings(m2.settings)]];
 }
-function updateIfReady(
+function updateFieldsIfReady(
   m: Model,
   s: Partial<Ready>
 ): readonly [Model, Cmd.List] {

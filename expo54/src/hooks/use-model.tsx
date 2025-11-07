@@ -3,6 +3,7 @@ import { Action, Cmd, Distortion, DistortionData, Model } from "@/src/model";
 import AsyncStorage, {
   AsyncStorageStatic,
 } from "@react-native-async-storage/async-storage";
+import { useRouter } from "expo-router";
 import React from "react";
 import { ActivityIndicator, Appearance, Dimensions } from "react-native";
 import { createElmArch, useElmArch } from "./use-elm-arch";
@@ -17,7 +18,7 @@ import { Style, useStyle } from "./use-style";
 const Ctx = createElmArch<Model.Model, Action.Action, Cmd.Cmd>();
 
 export function ModelProvider(props: { children: React.ReactNode }) {
-  const runner = createRunner(DistortionData, AsyncStorage);
+  const runner = useCmdRunner(DistortionData, AsyncStorage);
   return (
     <Ctx.Provider init={Model.init} update={Model.update} runner={runner}>
       {props.children}
@@ -59,9 +60,10 @@ export interface ModelLoadedProps {
 }
 export type ModelLoadedComponent = (props: ModelLoadedProps) => React.ReactNode;
 
-function createRunner(data: Distortion.Data, storage: AsyncStorageStatic) {
+function useCmdRunner(data: Distortion.Data, storage: AsyncStorageStatic) {
   const s = Storage.settings(storage);
   const t = Storage.thoughts(data, storage);
+  const router = useRouter();
 
   let lastDispatch: (a: Action.Action) => void = () => {};
   // TODO: some way to dispose these
@@ -70,6 +72,10 @@ function createRunner(data: Distortion.Data, storage: AsyncStorageStatic) {
   );
   const dcl = Dimensions.addEventListener("change", (d) =>
     lastDispatch(Action.setDeviceWindow(d.window))
+  );
+  const timecl = setInterval(
+    () => lastDispatch(Action.setNow(new Date())),
+    100
   );
 
   return async (c: Cmd.Cmd, dispatch: (a: Action.Action) => void) => {
@@ -80,10 +86,12 @@ function createRunner(data: Distortion.Data, storage: AsyncStorageStatic) {
         // const [settings, tm] = await Promise.all([s.read(), t.readAll()]);
         const settings = await s.read();
         const tm = await t.readAll();
+        const now = new Date();
         const deviceLocale = defaultLocale();
         const deviceColorScheme = Appearance.getColorScheme() ?? null;
         const deviceWindow = Dimensions.get("window");
         const m = Model.ready({
+          now,
           deviceColorScheme,
           deviceLocale,
           deviceWindow,
@@ -95,6 +103,14 @@ function createRunner(data: Distortion.Data, storage: AsyncStorageStatic) {
       }
       case "write-settings": {
         s.write(c.value);
+        return;
+      }
+      case "write-thought": {
+        t.write(c.value);
+        return;
+      }
+      case "navigate": {
+        router.navigate(c.value);
         return;
       }
       default: {
