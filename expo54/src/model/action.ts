@@ -13,6 +13,7 @@ export type Action = ReturnType<
   | typeof setDeviceWindow
   | typeof setNow
   | typeof createThought
+  | typeof deleteThought
 >;
 export type Dispatch = (a: Action) => void;
 
@@ -42,4 +43,7 @@ export function setNow(value: Date) {
 }
 export function createThought(value: Thought.Spec) {
   return { action: "create-thought", value } as const;
+}
+export function deleteThought(value: Thought.Id) {
+  return { action: "delete-thought", value } as const;
 }

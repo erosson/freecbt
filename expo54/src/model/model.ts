@@ -1,3 +1,4 @@
+import _ from "lodash";
 import { z } from "zod";
 import { Routes } from "..";
 import type { LocaleTag } from "../hooks/use-i18n";
@@ -46,6 +47,22 @@ export function locale(m: Model): LocaleTag {
     loading: () => "en",
   });
 }
+export function thoughtsList(m: Ready): readonly Thought.Thought[] {
+  return _.sortBy(Array.from(m.thoughts.values()), (t) => t.createdAt);
+}
+
+type Pair<A, B> = readonly [A, B];
+export function thoughtsByDate(
+  m: Ready
+): readonly Pair<string, readonly Thought.Thought[]>[] {
+  const g = _.groupBy(thoughtsList(m), (t) => t.createdAt.toLocaleDateString());
+  const pairs = Object.entries(g) as readonly Pair<
+    string,
+    readonly Thought.Thought[]
+  >[];
+  return _.sortBy(pairs, ([date]) => date);
+}
+
 export function update(m: Model, a: Action.Action): readonly [Model, Cmd.List] {
   switch (a.action) {
     case "model-ready": {
@@ -75,7 +92,6 @@ export function update(m: Model, a: Action.Action): readonly [Model, Cmd.List] {
     }
     case "create-thought": {
       if (m.status === "loading") return [m, []];
-      console.log("create-thought");
       const thought = Thought.create(a.value, m.now);
       const thoughts = new Map(m.thoughts);
       thoughts.set(thought.uuid, thought);
@@ -85,6 +101,13 @@ export function update(m: Model, a: Action.Action): readonly [Model, Cmd.List] {
         Cmd.navigate(Routes.thoughtListV2()),
       ];
       return [m2, cmds];
+    }
+    case "delete-thought": {
+      if (m.status === "loading") return [m, []];
+      const thoughts = new Map(m.thoughts);
+      thoughts.delete(a.value);
+      const m2: Model = { ...m, thoughts };
+      return [m2, [Cmd.deleteThought(Thought.keyFromId.decode(a.value))]];
     }
     default: {
       const _e: never = a;

@@ -51,6 +51,9 @@ export function thoughtCreateV2(): Href {
   return "/v2/thoughts/create";
 }
 export function thoughtListV2(): Href {
-  // return "/v2/thoughts";
-  return "/v2";
+  return "/v2/thoughts";
+}
+export function thoughtViewV2(id: string): Href {
+  // return `/v2/thoughts/${id}`;
+  return `/v2`;
 }

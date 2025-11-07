@@ -34,7 +34,7 @@ export function thoughts(data: Distortion.Data, storage: AsyncStorageStatic) {
     const keys = await readKeys();
     const pairs = await storage.multiGet(keys);
     const parsed = pairs.map(
-      ([k, enc]) => [Thought.idFromKey(k), T.fromString.safeParse(enc)] as const
+      ([k, enc]) => [k, T.fromString.safeParse(enc)] as const
     );
     const thoughts = new Map(
       parsed
@@ -43,21 +43,22 @@ export function thoughts(data: Distortion.Data, storage: AsyncStorageStatic) {
     ) as ReadonlyMap<string, Thought.Thought>;
     const thoughtParseErrors = new Map(
       parsed
-        .filter(([id, t]) => [id, !t.success])
+        .filter(([, t]) => !t.success)
         .map(([id, t]) => [id, t.error] as const)
     ) as ReadonlyMap<string, z.ZodError<Thought.Thought>>;
     return { thoughts, thoughtParseErrors };
   }
   async function write(t: Thought.Thought): Promise<void> {
     const enc = T.fromString.encode(t);
-    return await storage.setItem(t.uuid, enc);
+    const key = Thought.key(t);
+    return await storage.setItem(key, enc);
   }
-  async function read(id: string): Promise<Thought.Thought> {
+  async function read(id: Thought.Key): Promise<Thought.Thought> {
     const enc = await storage.getItem(id);
     if (enc === null) throw new Error(`no such thought-id: ${id}`);
     return T.fromString.decode(enc);
   }
-  async function remove(id: string): Promise<void> {
+  async function remove(id: Thought.Key): Promise<void> {
     await storage.removeItem(id);
   }
   async function clear() {

@@ -1,5 +1,8 @@
+import _ from "lodash";
 import { v4 as uuidv4 } from "uuid";
 import { z } from "zod";
+import type { Model } from ".";
+import { AssertExtends } from "../type-utils";
 import * as Distortion from "./distortion";
 
 export const Json = z.object({
@@ -13,7 +16,29 @@ export const Json = z.object({
 });
 export type Json = z.infer<typeof Json>;
 
-export const ID_PREFIX = `@Quirk:thoughts:`;
+export const KEY_PREFIX = `@Quirk:thoughts:`;
+// Keys start with KEY_PREFIX above, and are persisted as storage-ids (`storage.getItem(key)`).
+export const Key = z.string().startsWith(KEY_PREFIX).brand<"thought.key">();
+export type Key = z.infer<typeof Key>;
+// Ids do NOT start with KEY_PREFIX above, and are persisted as `thought.uuid`.
+// (I messed this up for a few versions, and some existing `thought.uuid`s will start with KEY_PREFIX, so we must be forgiving when parsing.)
+export const Id = z
+  .string()
+  .refine((s) => !s.startsWith(KEY_PREFIX), {
+    error: "starts with ID_PREFIX: looks like a key, not an id",
+  })
+  .brand<"thought.id">();
+export type Id = z.infer<typeof Id>;
+export const keyFromId = z.codec(Id, Key, {
+  decode: (id: Id) => Key.decode(`${KEY_PREFIX}${id}`),
+  encode: (key: z.input<typeof Key>) =>
+    Id.decode(key.substring(KEY_PREFIX.length)),
+});
+export const idFromKey = z.codec(Key, Id, {
+  decode: (key: Key) => keyFromId.encode(key),
+  encode: (id: z.input<typeof Id>) => keyFromId.decode(id),
+});
+
 export const Thought = z.object({
   automaticThought: z.string(),
   cognitiveDistortions: z.set(Distortion.Distortion),
@@ -21,15 +46,19 @@ export const Thought = z.object({
   alternativeThought: z.string(),
   createdAt: z.date(),
   updatedAt: z.date(),
-  uuid: z.string(),
+  // I messed this one up for a few versions...!
+  // Parse both keys and ids in this field, but once parsed, it's always an id (unprefixed).
+  uuid: z.union([Id, idFromKey]),
 });
 export type Thought = z.infer<typeof Thought>;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+type _uuidIsIdType = AssertExtends<Thought["uuid"], Id>;
+// @ts-expect-error
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+type uuidIsNotKeyType = AssertExtends<Thought["uuid"], Key>;
 
 export function isKey(key: string): boolean {
-  return key.startsWith(ID_PREFIX);
-}
-export function idFromKey(key: string): string {
-  return isKey(key) ? key.substring(ID_PREFIX.length) : key;
+  return Key.safeDecode(key).success;
 }
 
 export type Spec = Pick<
@@ -42,7 +71,7 @@ export type Spec = Pick<
 export function create(spec: Spec, now: Date): Thought {
   const createdAt = now;
   const updatedAt = now;
-  const uuid = `${ID_PREFIX}${uuidv4()}`;
+  const uuid = Id.decode(uuidv4());
   return { ...spec, createdAt, updatedAt, uuid };
 }
 
@@ -82,4 +111,19 @@ export function createParsers(data: Distortion.Data) {
     encode: (dec: Json) => JSON.stringify(dec),
   });
   return { fromJson, fromString };
+}
+
+export function label(t: Thought, m: Pick<Model.Ready, "settings">) {
+  return m.settings.historyLabels === "automatic-thought"
+    ? t.automaticThought
+    : t.alternativeThought;
+}
+export function distortionsList(t: Thought): readonly Distortion.Distortion[] {
+  return _.sortBy(Array.from(t.cognitiveDistortions), (d) => d.slug);
+}
+export function emojis(t: Thought): string {
+  return distortionsList(t).map(Distortion.emoji).join("");
+}
+export function key(t: Thought): Key {
+  return keyFromId.decode(t.uuid);
 }

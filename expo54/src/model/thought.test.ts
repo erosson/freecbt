@@ -4,7 +4,7 @@ import { DistortionData, Thought } from ".";
 export const T = Thought.createParsers(DistortionData);
 
 const fixture: Thought.Json = {
-  uuid: `${Thought.ID_PREFIX}${uuidv4()}`,
+  uuid: uuidv4(),
   createdAt: new Date(0).toISOString(),
   updatedAt: new Date(0).toISOString(),
   automaticThought: "auto",
@@ -16,10 +16,22 @@ const fixture: Thought.Json = {
 test("parse valid json", () => {
   const t = T.fromJson.decode(fixture);
   expect(t).toBeTruthy();
+  expect(t.uuid.startsWith(Thought.KEY_PREFIX)).toBe(false);
   expect(t.cognitiveDistortions.size).toBe(1);
   expect(Array.from(t.cognitiveDistortions).map((d) => d.slug)).toEqual([
     "all-or-nothing",
   ]);
+});
+
+test("accept keys saved in the id field, too", () => {
+  // I messed this one up for a few versions...!
+  // be forgiving when parsing it...
+  const json = { ...fixture, uuid: `${Thought.KEY_PREFIX}${fixture.uuid}` };
+  const t = T.fromJson.decode(json);
+  // ...but consistent after it's parsed
+  expect(t).toBeTruthy();
+  expect(t.uuid).toBe(fixture.uuid);
+  expect(t.uuid.startsWith(Thought.KEY_PREFIX)).toBe(false);
 });
 
 test("enforce missing distortions", () => {

@@ -95,3 +95,8 @@ export function createParsers(data: Data) {
 
   return { validSlug, fromSlug, fromSlugList, fromSlugSet };
 }
+
+export function emoji(d: Distortion): string {
+  // TODO: properly distinguish valid emojis by platform
+  return d.emojis[0];
+}

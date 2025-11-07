@@ -102,11 +102,15 @@ function useCmdRunner(data: Distortion.Data, storage: AsyncStorageStatic) {
         return;
       }
       case "write-settings": {
-        s.write(c.value);
+        await s.write(c.value);
         return;
       }
       case "write-thought": {
-        t.write(c.value);
+        await t.write(c.value);
+        return;
+      }
+      case "delete-thought": {
+        await t.remove(c.value);
         return;
       }
       case "navigate": {
