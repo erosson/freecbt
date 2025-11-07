@@ -4,7 +4,7 @@ import AsyncStorage, {
   AsyncStorageStatic,
 } from "@react-native-async-storage/async-storage";
 import React from "react";
-import { ActivityIndicator, Appearance } from "react-native";
+import { ActivityIndicator, Appearance, Dimensions } from "react-native";
 import { createElmArch, useElmArch } from "./use-elm-arch";
 import { defaultLocale, I18nProvider } from "./use-i18n";
 
@@ -41,18 +41,30 @@ function createRunner(data: Distortion.Data, storage: AsyncStorageStatic) {
   const s = Storage.settings(storage);
   const t = Storage.thoughts(data, storage);
 
+  let lastDispatch: (a: Action.Action) => void = () => {};
+  // TODO: some way to dispose these
+  const acl = Appearance.addChangeListener((prefs) =>
+    lastDispatch(Action.setDeviceColorScheme(prefs.colorScheme ?? null))
+  );
+  const dcl = Dimensions.addEventListener("change", (d) =>
+    lastDispatch(Action.setDeviceWindow(d.window))
+  );
+
   return async (c: Cmd.Cmd, dispatch: (a: Action.Action) => void) => {
+    lastDispatch = dispatch;
     switch (c.cmd) {
       case "load-model": {
         if (typeof window === "undefined") return; // web platform ssr + asyncstorage bugs out
         // const [settings, tm] = await Promise.all([s.read(), t.readAll()]);
         const settings = await s.read();
         const tm = await t.readAll();
-        const deviceColorScheme = Appearance.getColorScheme() ?? null;
         const deviceLocale = defaultLocale();
+        const deviceColorScheme = Appearance.getColorScheme() ?? null;
+        const deviceWindow = Dimensions.get("window");
         const m = Model.ready({
           deviceColorScheme,
           deviceLocale,
+          deviceWindow,
           settings,
           ...tm,
         });

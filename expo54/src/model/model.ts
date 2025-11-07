@@ -15,6 +15,7 @@ export interface Ready {
   settings: Settings.Settings;
   deviceColorScheme: ColorScheme | null;
   deviceLocale: LocaleTag;
+  deviceWindow: { width: number; height: number };
 }
 
 export const loading = { status: "loading" } as const;
@@ -61,6 +62,12 @@ export function update(m: Model, a: Action.Action): readonly [Model, Cmd.List] {
     case "set-theme": {
       return updateSettings(m, { theme: a.value });
     }
+    case "set-device-color-scheme": {
+      return updateIfReady(m, { deviceColorScheme: a.value });
+    }
+    case "set-device-window": {
+      return updateIfReady(m, { deviceWindow: a.value });
+    }
     default: {
       const _e: never = a;
       throw new Error(`no such action: ${_e}`);
@@ -74,4 +81,12 @@ function updateSettings(
   if (m.status === "loading") return [m, []];
   const m2: Model = { ...m, settings: { ...m.settings, ...s } };
   return [m2, [Cmd.writeSettings(m2.settings)]];
+}
+function updateIfReady(
+  m: Model,
+  s: Partial<Ready>
+): readonly [Model, Cmd.List] {
+  if (m.status === "loading") return [m, []];
+  const m2: Model = { ...m, ...s };
+  return [m2, []];
 }

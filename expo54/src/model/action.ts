@@ -8,6 +8,8 @@ export type Action = ReturnType<
   | typeof setHistoryLabel
   | typeof setLocale
   | typeof setTheme
+  | typeof setDeviceColorScheme
+  | typeof setDeviceWindow
 >;
 export type Dispatch = (a: Action) => void;
 
@@ -25,4 +27,10 @@ export function setPincode(value: Settings.Pincode | null) {
 }
 export function modelReady(model: Model.Ready) {
   return { action: "model-ready", model } as const;
+}
+export function setDeviceColorScheme(value: Model.Ready["deviceColorScheme"]) {
+  return { action: "set-device-color-scheme", value } as const;
+}
+export function setDeviceWindow(value: Model.Ready["deviceWindow"]) {
+  return { action: "set-device-window", value } as const;
 }
