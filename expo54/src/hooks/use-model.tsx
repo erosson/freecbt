@@ -6,7 +6,13 @@ import AsyncStorage, {
 import React from "react";
 import { ActivityIndicator, Appearance, Dimensions } from "react-native";
 import { createElmArch, useElmArch } from "./use-elm-arch";
-import { defaultLocale, I18nProvider } from "./use-i18n";
+import {
+  defaultLocale,
+  I18nProvider,
+  TranslateFn,
+  useTranslate,
+} from "./use-i18n";
+import { Style, useStyle } from "./use-style";
 
 const Ctx = createElmArch<Model.Model, Action.Action, Cmd.Cmd>();
 
@@ -26,16 +32,32 @@ export function ModelI18nProvider(props: { children: React.ReactNode }) {
 export function useModel() {
   return useElmArch(Ctx);
 }
-
-export function modelSpinner(
-  m: Model.Model,
-  ready: (m: Model.Ready) => React.JSX.Element
-) {
-  return Model.match(m, {
-    loading: () => <ActivityIndicator />,
-    ready,
+export function LoadModel(props: {
+  loading?: () => React.JSX.Element;
+  ready: ModelLoadedComponent;
+}): React.ReactNode {
+  const [model, dispatch] = useModel();
+  const style = useStyle(Model.colorScheme(model));
+  const translate = useTranslate();
+  return Model.match(model, {
+    loading: props.loading ?? (() => <ActivityIndicator />),
+    ready: (model) => (
+      <props.ready
+        model={model}
+        dispatch={dispatch}
+        style={style}
+        translate={translate}
+      />
+    ),
   });
 }
+export interface ModelLoadedProps {
+  model: Model.Ready;
+  dispatch: (a: Action.Action) => void;
+  style: Style;
+  translate: TranslateFn;
+}
+export type ModelLoadedComponent = (props: ModelLoadedProps) => React.ReactNode;
 
 function createRunner(data: Distortion.Data, storage: AsyncStorageStatic) {
   const s = Storage.settings(storage);

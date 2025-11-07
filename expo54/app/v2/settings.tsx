@@ -1,10 +1,5 @@
-import {
-  LocaleTag,
-  localeTags,
-  TranslateFn,
-  useTranslate,
-} from "@/src/hooks/use-i18n";
-import { modelSpinner, useModel } from "@/src/hooks/use-model";
+import { LocaleTag, localeTags, TranslateFn } from "@/src/hooks/use-i18n";
+import { LoadModel, ModelLoadedProps } from "@/src/hooks/use-model";
 import { useStyle, useTheme } from "@/src/hooks/use-style";
 import { Action, Model, Settings } from "@/src/model";
 import { Picker } from "@react-native-picker/picker";
@@ -12,10 +7,11 @@ import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 export default function Index() {
-  const [model, dispatch] = useModel();
+  return <LoadModel ready={Ready} />;
+}
+function Ready({ model, dispatch, translate: t }: ModelLoadedProps) {
   const s = usePageStyle(Model.colorScheme(model));
-  const t = useTranslate();
-  return modelSpinner(model, (model) => (
+  return (
     <View style={[s.view]}>
       <Text style={[s.header]}>{t("settings.header")}</Text>
 
@@ -54,8 +50,9 @@ export default function Index() {
 
       <DebugLink />
     </View>
-  ));
+  );
 }
+
 function PincodeForm(props: { isSet: boolean; s: PageStyle; t: TranslateFn }) {
   const { isSet, s, t } = props;
   return (
