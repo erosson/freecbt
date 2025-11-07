@@ -16,7 +16,10 @@ function Ready(props: ModelLoadedProps) {
     <View style={[s.view]}>
       <Text style={[s.header]}>{t("cbt_list.header")}</Text>
       <View style={[s.flexCol]}>
-        <Text style={[s.text]}>{list.length}</Text>
+        <Text style={[s.text]}>
+          num thoughts: {model.thoughts.size}. date-groups: {list.length}. parse
+          errors: {model.thoughtParseErrors.size}.
+        </Text>
         {list.length === 0 ? (
           <Text style={[s.text]}>{t("cbt_list.empty")}</Text>
         ) : (

@@ -5,6 +5,8 @@ import type { Model } from ".";
 import { AssertExtends } from "../type-utils";
 import * as Distortion from "./distortion";
 
+export const VERSION = "Thought-v2";
+
 export const Json = z.object({
   automaticThought: z.string(),
   cognitiveDistortions: z.string().array(),
@@ -13,6 +15,7 @@ export const Json = z.object({
   createdAt: z.iso.datetime(),
   updatedAt: z.iso.datetime(),
   uuid: z.string(),
+  v: z.string().optional(),
 });
 export type Json = z.infer<typeof Json>;
 
@@ -102,13 +105,19 @@ export function createParsers(data: Distortion.Data) {
       );
       const createdAt = t.createdAt.toISOString();
       const updatedAt = t.updatedAt.toISOString();
-      return Json.decode({ ...t, cognitiveDistortions, createdAt, updatedAt });
+      return Json.decode({
+        ...t,
+        cognitiveDistortions,
+        createdAt,
+        updatedAt,
+        v: VERSION,
+      });
     },
   });
 
   const fromString = z.codec(z.string(), fromJson, {
     decode: (enc: string) => JSON.parse(enc),
-    encode: (dec: Json) => JSON.stringify(dec),
+    encode: (dec: z.input<typeof Json>) => JSON.stringify(dec),
   });
   return { fromJson, fromString };
 }

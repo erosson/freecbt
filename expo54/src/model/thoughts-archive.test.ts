@@ -11,6 +11,7 @@ const fixture: Thought.Json = {
   cognitiveDistortions: ["all-or-nothing"],
   challenge: "chal",
   alternativeThought: "alt",
+  v: "nonsense-version",
 };
 
 test("parse empty json snapshot from old version", () => {

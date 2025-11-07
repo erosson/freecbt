@@ -11,6 +11,7 @@ const fixture: Thought.Json = {
   cognitiveDistortions: ["all-or-nothing"],
   challenge: "chal",
   alternativeThought: "alt",
+  v: Thought.VERSION,
 };
 
 test("parse valid json", () => {
@@ -21,6 +22,12 @@ test("parse valid json", () => {
   expect(Array.from(t.cognitiveDistortions).map((d) => d.slug)).toEqual([
     "all-or-nothing",
   ]);
+});
+
+test("allow missing version", () => {
+  const { v, ...json } = fixture;
+  const t = T.fromJson.decode(json);
+  expect(t).toBeTruthy();
 });
 
 test("accept keys saved in the id field, too", () => {

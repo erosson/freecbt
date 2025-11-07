@@ -3,16 +3,15 @@ import { z } from "zod";
 import * as Distortion from "./distortion";
 import * as Thought from "./thought";
 
-export const VERSION = "Archive-v1";
+export const VERSION = "Archive-v2";
 
 export const Json = z.object({
-  v: z.literal(VERSION),
+  v: z.string().optional(),
   thoughts: Thought.Json.array(),
 });
 export type Json = z.infer<typeof Json>;
 
 export const Archive = z.object({
-  v: z.literal(VERSION),
   thoughts: Thought.Thought.array(),
 });
 export type Archive = z.infer<typeof Archive>;
@@ -44,7 +43,7 @@ export const jsonFromString = z.codec(
 );
 
 export function create(thoughts: Thought.Thought[]): Archive {
-  return { v: VERSION, thoughts };
+  return { thoughts };
 }
 
 export function createParsers(data: Distortion.Data) {
@@ -57,11 +56,10 @@ export function createParsers(data: Distortion.Data) {
       return { v, thoughts };
     },
     encode: (arc: z.input<typeof Archive>) => {
-      const { v } = arc;
       const thoughts = Archive.decode(arc).thoughts.map((t) =>
         T.fromJson.encode(t)
       );
-      return { v, thoughts };
+      return { v: VERSION, thoughts };
     },
   });
 
