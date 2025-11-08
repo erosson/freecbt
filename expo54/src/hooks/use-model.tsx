@@ -92,6 +92,7 @@ function useCmdRunner(data: Distortion.Data, storage: AsyncStorageStatic) {
         const deviceWindow = Dimensions.get("window");
         const m = Model.ready({
           now,
+          distortionData: DistortionData,
           deviceColorScheme,
           deviceLocale,
           deviceWindow,

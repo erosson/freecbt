@@ -99,4 +99,19 @@ type FlattenKeys<
     ? `${Key}.${FlattenKeys<T[Key]>}`
     : `${Key}`
   : never;
-type TranslateKey = FlattenKeys<typeof en>;
+export type TranslateKey = FlattenKeys<typeof en>;
+
+type TranslateJson = { [k: string]: string | TranslateJson };
+function flattenKeys(o: TranslateJson): { [k: string]: string } {
+  return Object.fromEntries(
+    Object.entries(o).flatMap(([k, v]) =>
+      typeof v === "string"
+        ? [[k, v]]
+        : Object.entries(flattenKeys(v)).map(([k2, v2]) => [`${k}.${k2}`, v2])
+    )
+  );
+}
+export const translateKeys = Object.keys(
+  flattenKeys(en)
+) as readonly TranslateKey[];
+export const translateKeySet = new Set<string>(translateKeys);

@@ -4,6 +4,7 @@ import { Routes } from "..";
 import type { LocaleTag } from "../hooks/use-i18n";
 import * as Action from "./action";
 import * as Cmd from "./cmd";
+import * as Distortion from "./distortion";
 import * as Settings from "./settings";
 import * as Thought from "./thought";
 
@@ -13,6 +14,7 @@ export type ColorScheme = "light" | "dark";
 export interface Ready {
   status: "ready";
   now: Date;
+  distortionData: Distortion.Data;
   thoughts: ReadonlyMap<string, Thought.Thought>;
   thoughtParseErrors: ReadonlyMap<string, z.ZodError<Thought.Thought>>;
   settings: Settings.Settings;

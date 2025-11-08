@@ -1,25 +1,25 @@
-import React from "react"
-import { SelectorTextItem, SubHeader } from "../ui"
-import { View, ScrollView, Text, Switch, TouchableOpacity } from "react-native"
-import i18n from "../i18n"
-import * as Distortion from "../io-ts/distortion"
-import theme from "../theme"
-import * as Bubbles from "../imgs/Bubbles"
-import * as Style from "../style"
+import React from "react";
+import { ScrollView, Switch, Text, TouchableOpacity, View } from "react-native";
+import i18n from "../i18n";
+import * as Bubbles from "../imgs/Bubbles";
+import * as Distortion from "../io-ts/distortion";
+import * as Style from "../style";
+import theme from "../theme";
+import { SelectorTextItem, SubHeader } from "../ui";
 
 export default (props: {
-  list?: Distortion.Distortion[]
-  selected: Set<Distortion.Distortion>
-  onChange: (slug: string) => void
+  list?: Distortion.Distortion[];
+  selected: Set<Distortion.Distortion>;
+  onChange: (slug: string) => void;
 }) => {
-  const list: Distortion.Distortion[] = props.list ?? Distortion.sortedList()
+  const list: Distortion.Distortion[] = props.list ?? Distortion.sortedList();
   const items: { distortion: Distortion.Distortion; selected: boolean }[] =
     list.map((distortion) => ({
       distortion,
       selected: props.selected.has(distortion),
-    }))
-  const style = Style.useStyle()
-  const [details, setDetails] = React.useState(false)
+    }));
+  const style = Style.useStyle();
+  const [details, setDetails] = React.useState(false);
   return (
     <>
       <TouchableOpacity
@@ -61,16 +61,16 @@ export default (props: {
         </View>
       </ScrollView>
     </>
-  )
-}
+  );
+};
 
 function RoundedSelector(props: {
-  items: { selected: boolean; distortion: Distortion.Distortion }[]
-  extended?: boolean
-  onPress: (slug: string) => void
-  style?: object
+  items: { selected: boolean; distortion: Distortion.Distortion }[];
+  extended?: boolean;
+  onPress: (slug: string) => void;
+  style?: object;
 }) {
-  const style = Style.useStyle()
+  const style = Style.useStyle();
   return (
     <View
       style={{
@@ -79,7 +79,7 @@ function RoundedSelector(props: {
       }}
     >
       {props.items.map(({ distortion, selected }, i) => {
-        const bubble = Bubbles.colors[i % Bubbles.colors.length]
+        const bubble = Bubbles.colors[i % Bubbles.colors.length];
         const description = props.extended ? (
           <>
             <Text
@@ -96,7 +96,7 @@ function RoundedSelector(props: {
           </>
         ) : (
           distortion.description()
-        )
+        );
         return (
           <SelectorTextItem
             key={distortion.slug}
@@ -106,8 +106,8 @@ function RoundedSelector(props: {
             selected={selected}
             onPress={() => props.onPress(distortion.slug)}
           />
-        )
+        );
       })}
     </View>
-  )
+  );
 }

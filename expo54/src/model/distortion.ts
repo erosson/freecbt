@@ -1,6 +1,9 @@
 import _ from "lodash";
 import { z } from "zod";
+import { translateKeys } from "../hooks/use-i18n";
 import { AssertExtends } from "../type-utils";
+
+export const TranslateKey = z.enum(translateKeys);
 
 /**
  * A human-maintained cognitive distortion definition.
@@ -10,11 +13,11 @@ import { AssertExtends } from "../type-utils";
 export const Spec = z.object({
   slug: z.string(),
   emoji: z.string().array().readonly(),
-  labelKey: z.string().optional(),
-  descriptionKey: z.string().optional(),
-  explanationKeys: z.string().array().optional(),
+  labelKey: TranslateKey.optional(),
+  descriptionKey: TranslateKey.optional(),
+  explanationKeys: TranslateKey.array().optional(),
   explanationKeyCount: z.number().optional(),
-  explanationThoughtKey: z.string().optional(),
+  explanationThoughtKey: TranslateKey.optional(),
 });
 export type Spec = z.infer<typeof Spec>;
 
@@ -30,27 +33,29 @@ export type Slug = z.infer<typeof Slug>;
 export const Distortion = z.object({
   slug: Slug,
   emojis: z.string().array().readonly(),
-  labelKey: z.string(),
-  descriptionKey: z.string(),
-  explanationKeys: z.string().array().readonly(),
-  explanationThoughtKey: z.string(),
+  labelKey: TranslateKey,
+  descriptionKey: TranslateKey,
+  explanationKeys: TranslateKey.array().readonly(),
+  explanationThoughtKey: TranslateKey,
 });
 export type Distortion = z.infer<typeof Distortion>;
 
 export const fromSpec = Spec.transform((spec: Spec): Distortion => {
   const slug = Slug.decode(spec.slug);
   const emojis = spec.emoji;
-  const labelKey = spec.labelKey ?? _.snakeCase(slug);
+  const labelKey = spec.labelKey ?? TranslateKey.parse(_.snakeCase(slug));
   const descriptionKey =
-    spec.descriptionKey ?? `${_.snakeCase(slug)}_one_liner`;
-  const explanationKeys = spec.explanationKeys
-    ? typeof spec.explanationKeys === "number"
-      ? _.range(spec.explanationKeys).map(
-          (i) => `${_.snakeCase(slug)}_explanation_${i + 1}`
-        )
-      : spec.explanationKeys
-    : [`${_.snakeCase(slug)}_explanation`];
-  const explanationThoughtKey = `${_.snakeCase(slug)}_thought`;
+    spec.descriptionKey ?? TranslateKey.parse(`${_.snakeCase(slug)}_one_liner`);
+  const explanationKeys = spec.explanationKeyCount
+    ? _.range(spec.explanationKeyCount).map((i) =>
+        TranslateKey.parse(`${_.snakeCase(slug)}_explanation_${i + 1}`)
+      )
+    : spec.explanationKeys
+    ? spec.explanationKeys
+    : [TranslateKey.parse(`${_.snakeCase(slug)}_explanation`)];
+  const explanationThoughtKey =
+    spec.explanationThoughtKey ??
+    TranslateKey.parse(`${_.snakeCase(slug)}_thought`);
   return {
     slug,
     emojis,

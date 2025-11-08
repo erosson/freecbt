@@ -60,6 +60,8 @@ function style(c: Theme) {
     justifyBetween: { justifyContent: "space-between" },
     underline: { textDecorationLine: "underline" },
     selfStart: { alignSelf: "flex-start" },
+    alignMiddle: { verticalAlign: "middle" },
+    hFull: { height: "100%" },
 
     m1: { margin: spacing * 1 },
     m2: { margin: spacing * 2 },
@@ -96,6 +98,7 @@ function style(c: Theme) {
 
     text: { color: c.text },
     bg: { backgroundColor: c.background },
+    bgSelected: { backgroundColor: c.selectedBackground },
     border: { borderWidth: 1, borderColor: c.border },
     container: { maxWidth: 1000 },
   });
@@ -178,7 +181,7 @@ function style(c: Theme) {
     },
     selectedText: { color: c.selectedText },
     paginationDot: { backgroundColor: c.paginationDot, borderRadius: 50 },
-    activePaginationDot: { backgroundColor: c.selectedText, borderRadius: 50 },
+    activePaginationDot: { backgroundColor: c.text, borderRadius: 50 },
   });
 }
 export type Style = ReturnType<typeof style>;

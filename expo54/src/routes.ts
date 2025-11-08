@@ -47,6 +47,10 @@ export function export_(): Href {
   return "/export";
 }
 
+export function helpV2(): Href {
+  // return "/v2/help";
+  return "/v2";
+}
 export function settingsV2(): Href {
   return "/v2/settings";
 }
