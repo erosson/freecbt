@@ -176,6 +176,7 @@ function style(c: Theme) {
     formDistortionItemSelectedText: {
       color: c.selectedText,
     },
+    selectedText: { color: c.selectedText },
     paginationDot: { backgroundColor: c.paginationDot, borderRadius: 50 },
     activePaginationDot: { backgroundColor: c.selectedText, borderRadius: 50 },
   });

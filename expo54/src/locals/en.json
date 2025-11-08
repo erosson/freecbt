@@ -112,6 +112,12 @@
   },
   "settings": {
     "header": "FreeCBT*",
+    "theme": {
+      "header": "*theme",
+      "light": "Light",
+      "dark": "Dark",
+      "default": "System default"
+    },
     "reminders": {
       "header": "*reminders",
       "description": "If you'd like, you can turn on notification reminders that help you build up the habit of challenging thoughts.",

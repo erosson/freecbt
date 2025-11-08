@@ -30,6 +30,12 @@ function Ready({ model, dispatch, translate: t }: ModelLoadedProps) {
       </View>
 
       <View style={[s.container]}>
+        <ThemeForm
+          value={model.settings.theme}
+          dispatch={dispatch}
+          s={s}
+          t={t}
+        />
         <PincodeForm isSet={!!model.settings.pincode} s={s} t={t} />
         <HistoryForm
           value={model.settings.historyLabels}
@@ -71,6 +77,29 @@ function Ready({ model, dispatch, translate: t }: ModelLoadedProps) {
   );
 }
 
+function ThemeForm(props: {
+  value: Settings.Settings["theme"];
+  dispatch: (a: Action.Action) => void;
+  s: PageStyle;
+  t: TranslateFn;
+}) {
+  const { value, dispatch, s, t } = props;
+  return (
+    <>
+      <Text style={[s.subheader]}>{t("settings.theme.header")}</Text>
+      <SelectorButtons<Settings.Settings["theme"]>
+        style={s}
+        selected={value}
+        options={[
+          [null, t("settings.theme.default")],
+          ["light", t("settings.theme.light")],
+          ["dark", t("settings.theme.dark")],
+        ]}
+        onPress={(v) => dispatch(Action.setTheme(v))}
+      />
+    </>
+  );
+}
 function PincodeForm(props: { isSet: boolean; s: PageStyle; t: TranslateFn }) {
   const { isSet, s, t } = props;
   return (
@@ -105,24 +134,19 @@ function HistoryForm(props: {
   t: TranslateFn;
 }) {
   const { value, dispatch, s, t } = props;
-  const selectorBtn = (selected: boolean) =>
-    selected ? s.selectorBtnSelected : s.selectorBtn;
   return (
     <>
       <Text style={[s.subheader]}>{t("settings.history.header")}</Text>
       <Text style={[s.text]}>{t("settings.history.description")}</Text>
-      <TouchableOpacity
-        style={[selectorBtn(value === "alternative-thought")]}
-        onPress={() => dispatch(Action.setHistoryLabel("alternative-thought"))}
-      >
-        <Text style={[s.text]}>{t("settings.history.button.alternative")}</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={[selectorBtn(value === "automatic-thought")]}
-        onPress={() => dispatch(Action.setHistoryLabel("automatic-thought"))}
-      >
-        <Text style={[s.text]}>{t("settings.history.button.automatic")}</Text>
-      </TouchableOpacity>
+      <SelectorButtons<Settings.Settings["historyLabels"]>
+        style={s}
+        selected={value}
+        options={[
+          ["alternative-thought", t("settings.history.button.alternative")],
+          ["automatic-thought", t("settings.history.button.automatic")],
+        ]}
+        onPress={(v) => dispatch(Action.setHistoryLabel(v))}
+      />
     </>
   );
 }
@@ -155,6 +179,32 @@ function LocaleForm(props: {
           ))}
       </Picker>
     </>
+  );
+}
+
+type Pair<A, B> = readonly [A, B];
+function SelectorButtons<V extends string | null>(props: {
+  style: PageStyle;
+  selected: V;
+  options: readonly Pair<V, string>[];
+  onPress: (v: V) => void;
+}) {
+  const { style: s, selected, options, onPress } = props;
+  const selectorBtn = (v: V) =>
+    selected === v ? s.selectorBtnSelected : s.selectorBtn;
+  const selectorText = (v: V) => (selected === v ? s.selectedText : s.text);
+  return (
+    <View style={[s.flexRow, s.my2]}>
+      {options.map(([v, label]) => (
+        <TouchableOpacity
+          key={v}
+          style={[selectorBtn(v), s.flex1]}
+          onPress={() => onPress(v)}
+        >
+          <Text style={[selectorText(v)]}>{label}</Text>
+        </TouchableOpacity>
+      ))}
+    </View>
   );
 }
 
