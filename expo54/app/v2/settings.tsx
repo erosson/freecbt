@@ -157,26 +157,32 @@ function LocaleForm(props: {
   t: TranslateFn;
 }) {
   const { value, dispatch, s, t } = props;
+  const options: readonly Pair<LocaleTag | "", string>[] = [
+    ["", t("settings.locale.default")],
+    ...localeTags
+      .filter((locale) => !locale.startsWith("_"))
+      // since translation-keys and locales are both static, these constructed translation-keys are still typesafe! amazing!
+      .map((locale) => [locale, t(`settings.locale.list.${locale}`)] as const),
+  ];
   return (
     <>
       <Text style={[s.subheader]}>{t("settings.locale.header")}</Text>
-      <Picker
+      <Picker<LocaleTag | "">
+        style={[s.rounded, s.btn, s.buttonText]}
         selectedValue={value ?? ""}
         onValueChange={(value) =>
-          dispatch(Action.setLocale(value ? (value as LocaleTag) : null))
+          dispatch(Action.setLocale(value ? value : null))
         }
       >
-        <Picker.Item label={t("settings.locale.default")} value={""} />
-        {localeTags
-          .filter((locale) => !locale.startsWith("_"))
-          .map((locale) => (
-            <Picker.Item
-              key={locale}
-              // since translation-keys and locales are both static, these constructed translation-keys are still typesafe! amazing!
-              label={t(`settings.locale.list.${locale}`)}
-              value={locale}
-            />
-          ))}
+        {options.map(([value, label]) => (
+          <Picker.Item
+            style={[s.buttonText]}
+            color={s.buttonText.color}
+            key={value}
+            label={label}
+            value={value}
+          />
+        ))}
       </Picker>
     </>
   );
