@@ -1,8 +1,13 @@
 import { LoadModel, ModelLoadedProps } from "@/src/hooks/use-model";
 import { Action, Thought } from "@/src/model";
-import { useState } from "react";
+import React, { useState } from "react";
 import { Button, Keyboard, Text, TextInput, View } from "react-native";
-import Carousel from "react-native-reanimated-carousel";
+import { useSharedValue } from "react-native-reanimated";
+import Carousel, {
+  CarouselRenderItem,
+  ICarouselInstance,
+  Pagination,
+} from "react-native-reanimated-carousel";
 
 const slideNames = [
   "automatic-thought",
@@ -55,118 +60,137 @@ export function CBTForm(
   const { model, style: s, translate: t, value } = props;
   const onChange = props.onChange ?? (() => {});
   const onSubmit = props.onSubmit ?? (() => {});
-  return (
-    <Carousel
-      data={[...slideNames]}
-      renderItem={({ item }) => {
-        switch (item) {
-          case "automatic-thought":
-            return (
-              <>
-                <Text style={[s.text]}>autothought</Text>
-                <TextInput
-                  style={[s.textInput]}
-                  // placeholderTextColor={textInputPlaceholderColor}
-                  placeholder={t("cbt_form.auto_thought_placeholder")}
-                  value={value.automaticThought}
-                  multiline={true}
-                  numberOfLines={6}
-                  onChangeText={(v) =>
-                    onChange({ ...value, automaticThought: v })
-                  }
-                />
-              </>
-              // <AutomaticThought
-              //   value={props.automatic}
-              //   onChange={props.onChangeAutomaticThought}
-              // />
-            );
-          case "distortions":
-            return (
-              <Text style={[s.text]}>distortions</Text>
-              // <Distortions
-              //   selected={props.distortions}
-              //   onChange={props.onChangeDistortion}
-              // />
-            );
-          case "challenge":
-            return (
-              <>
-                <Text style={[s.text]}>challenge</Text>
-                <TextInput
-                  style={[s.textInput]}
-                  // placeholderTextColor={textInputPlaceholderColor}
-                  placeholder={t("cbt_form.changed_placeholder")}
-                  value={value.challenge}
-                  multiline={true}
-                  numberOfLines={6}
-                  onChangeText={(v) => onChange({ ...value, challenge: v })}
-                />
-              </>
-              // <Challenge
-              //   value={props.challenge}
-              //   onChange={props.onChangeChallenge}
-              // />
-            );
-          case "alternative-thought":
-            return (
-              <>
-                <Text style={[s.text]}>alt</Text>
-                <TextInput
-                  style={[s.textInput]}
-                  // placeholderTextColor={textInputPlaceholderColor}
-                  placeholder={t("cbt_form.alt_thought_placeholder")}
-                  value={value.alternativeThought}
-                  multiline={true}
-                  numberOfLines={6}
-                  onChangeText={(v) =>
-                    onChange({ ...value, alternativeThought: v })
-                  }
-                />
-                <Button onPress={onSubmit} title={t("cbt_form.submit")} />
-              </>
-              // <>
-              //   <AlternativeThought
-              //     value={props.alternative}
-              //     onChange={props.onChangeAlternativeThought}
-              //   />
+  const ref = React.useRef<ICarouselInstance>(null);
+  const progress = useSharedValue<number>(0);
+  const onPressPagination = (index: number) => {
+    ref.current?.scrollTo({
+      count: index - progress.value,
+      animated: true,
+    });
+  };
+  const CBTFormItem: CarouselRenderItem<SlideName> = ({ item }) => {
+    switch (item) {
+      case "automatic-thought":
+        return (
+          <>
+            <Text style={[s.text]}>autothought</Text>
+            <TextInput
+              style={[s.textInput]}
+              // placeholderTextColor={textInputPlaceholderColor}
+              placeholder={t("cbt_form.auto_thought_placeholder")}
+              value={value.automaticThought}
+              multiline={true}
+              numberOfLines={6}
+              onChangeText={(v) => onChange({ ...value, automaticThought: v })}
+            />
+          </>
+          // <AutomaticThought
+          //   value={props.automatic}
+          //   onChange={props.onChangeAutomaticThought}
+          // />
+        );
+      case "distortions":
+        return (
+          <Text style={[s.text]}>distortions</Text>
+          // <Distortions
+          //   selected={props.distortions}
+          //   onChange={props.onChangeDistortion}
+          // />
+        );
+      case "challenge":
+        return (
+          <>
+            <Text style={[s.text]}>challenge</Text>
+            <TextInput
+              style={[s.textInput]}
+              // placeholderTextColor={textInputPlaceholderColor}
+              placeholder={t("cbt_form.changed_placeholder")}
+              value={value.challenge}
+              multiline={true}
+              numberOfLines={6}
+              onChangeText={(v) => onChange({ ...value, challenge: v })}
+            />
+          </>
+          // <Challenge
+          //   value={props.challenge}
+          //   onChange={props.onChangeChallenge}
+          // />
+        );
+      case "alternative-thought":
+        return (
+          <>
+            <Text style={[s.text]}>alt</Text>
+            <TextInput
+              style={[s.textInput]}
+              // placeholderTextColor={textInputPlaceholderColor}
+              placeholder={t("cbt_form.alt_thought_placeholder")}
+              value={value.alternativeThought}
+              multiline={true}
+              numberOfLines={6}
+              onChangeText={(v) =>
+                onChange({ ...value, alternativeThought: v })
+              }
+            />
+            <Button onPress={onSubmit} title={t("cbt_form.submit")} />
+          </>
+          // <>
+          //   <AlternativeThought
+          //     value={props.alternative}
+          //     onChange={props.onChangeAlternativeThought}
+          //   />
 
-              //   <View
-              //     style={{
-              //       marginTop: 12,
-              //     }}
-              //   >
-              //     <ActionButton
-              //       title={i18n.t("cbt_form.submit")}
-              //       width="100%"
-              //       onPress={props.onSave}
-              //     />
-              //   </View>
-              // </>
-            );
-          default: {
-            const _e: never = item;
-            throw new Error(`unknown slide: ${_e}`);
-          }
-        }
-      }}
-      width={model.deviceWindow.width}
-      height={model.deviceWindow.height}
-      onSnapToItem={(index) => {
-        Keyboard.dismiss();
-      }}
-      loop={false}
-      // defaultIndex={slideNums.get(props.slideToShow) ?? 0}
-      mode="parallax"
-      modeConfig={{
-        parallaxScrollingScale: 0.9,
-        parallaxScrollingOffset: Math.round(model.deviceWindow.width * 0.15),
-      }}
-      // fix vertical scrolling for distortions
-      onConfigurePanGesture={(gesture) => {
-        "worklet";
-        gesture.activeOffsetX([-10, 10]);
-      }}
-    />
+          //   <View
+          //     style={{
+          //       marginTop: 12,
+          //     }}
+          //   >
+          //     <ActionButton
+          //       title={i18n.t("cbt_form.submit")}
+          //       width="100%"
+          //       onPress={props.onSave}
+          //     />
+          //   </View>
+          // </>
+        );
+      default: {
+        const _e: never = item;
+        throw new Error(`unknown slide: ${_e}`);
+      }
+    }
+  };
+  return (
+    <>
+      <Carousel
+        ref={ref}
+        data={[...slideNames]}
+        onProgressChange={progress}
+        renderItem={CBTFormItem}
+        width={model.deviceWindow.width}
+        height={model.deviceWindow.height - 150}
+        onSnapToItem={(index) => {
+          Keyboard.dismiss();
+        }}
+        loop={false}
+        // defaultIndex={slideNums.get(props.slideToShow) ?? 0}
+        mode="parallax"
+        modeConfig={{
+          parallaxScrollingScale: 0.9,
+          parallaxScrollingOffset: Math.round(model.deviceWindow.width * 0.15),
+        }}
+        // fix vertical scrolling for distortions
+        onConfigurePanGesture={(gesture) => {
+          "worklet";
+          gesture.activeOffsetX([-10, 10]);
+        }}
+      />
+      <Pagination.Basic
+        progress={progress}
+        data={[...slideNames]}
+        dotStyle={s.paginationDot}
+        activeDotStyle={s.activePaginationDot}
+        containerStyle={{ gap: 5, marginTop: 10 }}
+        onPress={onPressPagination}
+      />
+    </>
   );
 }

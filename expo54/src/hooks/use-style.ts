@@ -59,6 +59,7 @@ function style(c: Theme) {
     flexCol: { flexDirection: "column" },
     justifyBetween: { justifyContent: "space-between" },
     underline: { textDecorationLine: "underline" },
+    selfStart: { alignSelf: "flex-start" },
 
     m1: { margin: spacing * 1 },
     m2: { margin: spacing * 2 },
@@ -95,6 +96,8 @@ function style(c: Theme) {
 
     text: { color: c.text },
     bg: { backgroundColor: c.background },
+    border: { borderWidth: 1, borderColor: c.border },
+    container: { maxWidth: 1000 },
   });
 
   // application-specific "class names"
@@ -155,9 +158,6 @@ function style(c: Theme) {
     buttonText: {
       color: c.buttonText,
     },
-    flexColumn: {
-      flexDirection: "column",
-    },
     formDistortionItem: {
       backgroundColor: c.background,
       borderColor: c.border,
@@ -176,6 +176,8 @@ function style(c: Theme) {
     formDistortionItemSelectedText: {
       color: c.selectedText,
     },
+    paginationDot: { backgroundColor: c.paginationDot, borderRadius: 50 },
+    activePaginationDot: { backgroundColor: c.selectedText, borderRadius: 50 },
   });
 }
 export type Style = ReturnType<typeof style>;

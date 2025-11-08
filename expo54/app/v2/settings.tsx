@@ -1,7 +1,9 @@
+import { Routes } from "@/src";
 import { LocaleTag, localeTags, TranslateFn } from "@/src/hooks/use-i18n";
 import { LoadModel, ModelLoadedProps } from "@/src/hooks/use-model";
 import { useStyle, useTheme } from "@/src/hooks/use-style";
 import { Action, Model, Settings } from "@/src/model";
+import { LinkButton } from "@/src/view/view";
 import { Picker } from "@react-native-picker/picker";
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
@@ -13,42 +15,58 @@ function Ready({ model, dispatch, translate: t }: ModelLoadedProps) {
   const s = usePageStyle(Model.colorScheme(model));
   return (
     <View style={[s.view]}>
-      <Text style={[s.header]}>{t("settings.header")}</Text>
+      <View style={[s.flexRow, s.justifyBetween, s.container]}>
+        <Text style={[s.header]}>{t("settings.header")}</Text>
+        <View>
+          <View style={[s.flexCol]}>
+            <LinkButton
+              style={s}
+              href={Routes.thoughtListV2()}
+              label={t("accessibility.list_button")}
+              icon="list"
+            />
+          </View>
+        </View>
+      </View>
 
-      <PincodeForm isSet={!!model.settings.pincode} s={s} t={t} />
-      <HistoryForm
-        value={model.settings.historyLabels}
-        dispatch={dispatch}
-        s={s}
-        t={t}
-      />
+      <View style={[s.container]}>
+        <PincodeForm isSet={!!model.settings.pincode} s={s} t={t} />
+        <HistoryForm
+          value={model.settings.historyLabels}
+          dispatch={dispatch}
+          s={s}
+          t={t}
+        />
 
-      <Text style={[s.subheader]}>{t("settings.backup.header")}</Text>
-      <TouchableOpacity style={[s.btn]}>
-        <Text style={[s.buttonText]}>{t("settings.backup.button")}</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={[s.btn]}>
-        <Text style={[s.buttonText]}>{t("settings.backup.export-button")}</Text>
-      </TouchableOpacity>
+        <Text style={[s.subheader]}>{t("settings.backup.header")}</Text>
+        <TouchableOpacity style={[s.btn]}>
+          <Text style={[s.buttonText]}>{t("settings.backup.button")}</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={[s.btn]}>
+          <Text style={[s.buttonText]}>
+            {t("settings.backup.export-button")}
+          </Text>
+        </TouchableOpacity>
 
-      <LocaleForm
-        value={model.settings.locale}
-        dispatch={dispatch}
-        s={s}
-        t={t}
-      />
+        <LocaleForm
+          value={model.settings.locale}
+          dispatch={dispatch}
+          s={s}
+          t={t}
+        />
 
-      <TouchableOpacity style={[s.btn, s.mt4]}>
-        <Text style={[s.buttonText]}>{t("settings.locale.contribute")}</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={[s.btn]}>
-        <Text style={[s.buttonText]}>{t("settings.terms")}</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={[s.btn]}>
-        <Text style={[s.buttonText]}>{t("settings.privacy")}</Text>
-      </TouchableOpacity>
+        <TouchableOpacity style={[s.btn, s.mt4]}>
+          <Text style={[s.buttonText]}>{t("settings.locale.contribute")}</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={[s.btn]}>
+          <Text style={[s.buttonText]}>{t("settings.terms")}</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={[s.btn]}>
+          <Text style={[s.buttonText]}>{t("settings.privacy")}</Text>
+        </TouchableOpacity>
 
-      <DebugLink />
+        <DebugLink />
+      </View>
     </View>
   );
 }

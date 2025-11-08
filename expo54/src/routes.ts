@@ -47,6 +47,9 @@ export function export_(): Href {
   return "/export";
 }
 
+export function settingsV2(): Href {
+  return "/v2/settings";
+}
 export function thoughtCreateV2(): Href {
   return "/v2/thoughts/create";
 }

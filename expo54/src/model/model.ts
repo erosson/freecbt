@@ -55,7 +55,7 @@ type Pair<A, B> = readonly [A, B];
 export function thoughtsByDate(
   m: Ready
 ): readonly Pair<string, readonly Thought.Thought[]>[] {
-  const g = _.groupBy(thoughtsList(m), (t) => t.createdAt.toLocaleDateString());
+  const g = _.groupBy(thoughtsList(m), (t) => t.createdAt.toDateString());
   const pairs = Object.entries(g) as readonly Pair<
     string,
     readonly Thought.Thought[]
