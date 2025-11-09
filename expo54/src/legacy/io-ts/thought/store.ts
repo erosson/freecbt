@@ -8,8 +8,14 @@ import * as AsyncState from "../../async-state";
 import * as Archive from "../archive";
 import { decodeOrThrow } from "../io-utils";
 import { Codec } from "./codec";
-import { Persist } from "./persist";
-import { ID, Thought, THOUGHTS_KEY_PREFIX } from "./thought";
+import { Persist, VERSION } from "./persist";
+import {
+  getThoughtKey,
+  ID,
+  key,
+  Thought,
+  THOUGHTS_KEY_PREFIX,
+} from "./thought";
 
 const EXISTING_USER_KEY = "@Quirk:existing-user";
 
@@ -43,8 +49,9 @@ export async function setIsExistingUser() {
 
 export async function write(t: Thought): Promise<void> {
   const enc = Codec.encode(t);
+  enc.v = VERSION;
   const raw = JSON.stringify(enc);
-  await AsyncStorage.setItem(t.uuid, raw);
+  await AsyncStorage.setItem(key(t), raw);
 }
 
 export async function read(id: ID): Promise<Thought> {
@@ -77,7 +84,7 @@ function parseResult(
 
 export async function remove(uuid: ID) {
   try {
-    await AsyncStorage.removeItem(uuid);
+    await AsyncStorage.removeItem(getThoughtKey(uuid));
   } catch (error) {
     console.error(error);
   }
@@ -124,7 +131,7 @@ export async function readArchive(): Promise<Archive.Archive> {
 
 export async function writeArchive(archive: Archive.Archive): Promise<void> {
   const rows: [string, string][] = archive.thoughts.map((entry) => [
-    entry.uuid,
+    key(entry),
     JsonFromString.pipe(Persist).encode(entry),
   ]);
   const oldKeys = await getExercisesKeys();

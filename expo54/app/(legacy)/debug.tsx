@@ -59,7 +59,7 @@ const writeThoughts: { [name: string]: () => Promise<void> } = {
     const t = exampleThought();
     const enc = Thought.FromLegacy.encode(t);
     const raw = JSON.stringify(enc);
-    await AsyncStorage.setItem(t.uuid, raw);
+    await AsyncStorage.setItem(Thought.key(t), raw);
     console.log("write legacy");
   },
   invalid: async () => {
@@ -67,7 +67,7 @@ const writeThoughts: { [name: string]: () => Promise<void> } = {
     const enc = Thought.FromLegacy.encode(t);
     (enc as any)["automaticThought"] = false;
     const raw = JSON.stringify(enc);
-    await AsyncStorage.setItem(t.uuid, raw);
+    await AsyncStorage.setItem(Thought.key(t), raw);
     console.log("write invalid");
   },
 };

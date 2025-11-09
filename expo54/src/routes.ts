@@ -1,4 +1,5 @@
 import { Href } from "expo-router";
+import { Thought } from "./model";
 
 // see also ./legacy/screens.ts for legacy routes/screens
 export function thoughtCreate(
@@ -60,7 +61,6 @@ export function thoughtCreateV2(): Href {
 export function thoughtListV2(): Href {
   return "/v2/thoughts";
 }
-export function thoughtViewV2(id: string): Href {
-  // return `/v2/thoughts/${id}`;
-  return `/v2`;
+export function thoughtViewV2(id: Thought.Id): Href {
+  return `/v2/thoughts/${id}`;
 }

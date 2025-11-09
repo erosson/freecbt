@@ -1,20 +1,18 @@
-import React from "react"
-import * as Thought from "../io-ts/thought"
-import { ScrollView, TextInput } from "react-native"
+import React from "react";
+import { ScrollView } from "react-native";
+import Feedback from "../feedback";
+import i18n from "../i18n";
+import { BubbleThought } from "../imgs/Bubbles";
+import * as Distortion from "../io-ts/distortion";
+import * as Thought from "../io-ts/thought";
+import theme from "../theme";
 import {
-  SubHeader,
-  Paragraph,
   FormContainer,
   GhostButtonWithGuts,
-  Row,
-} from "../ui"
-import i18n from "../i18n"
-import { BubbleThought } from "../imgs/Bubbles"
-import * as Distortion from "../io-ts/distortion"
-import theme from "../theme"
-import { Slides } from "./FormView"
-import Feedback from "../feedback"
-import { textInputStyle } from "./textInputStyle"
+  Paragraph,
+  SubHeader,
+} from "../ui";
+import { Slides } from "./FormView";
 
 const cognitiveDistortionsToText = (
   cognitiveDistortions: Set<Distortion.Distortion>
@@ -28,21 +26,21 @@ const cognitiveDistortionsToText = (
     >
       {d.emoji()} {d.label()}
     </Paragraph>
-  ))
+  ));
 
   if (paragraphs.length === 0) {
-    return <Paragraph>🤷‍</Paragraph>
+    return <Paragraph>🤷‍</Paragraph>;
   }
 
-  return paragraphs
-}
+  return paragraphs;
+};
 
 const CBTView = ({
   thought,
   onEdit,
 }: {
-  thought: Thought.Thought
-  onEdit: (uuid: string, slide: Slides) => void
+  thought: Thought.Thought;
+  onEdit: (uuid: string, slide: Slides) => void;
 }) => (
   <>
     <FormContainer>
@@ -53,7 +51,7 @@ const CBTView = ({
         style={{
           backgroundColor: "white",
         }}
-        onPress={() => onEdit(thought.uuid, "automatic")}
+        onPress={() => onEdit(Thought.key(thought), "automatic")}
       >
         {thought.automaticThought ? (
           <BubbleThought
@@ -76,7 +74,7 @@ const CBTView = ({
         style={{
           backgroundColor: "white",
         }}
-        onPress={() => onEdit(thought.uuid, "distortions")}
+        onPress={() => onEdit(Thought.key(thought), "distortions")}
       >
         {cognitiveDistortionsToText(thought.cognitiveDistortions)}
       </GhostButtonWithGuts>
@@ -89,7 +87,7 @@ const CBTView = ({
         style={{
           backgroundColor: "white",
         }}
-        onPress={() => onEdit(thought.uuid, "challenge")}
+        onPress={() => onEdit(Thought.key(thought), "challenge")}
       >
         <Paragraph>{thought.challenge || "🤷‍"}</Paragraph>
       </GhostButtonWithGuts>
@@ -102,7 +100,7 @@ const CBTView = ({
         style={{
           backgroundColor: "white",
         }}
-        onPress={() => onEdit(thought.uuid, "alternative")}
+        onPress={() => onEdit(Thought.key(thought), "alternative")}
       >
         {thought.alternativeThought ? (
           <BubbleThought
@@ -119,19 +117,19 @@ const CBTView = ({
       </GhostButtonWithGuts>
     </FormContainer>
   </>
-)
+);
 
 export default ({
   thought,
   onEdit,
   onNew,
 }: {
-  thought: Thought.Thought
-  onEdit: (uuid: string, slide: Slides) => void
-  onNew: () => void
+  thought: Thought.Thought;
+  onEdit: (uuid: string, slide: Slides) => void;
+  onNew: () => void;
 }) => {
   if (!thought.uuid) {
-    console.error("Viewing something that's not saved")
+    console.error("Viewing something that's not saved");
   }
 
   return (
@@ -168,5 +166,5 @@ export default ({
         />
         </Row>*/}
     </ScrollView>
-  )
-}
+  );
+};

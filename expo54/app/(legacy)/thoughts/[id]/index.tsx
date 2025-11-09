@@ -4,7 +4,7 @@ import CBTView from "@/src/legacy/form/CBTView";
 import { Slides } from "@/src/legacy/form/FormView";
 import haptic from "@/src/legacy/haptic";
 import i18n from "@/src/legacy/i18n";
-import { Thought } from "@/src/legacy/io-ts/thought";
+import * as Thought from "@/src/legacy/io-ts/thought";
 import * as ThoughtStore from "@/src/legacy/io-ts/thought/store";
 import theme from "@/src/legacy/theme";
 import {
@@ -63,12 +63,16 @@ json: ${props.error.raw}`;
 export default function CBTViewScreen(): React.JSX.Element {
   const router = useRouter();
   const { id: thoughtID } = useLocalSearchParams<{ id: string }>();
-  const thought: AsyncState.RemoteData<Thought, ThoughtStore.ParseError> =
-    AsyncState.useAsyncResultState(() => ThoughtStore.readResult(thoughtID));
+  const thought: AsyncState.RemoteData<
+    Thought.Thought,
+    ThoughtStore.ParseError
+  > = AsyncState.useAsyncResultState(() => ThoughtStore.readResult(thoughtID));
 
   function onEdit(_: string, slide: Slides) {
     if (AsyncState.isSuccess(thought)) {
-      router.navigate(Routes.thoughtEdit(thought.value.uuid, { slide }));
+      router.navigate(
+        Routes.thoughtEdit(Thought.key(thought.value), { slide })
+      );
     }
   }
 

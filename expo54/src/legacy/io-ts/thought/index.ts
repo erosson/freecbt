@@ -1,3 +1,11 @@
-export { Thought, ID, create, Group, groupByDay } from "./thought"
-export { Persist, Legacy, VERSION } from "./persist"
-export { Codec, FromLegacy } from "./codec"
+export { Codec, FromLegacy } from "./codec";
+export { Legacy, Persist, VERSION } from "./persist";
+export {
+  create,
+  getThoughtKey,
+  Group,
+  groupByDay,
+  ID,
+  key,
+  Thought,
+} from "./thought";

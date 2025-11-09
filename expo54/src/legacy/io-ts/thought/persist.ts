@@ -1,14 +1,14 @@
-import * as T from "io-ts"
-import * as Distortion from "../distortion"
+import * as T from "io-ts";
+import * as Distortion from "../distortion";
 
-export const VERSION = "Thought-v1"
+export const VERSION = "Thought-v1";
 
 /**
  * our json-formatted thought data, as persisted to disk
  */
 export const Persist = T.type(
   {
-    v: T.literal(VERSION),
+    v: T.string,
     automaticThought: T.string,
     alternativeThought: T.string,
     cognitiveDistortions: T.array(T.string),
@@ -18,8 +18,8 @@ export const Persist = T.type(
     uuid: T.string,
   },
   "Thought.Persist"
-)
-export type Persist = T.TypeOf<typeof Persist>
+);
+export type Persist = T.TypeOf<typeof Persist>;
 
 /**
  * old-style thoughts, as json
@@ -39,5 +39,5 @@ export const Legacy = T.intersection(
     T.partial({ v: T.undefined }),
   ],
   "Thought.Legacy"
-)
-export type Legacy = T.TypeOf<typeof Legacy>
+);
+export type Legacy = T.TypeOf<typeof Legacy>;

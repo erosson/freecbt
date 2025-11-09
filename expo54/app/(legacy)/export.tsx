@@ -180,7 +180,7 @@ function toMarkdown(ts: Thought.Thought[]): string {
       return `\
 created: ${t.createdAt.toISOString()},
 updated: ${t.updatedAt.toISOString()},
-id: ${t.uuid}
+id: ${Thought.key(t)}
 
 # Automatic Thought
 

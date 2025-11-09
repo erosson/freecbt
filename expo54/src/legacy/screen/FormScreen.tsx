@@ -89,7 +89,7 @@ export default function FormScreen(props: Props = {}): React.JSX.Element {
       : Thought.create(args);
     await ThoughtStore.write(thought);
     haptic.notification(Haptic.NotificationFeedbackType.Success);
-    router.navigate(Routes.thoughtView(thought.uuid));
+    router.navigate(Routes.thoughtView(Thought.key(thought)));
     setSlide("automatic");
   }
 

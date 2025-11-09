@@ -138,7 +138,7 @@ const ThoughtItemList = (props: {
   const items = groups.map((group) => {
     const thoughts = group.thoughts.map((thought) => (
       <ThoughtItem
-        key={thought.uuid}
+        key={Thought.key(thought)}
         thought={thought}
         onPress={navigateToViewer}
         onDelete={onItemDelete}
@@ -299,13 +299,13 @@ export default function CBTListScreen(): React.JSX.Element {
               <ThoughtItemList
                 groups={gs}
                 navigateToViewer={(thought: Thought.Thought) => {
-                  router.navigate(Routes.thoughtView(thought.uuid));
+                  router.navigate(Routes.thoughtView(Thought.key(thought)));
                 }}
                 onItemDelete={async (thought: Thought.Thought) => {
                   universalHaptic.notification(
                     Haptic.NotificationFeedbackType.Success
                   );
-                  await ThoughtStore.remove(thought.uuid);
+                  await ThoughtStore.remove(Thought.key(thought));
                   setReload(reload + 1);
                 }}
                 historyButtonLabel={AsyncState.withDefault(
