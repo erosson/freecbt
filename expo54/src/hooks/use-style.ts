@@ -63,6 +63,7 @@ function style(c: Theme) {
     alignMiddle: { verticalAlign: "middle" },
     selfCenter: { alignSelf: "center" },
     hFull: { height: "100%" },
+    wFull: { width: "100%" },
 
     m1: { margin: spacing * 1 },
     m2: { margin: spacing * 2 },

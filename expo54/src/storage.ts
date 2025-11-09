@@ -1,6 +1,5 @@
 import { Distortion, Model, Settings, Thought } from "@/src/model";
 import { AsyncStorageStatic } from "@react-native-async-storage/async-storage";
-import { z } from "zod";
 
 export function settings(storage: AsyncStorageStatic) {
   async function read(): Promise<Settings.Settings> {
@@ -24,9 +23,12 @@ export type Settings = ReturnType<typeof settings>;
 export function thoughts(data: Distortion.Data, storage: AsyncStorageStatic) {
   const T = Thought.createParsers(data);
 
-  async function readKeys(): Promise<readonly string[]> {
+  async function readKeys(): Promise<readonly Thought.Key[]> {
     const keys = await storage.getAllKeys();
-    return keys.filter(Thought.isKey);
+    return keys
+      .map((k) => Thought.Key.safeDecode(k))
+      .filter((k) => k.success)
+      .map((k) => k.data);
   }
   async function readAll(): Promise<
     Pick<Model.Ready, "thoughts" | "thoughtParseErrors">
@@ -34,19 +36,21 @@ export function thoughts(data: Distortion.Data, storage: AsyncStorageStatic) {
     const keys = await readKeys();
     const pairs = await storage.multiGet(keys);
     const parsed = pairs.map(
-      ([k, enc]) => [k, T.fromString.safeParse(enc)] as const
+      ([k, enc]) =>
+        [Thought.Key.decode(k), T.fromString.safeParse(enc)] as const
     );
-    const thoughts = new Map(
-      parsed
-        .filter(([, t]) => t.success)
-        .map(([id, t]) => [id, t.data] as const)
-    ) as ReadonlyMap<string, Thought.Thought>;
-    const thoughtParseErrors = new Map(
-      parsed
-        .filter(([, t]) => !t.success)
-        .map(([id, t]) => [id, t.error] as const)
-    ) as ReadonlyMap<string, z.ZodError<Thought.Thought>>;
-    return { thoughts, thoughtParseErrors };
+    return {
+      thoughts: new Map(
+        parsed
+          .filter(([, t]) => t.success)
+          .map(([k, t]) => [k, t.data!] as const)
+      ),
+      thoughtParseErrors: new Map(
+        parsed
+          .filter(([, t]) => !t.success)
+          .map(([k, t]) => [k, t.error!] as const)
+      ),
+    };
   }
   async function write(t: Thought.Thought): Promise<void> {
     const enc = T.fromString.encode(t);

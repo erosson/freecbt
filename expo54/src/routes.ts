@@ -1,3 +1,4 @@
+import { SlideName } from "@/app/v2/thoughts/create";
 import { Href } from "expo-router";
 import { Thought } from "./model";
 
@@ -62,5 +63,11 @@ export function thoughtListV2(): Href {
   return "/v2/thoughts";
 }
 export function thoughtViewV2(id: Thought.Id): Href {
-  return `/v2/thoughts/${id}`;
+  return { pathname: `/v2/thoughts/[idOrKey]`, params: { idOrKey: id } };
+}
+export function thoughtEditV2(id: Thought.Id, slide: SlideName): Href {
+  return {
+    pathname: `/v2/thoughts/[idOrKey]/edit`,
+    params: { idOrKey: id, slide },
+  };
 }

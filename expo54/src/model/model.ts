@@ -15,8 +15,8 @@ export interface Ready {
   status: "ready";
   now: Date;
   distortionData: Distortion.Data;
-  thoughts: ReadonlyMap<string, Thought.Thought>;
-  thoughtParseErrors: ReadonlyMap<string, z.ZodError<Thought.Thought>>;
+  thoughts: ReadonlyMap<Thought.Key, Thought.Thought>;
+  thoughtParseErrors: ReadonlyMap<Thought.Key, z.ZodError<Thought.Thought>>;
   settings: Settings.Settings;
   deviceColorScheme: ColorScheme | null;
   deviceLocale: LocaleTag;
@@ -71,6 +71,17 @@ export function update(m: Model, a: Action.Action): readonly [Model, Cmd.List] {
       const m2 = m.status === "loading" ? a.model : m;
       return [m2, []];
     }
+    default: {
+      if (m.status === "loading") return [m, []];
+      return updateReady(m, a);
+    }
+  }
+}
+function updateReady(m: Ready, a: Action.Action): readonly [Model, Cmd.List] {
+  switch (a.action) {
+    case "model-ready": {
+      return [m, []];
+    }
     case "set-pincode": {
       return updateSettings(m, { pincode: a.value });
     }
@@ -84,32 +95,26 @@ export function update(m: Model, a: Action.Action): readonly [Model, Cmd.List] {
       return updateSettings(m, { theme: a.value });
     }
     case "set-device-color-scheme": {
-      return updateFieldsIfReady(m, { deviceColorScheme: a.value });
+      return [{ ...m, deviceColorScheme: a.value }, []];
     }
     case "set-device-window": {
-      return updateFieldsIfReady(m, { deviceWindow: a.value });
+      return [{ ...m, deviceWindow: a.value }, []];
     }
     case "set-now": {
-      return updateFieldsIfReady(m, { now: a.value });
+      return [{ ...m, now: a.value }, []];
     }
     case "create-thought": {
-      if (m.status === "loading") return [m, []];
-      const thought = Thought.create(a.value, m.now);
-      const thoughts = new Map(m.thoughts);
-      thoughts.set(thought.uuid, thought);
-      const m2: Model = { ...m, thoughts };
-      const cmds = [
-        Cmd.writeThought(thought),
-        Cmd.navigate(Routes.thoughtListV2()),
-      ];
-      return [m2, cmds];
+      return writeThought(m, Thought.create(a.value, m.now));
+    }
+    case "update-thought": {
+      return writeThought(m, a.value);
     }
     case "delete-thought": {
-      if (m.status === "loading") return [m, []];
       const thoughts = new Map(m.thoughts);
-      thoughts.delete(a.value);
+      const k = Thought.keyFromId.decode(a.value);
+      thoughts.delete(k);
       const m2: Model = { ...m, thoughts };
-      return [m2, [Cmd.deleteThought(Thought.keyFromId.decode(a.value))]];
+      return [m2, [Cmd.deleteThought(k)]];
     }
     default: {
       const _e: never = a;
@@ -117,19 +122,23 @@ export function update(m: Model, a: Action.Action): readonly [Model, Cmd.List] {
     }
   }
 }
+function writeThought(
+  m: Ready,
+  thought: Thought.Thought
+): readonly [Model, Cmd.List] {
+  const thoughts = new Map(m.thoughts);
+  thoughts.set(Thought.key(thought), thought);
+  const m2: Model = { ...m, thoughts };
+  const cmds = [
+    Cmd.writeThought(thought),
+    Cmd.navigate(Routes.thoughtViewV2(thought.uuid)),
+  ];
+  return [m2, cmds];
+}
 function updateSettings(
-  m: Model,
+  m: Ready,
   s: Partial<Settings.Settings>
 ): readonly [Model, Cmd.List] {
-  if (m.status === "loading") return [m, []];
   const m2: Model = { ...m, settings: { ...m.settings, ...s } };
   return [m2, [Cmd.writeSettings(m2.settings)]];
-}
-function updateFieldsIfReady(
-  m: Model,
-  s: Partial<Ready>
-): readonly [Model, Cmd.List] {
-  if (m.status === "loading") return [m, []];
-  const m2: Model = { ...m, ...s };
-  return [m2, []];
 }

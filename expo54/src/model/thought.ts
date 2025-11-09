@@ -42,11 +42,16 @@ export const idFromKey = z.codec(Key, Id, {
   encode: (id: z.input<typeof Id>) => keyFromId.decode(id),
 });
 
-export const Thought = z.object({
+export const Spec = z.object({
   automaticThought: z.string(),
   cognitiveDistortions: z.set(Distortion.Distortion),
   challenge: z.string(),
   alternativeThought: z.string(),
+});
+export type Spec = z.infer<typeof Spec>;
+
+export const Thought = z.object({
+  ...Spec.shape,
   createdAt: z.date(),
   updatedAt: z.date(),
   // I messed this one up for a few versions...!
@@ -64,18 +69,28 @@ export function isKey(key: string): boolean {
   return Key.safeDecode(key).success;
 }
 
-export type Spec = Pick<
-  Thought,
-  | "automaticThought"
-  | "cognitiveDistortions"
-  | "challenge"
-  | "alternativeThought"
->;
 export function create(spec: Spec, now: Date): Thought {
   const createdAt = now;
   const updatedAt = now;
   const uuid = Id.decode(uuidv4());
   return { ...spec, createdAt, updatedAt, uuid };
+}
+export function toSpec(t: Thought): Spec {
+  return _.pick(t, [
+    "automaticThought",
+    "cognitiveDistortions",
+    "challenge",
+    "alternativeThought",
+  ]);
+}
+
+export function emptySpec(): Spec {
+  return {
+    automaticThought: "",
+    cognitiveDistortions: new Set(),
+    challenge: "",
+    alternativeThought: "",
+  };
 }
 
 /**

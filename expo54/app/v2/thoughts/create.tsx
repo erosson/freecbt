@@ -20,6 +20,7 @@ import Carousel, {
   ICarouselInstance,
   Pagination,
 } from "react-native-reanimated-carousel";
+import z from "zod";
 
 const slideNames = [
   "automatic-thought",
@@ -27,7 +28,8 @@ const slideNames = [
   "challenge",
   "alternative-thought",
 ] as const;
-type SlideName = (typeof slideNames)[number];
+export const SlideName = z.enum(slideNames);
+export type SlideName = z.infer<typeof SlideName>;
 const slideNums = new Map<SlideName, number>(
   slideNames.map((name, i) => [name, i])
 );
@@ -37,7 +39,7 @@ export default function Create() {
 }
 
 function Ready({ model, dispatch, style: s, translate: t }: ModelLoadedProps) {
-  const [value, setValue] = useState(emptyForm());
+  const [value, setValue] = useState(Thought.emptySpec());
   return (
     <View style={[s.view]}>
       <View style={[s.flexRow, s.justifyBetween, s.container]}>
@@ -71,23 +73,20 @@ function Ready({ model, dispatch, style: s, translate: t }: ModelLoadedProps) {
   );
 }
 
-function emptyForm(): Thought.Spec {
-  return {
-    automaticThought: "",
-    cognitiveDistortions: new Set(),
-    challenge: "",
-    alternativeThought: "",
-  };
-}
-
+/**
+ * Used for both the create and edit pages.
+ */
 export function CBTForm(
   props: Pick<ModelLoadedProps, "model" | "style" | "translate"> & {
+    slide?: SlideName; // used only for editing - select this slide on page load
     value: Thought.Spec;
     onChange?: (t: Thought.Spec) => void;
     onSubmit?: () => void;
   }
 ) {
   const { model, style: s } = props;
+  const defaultIndex = props.slide ? slideNums.get(props.slide) ?? 0 : 0;
+  console.log("defaultIndex", { slide: props.slide, defaultIndex });
   const ref = React.useRef<ICarouselInstance>(null);
   const progress = useSharedValue<number>(0);
   const onPressPagination = (index: number) => {
@@ -110,7 +109,7 @@ export function CBTForm(
           Keyboard.dismiss();
         }}
         loop={false}
-        // defaultIndex={slideNums.get(props.slideToShow) ?? 0}
+        defaultIndex={defaultIndex}
         mode="parallax"
         modeConfig={{
           parallaxScrollingScale: 0.9,
@@ -162,10 +161,6 @@ function CBTFormItem(
               onChangeText={(v) => onChange({ ...value, automaticThought: v })}
             />
           </>
-          // <AutomaticThought
-          //   value={props.automatic}
-          //   onChange={props.onChangeAutomaticThought}
-          // />
         );
       }
       case "distortions": {
@@ -221,10 +216,6 @@ function CBTFormItem(
               })}
             </ScrollView>
           </>
-          // <Distortions
-          //   selected={props.distortions}
-          //   onChange={props.onChangeDistortion}
-          // />
         );
       }
       case "challenge": {
@@ -241,10 +232,6 @@ function CBTFormItem(
               onChangeText={(v) => onChange({ ...value, challenge: v })}
             />
           </>
-          // <Challenge
-          //   value={props.challenge}
-          //   onChange={props.onChangeChallenge}
-          // />
         );
       }
       case "alternative-thought": {
@@ -265,24 +252,6 @@ function CBTFormItem(
             />
             <Button onPress={onSubmit} title={t("cbt_form.submit")} />
           </>
-          // <>
-          //   <AlternativeThought
-          //     value={props.alternative}
-          //     onChange={props.onChangeAlternativeThought}
-          //   />
-
-          //   <View
-          //     style={{
-          //       marginTop: 12,
-          //     }}
-          //   >
-          //     <ActionButton
-          //       title={i18n.t("cbt_form.submit")}
-          //       width="100%"
-          //       onPress={props.onSave}
-          //     />
-          //   </View>
-          // </>
         );
       }
       default: {

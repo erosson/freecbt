@@ -14,6 +14,7 @@ export type Action = ReturnType<
   | typeof setNow
   | typeof createThought
   | typeof deleteThought
+  | typeof updateThought
 >;
 export type Dispatch = (a: Action) => void;
 
@@ -46,4 +47,7 @@ export function createThought(value: Thought.Spec) {
 }
 export function deleteThought(value: Thought.Id) {
   return { action: "delete-thought", value } as const;
+}
+export function updateThought(value: Thought.Thought) {
+  return { action: "update-thought", value } as const;
 }
