@@ -61,6 +61,7 @@ function style(c: Theme) {
     underline: { textDecorationLine: "underline" },
     selfStart: { alignSelf: "flex-start" },
     alignMiddle: { verticalAlign: "middle" },
+    selfCenter: { alignSelf: "center" },
     hFull: { height: "100%" },
 
     m1: { margin: spacing * 1 },
