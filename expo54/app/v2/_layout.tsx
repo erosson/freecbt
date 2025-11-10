@@ -37,8 +37,8 @@ function AuthReady(props: ModelLoadedProps & { children: React.ReactNode }) {
     setValue(newValue.replace(/[^0-9]/g, ""));
   }
   function onSubmit() {
-    setValue("");
     // reset text entry. this won't matter if auth succeeds
+    setValue("");
     if (value === model.settings.pincode) {
       // successful auth
       dispatch(Action.setSessionAuthed(true));
@@ -56,17 +56,22 @@ function AuthReady(props: ModelLoadedProps & { children: React.ReactNode }) {
     return props.children;
   } else {
     return (
-      <View style={[s.view]}>
-        <View style={[s.container]}>
-          <Text style={[s.text]}>unauthed</Text>
+      <View style={[s.centeredView]}>
+        <View style={[s.container, s.itemsCenter]}>
+          <Text style={[s.header]}>{t("lock_screen.auth")}</Text>
           <TextInput
-            style={[s.bg, s.border, s.rounded, s.text]}
+            style={[s.bg, s.border, s.rounded, s.text, s.header, s.textCenter]}
             keyboardType="number-pad"
             secureTextEntry={true}
             maxLength={4}
             value={value}
+            autoFocus={true}
             onChangeText={onChangeText}
             onSubmitEditing={onSubmit}
+            // don't attempt to blur
+            submitBehavior="submit"
+            // that wasn't good enough, keep focus
+            onBlur={(e) => e.target.focus()}
           />
           <Button title="submit" onPress={onSubmit} />
         </View>

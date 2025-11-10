@@ -64,6 +64,7 @@ function style(c: Theme) {
     selfCenter: { alignSelf: "center" },
     hFull: { height: "100%" },
     wFull: { width: "100%" },
+    textCenter: { textAlign: "center" },
 
     m1: { margin: spacing * 1 },
     m2: { margin: spacing * 2 },
