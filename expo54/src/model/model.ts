@@ -14,6 +14,7 @@ export type ColorScheme = "light" | "dark";
 export interface Ready {
   status: "ready";
   now: Date;
+  sessionAuthed: boolean;
   distortionData: Distortion.Data;
   thoughts: ReadonlyMap<Thought.Key, Thought.Thought>;
   thoughtParseErrors: ReadonlyMap<Thought.Key, z.ZodError<Thought.Thought>>;
@@ -82,8 +83,14 @@ function updateReady(m: Ready, a: Action.Action): readonly [Model, Cmd.List] {
     case "model-ready": {
       return [m, []];
     }
+    case "set-session-authed": {
+      return [{ ...m, sessionAuthed: a.value }, []];
+    }
     case "set-pincode": {
-      return updateSettings(m, { pincode: a.value });
+      return updateSettings(
+        { ...m, sessionAuthed: false },
+        { pincode: a.value }
+      );
     }
     case "set-history-label": {
       return updateSettings(m, { historyLabels: a.value });

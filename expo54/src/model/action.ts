@@ -5,6 +5,7 @@ import * as Settings from "./settings";
 
 export type Action = ReturnType<
   | typeof modelReady
+  | typeof setSessionAuthed
   | typeof setPincode
   | typeof setHistoryLabel
   | typeof setLocale
@@ -18,6 +19,9 @@ export type Action = ReturnType<
 >;
 export type Dispatch = (a: Action) => void;
 
+export function setSessionAuthed(value: boolean) {
+  return { action: "set-session-authed", value } as const;
+}
 export function setTheme(value: Model.ColorScheme | null) {
   return { action: "set-theme", value } as const;
 }
