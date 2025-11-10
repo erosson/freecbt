@@ -92,6 +92,7 @@ function useCmdRunner(data: Distortion.Data, storage: AsyncStorageStatic) {
         const deviceWindow = Dimensions.get("window");
         const m = Model.ready({
           now,
+          sessionAuthed: false,
           distortionData: DistortionData,
           deviceColorScheme,
           deviceLocale,
@@ -114,6 +115,7 @@ function useCmdRunner(data: Distortion.Data, storage: AsyncStorageStatic) {
         await t.remove(c.value);
         return;
       }
+      // TODO delete this, it's better for forms to return <Redirect href=...> when they're done
       case "navigate": {
         router.navigate(c.value);
         return;

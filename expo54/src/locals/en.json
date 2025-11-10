@@ -317,6 +317,7 @@
   },
   "lock_screen": {
     "auth": "Please enter your passcode.",
-    "update": "Please set a passcode."
+    "update": "Please set a passcode.",
+    "confirm": "Please re-enter your passcode to confirm."
   }
 }

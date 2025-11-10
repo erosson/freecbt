@@ -88,7 +88,7 @@ function updateReady(m: Ready, a: Action.Action): readonly [Model, Cmd.List] {
     }
     case "set-pincode": {
       return updateSettings(
-        { ...m, sessionAuthed: false },
+        { ...m, sessionAuthed: !!a.value },
         { pincode: a.value }
       );
     }

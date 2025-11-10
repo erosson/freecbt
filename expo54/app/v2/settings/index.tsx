@@ -5,6 +5,7 @@ import { useStyle, useTheme } from "@/src/hooks/use-style";
 import { Action, Model, Settings } from "@/src/model";
 import { LinkButton } from "@/src/view/view";
 import { Picker } from "@react-native-picker/picker";
+import { Link } from "expo-router";
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
@@ -36,7 +37,12 @@ function Ready({ model, dispatch, translate: t }: ModelLoadedProps) {
           s={s}
           t={t}
         />
-        <PincodeForm isSet={!!model.settings.pincode} s={s} t={t} />
+        <LockUpdateForm
+          dispatch={dispatch}
+          isSet={!!model.settings.pincode}
+          s={s}
+          t={t}
+        />
         <HistoryForm
           value={model.settings.historyLabels}
           dispatch={dispatch}
@@ -100,29 +106,49 @@ function ThemeForm(props: {
     </>
   );
 }
-function PincodeForm(props: { isSet: boolean; s: PageStyle; t: TranslateFn }) {
-  const { isSet, s, t } = props;
+function LockUpdateForm(props: {
+  dispatch: (a: Action.Action) => void;
+  isSet: boolean;
+  s: PageStyle;
+  t: TranslateFn;
+}) {
+  const { dispatch, isSet, s, t } = props;
   return (
     <>
       <Text style={[s.subheader]}>{t("settings.pincode.header")}</Text>
       <Text style={[s.text]}>{t("settings.pincode.description")}</Text>
       {isSet ? (
         <>
-          <TouchableOpacity style={[s.btn]}>
-            <Text style={[s.buttonText]}>
-              {t("settings.pincode.button.update")}
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={[s.btn]}>
+          <Link
+            style={[s.btn, s.flex1, { fontWeight: "normal" }]}
+            href={Routes.lockUpdateV2()}
+          >
+            <TouchableOpacity style={[s.flex1]}>
+              <Text style={[s.buttonText]}>
+                {t("settings.pincode.button.update")}
+              </Text>
+            </TouchableOpacity>
+          </Link>
+          <TouchableOpacity
+            style={[s.btn]}
+            onPress={() => dispatch(Action.setPincode(null))}
+          >
             <Text style={[s.buttonText]}>
               {t("settings.pincode.button.clear")}
             </Text>
           </TouchableOpacity>
         </>
       ) : (
-        <TouchableOpacity style={[s.btn]}>
-          <Text style={[s.buttonText]}>{t("settings.pincode.button.set")}</Text>
-        </TouchableOpacity>
+        <Link
+          style={[s.btn, s.flex1, { fontWeight: "normal" }]}
+          href={Routes.lockUpdateV2()}
+        >
+          <TouchableOpacity style={[s.flex1]}>
+            <Text style={[s.buttonText]}>
+              {t("settings.pincode.button.set")}
+            </Text>
+          </TouchableOpacity>
+        </Link>
       )}
     </>
   );
