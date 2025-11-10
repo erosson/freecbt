@@ -155,7 +155,7 @@ function Export(props: { archive: string }): React.JSX.Element {
               </Row>
             </>
           ) : (
-            <Text>Error: sharing api not available</Text>
+            <Text>{i18n.t("backup_screen.export.share.unavailable")}</Text>
           )
       )}
       {isCopied === "file" ? (

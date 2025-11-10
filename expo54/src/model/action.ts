@@ -1,5 +1,5 @@
 import type { LocaleTag } from "@/src/hooks/use-i18n";
-import { Thought } from ".";
+import { Archive, Thought } from ".";
 import * as Model from "./model";
 import * as Settings from "./settings";
 
@@ -16,6 +16,7 @@ export type Action = ReturnType<
   | typeof createThought
   | typeof deleteThought
   | typeof updateThought
+  | typeof importArchive
 >;
 export type Dispatch = (a: Action) => void;
 
@@ -54,4 +55,7 @@ export function deleteThought(value: Thought.Id) {
 }
 export function updateThought(value: Thought.Thought) {
   return { action: "update-thought", value } as const;
+}
+export function importArchive(value: Archive.Archive) {
+  return { action: "import-archive", value } as const;
 }

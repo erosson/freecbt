@@ -285,7 +285,8 @@
         "success": "Copied to file!"
       },
       "share": {
-        "button": "Export and share your FreeCBT data"
+        "button": "Export and share your FreeCBT data",
+        "unavailable": "Error: sharing not available on this device"
       }
     },
     "import": {

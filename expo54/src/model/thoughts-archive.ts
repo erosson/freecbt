@@ -7,12 +7,12 @@ export const VERSION = "Archive-v2";
 
 export const Json = z.object({
   v: z.string().optional(),
-  thoughts: Thought.Json.array(),
+  thoughts: Thought.Json.array().readonly(),
 });
 export type Json = z.infer<typeof Json>;
 
 export const Archive = z.object({
-  thoughts: Thought.Thought.array(),
+  thoughts: Thought.Thought.array().readonly(),
 });
 export type Archive = z.infer<typeof Archive>;
 

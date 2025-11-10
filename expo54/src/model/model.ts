@@ -1,5 +1,6 @@
 import _ from "lodash";
 import { z } from "zod";
+import { Model } from ".";
 import { Routes } from "..";
 import type { LocaleTag } from "../hooks/use-i18n";
 import * as Action from "./action";
@@ -7,6 +8,7 @@ import * as Cmd from "./cmd";
 import * as Distortion from "./distortion";
 import * as Settings from "./settings";
 import * as Thought from "./thought";
+import * as Archive from "./thoughts-archive";
 
 export type Model = Loading | Ready;
 export type Loading = typeof loading;
@@ -52,6 +54,9 @@ export function locale(m: Model): LocaleTag {
 }
 export function thoughtsList(m: Ready): readonly Thought.Thought[] {
   return _.sortBy(Array.from(m.thoughts.values()), (t) => t.createdAt);
+}
+export function toArchive(m: Ready): Archive.Archive {
+  return { thoughts: thoughtsList(m) };
 }
 
 type Pair<A, B> = readonly [A, B];
@@ -122,6 +127,21 @@ function updateReady(m: Ready, a: Action.Action): readonly [Model, Cmd.List] {
       thoughts.delete(k);
       const m2: Model = { ...m, thoughts };
       return [m2, [Cmd.deleteThought(k)]];
+    }
+    case "import-archive": {
+      const thoughts = new Map(
+        a.value.thoughts.map((t) => [Thought.key(t), t] as const)
+      );
+      const m2: Model = { ...m, thoughts };
+      return [
+        m2,
+        [
+          ...Model.thoughtsList(m).map((t) =>
+            Cmd.deleteThought(Thought.key(t))
+          ),
+          ...a.value.thoughts.map((t) => Cmd.writeThought(t)),
+        ],
+      ];
     }
     default: {
       const _e: never = a;

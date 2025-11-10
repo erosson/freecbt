@@ -100,6 +100,7 @@ function style(c: Theme) {
     pt4: { paddingTop: spacing * 4 },
 
     text: { color: c.text },
+    errorText: { color: c.text, fontFamily: "ui-monospace" },
     bg: { backgroundColor: c.background },
     bgSelected: { backgroundColor: c.selectedBackground },
     border: { borderWidth: 1, borderColor: c.border },
