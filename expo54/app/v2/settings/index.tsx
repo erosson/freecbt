@@ -51,14 +51,24 @@ function Ready({ model, dispatch, translate: t }: ModelLoadedProps) {
         />
 
         <Text style={[s.subheader]}>{t("settings.backup.header")}</Text>
-        <TouchableOpacity style={[s.btn]}>
-          <Text style={[s.buttonText]}>{t("settings.backup.button")}</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={[s.btn]}>
-          <Text style={[s.buttonText]}>
-            {t("settings.backup.export-button")}
-          </Text>
-        </TouchableOpacity>
+        <Link
+          style={[s.btn, s.flex1, { fontWeight: "normal" }]}
+          href={Routes.backupV2()}
+        >
+          <TouchableOpacity style={[s.flex1]}>
+            <Text style={[s.buttonText]}>{t("settings.backup.button")}</Text>
+          </TouchableOpacity>
+        </Link>
+        <Link
+          style={[s.btn, s.flex1, { fontWeight: "normal" }]}
+          href={Routes.exportV2()}
+        >
+          <TouchableOpacity style={[s.flex1]}>
+            <Text style={[s.buttonText]}>
+              {t("settings.backup.export-button")}
+            </Text>
+          </TouchableOpacity>
+        </Link>
 
         <LocaleForm
           value={model.settings.locale}
