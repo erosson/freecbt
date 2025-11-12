@@ -80,6 +80,5 @@ export function helpV2(): Href {
   return "/v2/help";
 }
 export function introV2(): Href {
-  // return "/v2/help/intro";
-  return "/v2";
+  return "/v2/help/intro";
 }

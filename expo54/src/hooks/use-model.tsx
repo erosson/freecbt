@@ -75,7 +75,7 @@ function useCmdRunner(data: Distortion.Data, storage: AsyncStorageStatic) {
   );
   const timecl = setInterval(
     () => lastDispatch(Action.setNow(new Date())),
-    100
+    1000
   );
 
   return async (c: Cmd.Cmd, dispatch: (a: Action.Action) => void) => {

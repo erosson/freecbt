@@ -29,33 +29,32 @@ function Ready(props: ModelLoadedProps) {
       </View>
       <View style={[s.flexCol, s.container]}>
         <View style={[s.flexRow]}>
-          <TouchableOpacity
+          <Link
             style={[s.flex1, s.border, s.rounded, s.p2, s.button]}
+            href="https://freecbt.erosson.org/explanation/?ref=quirk"
           >
-            <Link
-              style={[s.flex1]}
-              href="https://freecbt.erosson.org/explanation/?ref=quirk"
-            >
+            <TouchableOpacity style={[s.flex1]}>
               <Text style={[s.buttonText]}>
                 {t("onboarding_screen.header")}
               </Text>
-            </Link>
-          </TouchableOpacity>
-          <TouchableOpacity
+            </TouchableOpacity>
+          </Link>
+          <Link
             style={[
               s.flex1,
               s.border,
               s.rounded,
               s.p2,
               s.bg,
-              s.itemsCenter,
+              s.textCenter,
               s.p3,
             ]}
+            href={Routes.introV2()}
           >
-            <Link style={[s.flex1]} href={Routes.introV2()}>
+            <TouchableOpacity style={[s.flex1]}>
               <Text style={[s.text]}>{t("explanation_screen.intro")}</Text>
-            </Link>
-          </TouchableOpacity>
+            </TouchableOpacity>
+          </Link>
         </View>
         {model.distortionData.list.map((d, i) => (
           <View key={d.slug} style={[s.my2]}>

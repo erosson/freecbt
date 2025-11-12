@@ -14,13 +14,13 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { useSharedValue } from "react-native-reanimated";
+import { SharedValue, useSharedValue } from "react-native-reanimated";
 import Carousel, {
   CarouselRenderItem,
   ICarouselInstance,
   Pagination,
 } from "react-native-reanimated-carousel";
-import z from "zod";
+import { z } from "zod";
 
 const slideNames = [
   "automatic-thought",
@@ -86,7 +86,6 @@ export function CBTForm(
 ) {
   const { model, style: s } = props;
   const defaultIndex = props.slide ? slideNums.get(props.slide) ?? 0 : 0;
-  console.log("defaultIndex", { slide: props.slide, defaultIndex });
   const ref = React.useRef<ICarouselInstance>(null);
   const progress = useSharedValue<number>(0);
   const onPressPagination = (index: number) => {
@@ -102,7 +101,7 @@ export function CBTForm(
         ref={ref}
         data={[...slideNames]}
         onProgressChange={progress}
-        renderItem={CBTFormItem({ ...props, progress: progress.get() })}
+        renderItem={CBTFormItem({ ...props, progress })}
         width={width}
         height={model.deviceWindow.height - 150}
         onSnapToItem={(index) => {
@@ -135,7 +134,7 @@ export function CBTForm(
 
 function CBTFormItem(
   props: Pick<ModelLoadedProps, "model" | "style" | "translate"> & {
-    progress: number;
+    progress: SharedValue<number>;
     value: Thought.Spec;
     onChange?: (t: Thought.Spec) => void;
     onSubmit?: () => void;
@@ -187,7 +186,7 @@ function CBTFormItem(
                 function onPress() {
                   // ignore button-presses if the distortion slide is not focused.
                   // this prevents pressing the button while swiping away from the distortion list.
-                  if (progress !== 1) return;
+                  if (progress.get() !== slideNums.get("distortions")) return;
 
                   const ds = new Set(value.cognitiveDistortions);
                   // toggle
