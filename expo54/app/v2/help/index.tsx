@@ -1,0 +1,79 @@
+import { Routes } from "@/src";
+import { LoadModel, ModelLoadedProps } from "@/src/hooks/use-model";
+import { ImagePath } from "@/src/view";
+import { LinkButton } from "@/src/view/view";
+import { Link } from "expo-router";
+import React from "react";
+import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
+
+export default function Index() {
+  return <LoadModel ready={Ready} />;
+}
+function Ready(props: ModelLoadedProps) {
+  const { model, style: s, translate: t } = props;
+  const img = (i: number) => ImagePath.bubbles[i % ImagePath.bubbles.length];
+  return (
+    <ScrollView style={[s.view]}>
+      <View style={[s.flexRow, s.justifyBetween, s.container]}>
+        <Text style={[s.header]}>{t("explanation_screen.header")}</Text>
+        <View>
+          <View style={[s.flexCol]}>
+            <LinkButton
+              style={s}
+              href={Routes.thoughtCreateV2()}
+              label={t("accessibility.new_thought_button")}
+              icon="message-circle"
+            />
+          </View>
+        </View>
+      </View>
+      <View style={[s.flexCol, s.container]}>
+        <View style={[s.flexRow]}>
+          <TouchableOpacity
+            style={[s.flex1, s.border, s.rounded, s.p2, s.button]}
+          >
+            <Link
+              style={[s.flex1]}
+              href="https://freecbt.erosson.org/explanation/?ref=quirk"
+            >
+              <Text style={[s.buttonText]}>
+                {t("onboarding_screen.header")}
+              </Text>
+            </Link>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[
+              s.flex1,
+              s.border,
+              s.rounded,
+              s.p2,
+              s.bg,
+              s.itemsCenter,
+              s.p3,
+            ]}
+          >
+            <Link style={[s.flex1]} href={Routes.introV2()}>
+              <Text style={[s.text]}>{t("explanation_screen.intro")}</Text>
+            </Link>
+          </TouchableOpacity>
+        </View>
+        {model.distortionData.list.map((d, i) => (
+          <View key={d.slug} style={[s.my2]}>
+            <Text style={[s.subheader]}>{t(d.labelKey)}</Text>
+            {/* <Text style={[s.text]}>{t(d.descriptionKey)}</Text> */}
+            <Text style={[s.text]}>
+              {d.explanationKeys.map((tk) => t(tk)).join("\n\n")}
+            </Text>
+
+            <View style={[s.flexRow, s.my2]}>
+              <Image source={img(i)} style={[s.bubble, s.m2]} />{" "}
+              <Text style={[s.text, s.border, s.rounded, s.p2]}>
+                {t(d.explanationThoughtKey)}
+              </Text>
+            </View>
+          </View>
+        ))}
+      </View>
+    </ScrollView>
+  );
+}

@@ -50,7 +50,15 @@ function style(c: Theme) {
   // Tailwind-style utility classes.
   // Very incomplete, feel free to expand. Try to match tailwind's names.
   const U = StyleSheet.create({
-    rounded: { borderRadius: 2 },
+    rounded: { borderRadius: 8 },
+    roundedXs: { borderRadius: 2 },
+    roundedSm: { borderRadius: 4 },
+    roundedMd: { borderRadius: 6 },
+    roundedLg: { borderRadius: 8 },
+    roundedXl: { borderRadius: 12 },
+    rounded2xl: { borderRadius: 16 },
+    rounded3xl: { borderRadius: 24 },
+    rounded4xl: { borderRadius: 32 },
     justifyCenter: { justifyContent: "center" },
     itemsCenter: { alignItems: "center" },
     itemsStart: { alignItems: "flex-start" },
@@ -186,6 +194,7 @@ function style(c: Theme) {
     selectedText: { color: c.selectedText },
     paginationDot: { backgroundColor: c.paginationDot, borderRadius: 50 },
     activePaginationDot: { backgroundColor: c.text, borderRadius: 50 },
+    bubble: { width: 24, height: 24 },
   });
 }
 export type Style = ReturnType<typeof style>;

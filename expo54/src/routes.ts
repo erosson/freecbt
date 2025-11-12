@@ -49,10 +49,6 @@ export function export_(): Href {
   return "/export";
 }
 
-export function helpV2(): Href {
-  // return "/v2/help";
-  return "/v2";
-}
 export function settingsV2(): Href {
   return "/v2/settings";
 }
@@ -79,4 +75,11 @@ export function backupV2(): Href {
 }
 export function exportV2(): Href {
   return "/v2/settings/export";
+}
+export function helpV2(): Href {
+  return "/v2/help";
+}
+export function introV2(): Href {
+  // return "/v2/help/intro";
+  return "/v2";
 }

@@ -1,7 +1,7 @@
 import { Routes } from "@/src";
 import { LoadModel, ModelLoadedProps } from "@/src/hooks/use-model";
 import { Distortion, Model, Thought } from "@/src/model";
-import { ImagePath } from "@/src/view/path";
+import { ImagePath } from "@/src/view";
 import { LinkButton } from "@/src/view/view";
 import { Link, Redirect, Unmatched, useLocalSearchParams } from "expo-router";
 import React from "react";
