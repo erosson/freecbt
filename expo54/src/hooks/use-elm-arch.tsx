@@ -27,7 +27,7 @@ type ElmArchCtxValue<M, A> = readonly [M, (a: A) => void];
 interface ElmArchProviderProps<M, A, C> {
   init: readonly [M, readonly C[]];
   update: (m: M, a: A) => readonly [M, readonly C[]];
-  runner: (d: (a: A) => void) => (c: C) => void;
+  runner: (d: (a: A) => void) => (c: C) => void | Promise<void>;
   children: React.ReactNode;
 }
 interface ElmArchCtx<M, A, C> {

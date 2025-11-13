@@ -17,27 +17,35 @@ import { Style, useStyle } from "./use-style";
 
 const Ctx = createElmArch<Model.Model, Action.Action, Cmd.Cmd>();
 
-export function ModelProvider(props: { children: React.ReactNode }) {
+export function ModelProvider(props: {
+  ctx?: typeof Ctx;
+  children: React.ReactNode;
+}) {
   const runner = useCmdRunner(DistortionData, AsyncStorage);
+  const ctx = props.ctx ?? Ctx;
   return (
-    <Ctx.Provider init={Model.init} update={Model.update} runner={runner}>
+    <ctx.Provider init={Model.init} update={Model.update} runner={runner}>
       {props.children}
-    </Ctx.Provider>
+    </ctx.Provider>
   );
 }
-export function ModelI18nProvider(props: { children: React.ReactNode }) {
-  const [m] = useModel();
+export function ModelI18nProvider(props: {
+  ctx?: typeof Ctx;
+  children: React.ReactNode;
+}) {
+  const [m] = useModel(props.ctx);
   const locale = Model.locale(m);
   return <I18nProvider locale={locale}>{props.children}</I18nProvider>;
 }
-export function useModel() {
-  return useElmArch(Ctx);
+export function useModel(ctx?: typeof Ctx) {
+  return useElmArch(ctx ?? Ctx);
 }
 export function LoadModel(props: {
+  ctx?: typeof Ctx;
   loading?: () => React.JSX.Element;
   ready: ModelLoadedComponent;
 }): React.ReactNode {
-  const [model, dispatch] = useModel();
+  const [model, dispatch] = useModel(props.ctx);
   const style = useStyle(Model.colorScheme(model));
   const translate = useTranslate();
   return Model.match(model, {
