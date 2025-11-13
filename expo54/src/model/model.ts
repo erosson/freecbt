@@ -1,8 +1,7 @@
 import _ from "lodash";
 import { z } from "zod";
-import { Model } from ".";
-import { Routes } from "..";
 import type { LocaleTag } from "../hooks/use-i18n";
+import * as Routes from "../routes";
 import * as Action from "./action";
 import * as Cmd from "./cmd";
 import * as Distortion from "./distortion";
@@ -136,9 +135,7 @@ function updateReady(m: Ready, a: Action.Action): readonly [Model, Cmd.List] {
       return [
         m2,
         [
-          ...Model.thoughtsList(m).map((t) =>
-            Cmd.deleteThought(Thought.key(t))
-          ),
+          ...thoughtsList(m).map((t) => Cmd.deleteThought(Thought.key(t))),
           ...a.value.thoughts.map((t) => Cmd.writeThought(t)),
         ],
       ];
