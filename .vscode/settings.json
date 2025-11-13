@@ -7,5 +7,6 @@
     "source.fixAll": "explicit",
     "source.organizeImports": "explicit",
     "source.sortMembers": "explicit"
-  }
+  },
+  "jest.jestCommandLine": "yarn test"
 }
