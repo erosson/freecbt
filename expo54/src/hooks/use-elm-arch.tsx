@@ -15,13 +15,19 @@
  *   Execute impure, side-effectful code. Any and all side effects in your program go here.
  *   (Elm doesn't make you write this one)
  */
-import React, { createContext, useContext, useEffect, useReducer } from "react";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useReducer,
+} from "react";
 
 type ElmArchCtxValue<M, A> = readonly [M, (a: A) => void];
 interface ElmArchProviderProps<M, A, C> {
   init: readonly [M, readonly C[]];
   update: (m: M, a: A) => readonly [M, readonly C[]];
-  runner: (c: C, d: (a: A) => void) => void;
+  runner: (d: (a: A) => void) => (c: C) => void;
   children: React.ReactNode;
 }
 interface ElmArchCtx<M, A, C> {
@@ -54,13 +60,14 @@ export function createElmArch<M, A, C>(): ElmArchCtx<M, A, C> {
       },
       init
     );
+    const run = useMemo(() => runner(dispatch), [runner]);
     useEffect(() => {
       if (!lastCmds.length) return;
       for (const cmd of lastCmds) {
-        runner(cmd, dispatch);
+        run(cmd);
       }
       dispatch(clearCmdsAction);
-    }, [runner, lastCmds]);
+    }, [run, lastCmds]);
     return <Ctx value={[model, dispatch]}>{children}</Ctx>;
   }
   return { reactCtx: Ctx, Provider };
@@ -72,7 +79,7 @@ export function createPureElmArch<M, A>(): PureElmArchCtx<M, A> {
     return arch.Provider({
       init: [props.init, []],
       update: (m, a) => [props.update(m, a), []],
-      runner: () => {},
+      runner: () => () => {},
       children: props.children,
     });
   }

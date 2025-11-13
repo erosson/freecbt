@@ -96,20 +96,19 @@ function runner() {
   const spy = { persistCount: 0 };
   return [
     spy,
-    (c: Cmd, dispatch: (a: Action) => void) => {
-      // (dispatch: (a: Action) => void) => {
-      // return (c: Cmd) => {
-      switch (c.cmd) {
-        case "persist": {
-          spy.persistCount += 1;
-          return;
+    (dispatch: (a: Action) => void) => {
+      return (c: Cmd) => {
+        switch (c.cmd) {
+          case "persist": {
+            spy.persistCount += 1;
+            return;
+          }
+          default: {
+            const _e: never = c.cmd;
+            throw new Error(`no such cmd: ${_e}`);
+          }
         }
-        default: {
-          const _e: never = c.cmd;
-          throw new Error(`no such cmd: ${_e}`);
-        }
-      }
-      // };
+      };
     },
   ] as const;
 }
