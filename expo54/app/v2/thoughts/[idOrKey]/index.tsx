@@ -6,6 +6,7 @@ import { LinkButton } from "@/src/view/view";
 import { Link, Redirect, Unmatched, useLocalSearchParams } from "expo-router";
 import React from "react";
 import { Image, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Show() {
   return <LoadModel ready={Ready} />;
@@ -24,7 +25,7 @@ function Ready({ model, style: s, translate: t }: ModelLoadedProps) {
     slugs.has(d.slug)
   );
   return (
-    <View style={[s.view]}>
+    <SafeAreaView style={[s.view]}>
       <View style={[s.flexRow, s.justifyBetween, s.container]}>
         <Text style={[s.header]}>{t("cbt_form.header")}</Text>
         <View>
@@ -112,7 +113,7 @@ function Ready({ model, style: s, translate: t }: ModelLoadedProps) {
           </View>
         </Link>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 

@@ -4,14 +4,15 @@ import { Archive, Model, Thought } from "@/src/model";
 import { DownloadOrShareLink } from "@/src/view/download-or-share";
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Backup() {
   return <LoadModel ready={Ready} />;
 }
 export function Ready(props: ModelLoadedProps) {
-  const { model, style: s, translate: t } = props;
+  const { style: s, translate: t } = props;
   return (
-    <View style={[s.view]}>
+    <SafeAreaView style={[s.view]}>
       <View style={[s.container]}>
         <Text style={[s.header]}>{t("export_screen.header")}</Text>
         <Text style={[s.text]}>{t("export_screen.description")}</Text>
@@ -19,7 +20,7 @@ export function Ready(props: ModelLoadedProps) {
         <CSVLink {...props} />
         <JSONLink {...props} />
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 

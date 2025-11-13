@@ -6,6 +6,7 @@ import { Feather } from "@expo/vector-icons";
 import { Link } from "expo-router";
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Index() {
   return <LoadModel ready={Ready} />;
@@ -15,7 +16,7 @@ function Ready(props: ModelLoadedProps) {
   const list = Model.thoughtsByDate(model);
   const today = new Date().toDateString();
   return (
-    <View style={[s.view]}>
+    <SafeAreaView style={[s.view]}>
       <View style={[s.flexRow, s.justifyBetween, s.container]}>
         <Text style={[s.header]}>{t("cbt_list.header")}</Text>
         <View>
@@ -63,7 +64,7 @@ function Ready(props: ModelLoadedProps) {
           ))
         )}
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 function ThoughtItem(props: ModelLoadedProps & { thought: Thought.Thought }) {

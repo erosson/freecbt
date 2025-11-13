@@ -8,16 +8,19 @@ import { Action } from "@/src/model";
 import { Stack } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { AppState, Button, Text, TextInput, View } from "react-native";
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
 export default function Layout() {
   return (
-    <ModelProvider>
-      <ModelI18nProvider>
-        <AuthGateway>
-          <Stack screenOptions={{ headerShown: false }} />
-        </AuthGateway>
-      </ModelI18nProvider>
-    </ModelProvider>
+    <SafeAreaProvider>
+      <ModelProvider>
+        <ModelI18nProvider>
+          <AuthGateway>
+            <Stack screenOptions={{ headerShown: false }} />
+          </AuthGateway>
+        </ModelI18nProvider>
+      </ModelProvider>
+    </SafeAreaProvider>
   );
 }
 
@@ -76,7 +79,7 @@ export function LockForm(props: {
     setValue(newValue.replace(/[^0-9]/g, ""));
   }
   return (
-    <View style={[s.centeredView]}>
+    <SafeAreaView style={[s.centeredView]}>
       <View style={[s.container, s.itemsCenter]}>
         <Text style={[s.header]}>{header}</Text>
         <TextInput
@@ -95,6 +98,6 @@ export function LockForm(props: {
         />
         <Button title="submit" onPress={onSubmit} />
       </View>
-    </View>
+    </SafeAreaView>
   );
 }

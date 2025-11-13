@@ -5,6 +5,7 @@ import * as DocumentPicker from "expo-document-picker";
 import * as FileSystem from "expo-file-system";
 import React, { useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Backup() {
   return <LoadModel ready={Ready} />;
@@ -14,7 +15,7 @@ export function Ready(props: ModelLoadedProps) {
   const parser = Archive.createParsers(model.distortionData);
   const toArchive = () => parser.fromString.encode(Model.toArchive(model));
   return (
-    <View style={[s.view]}>
+    <SafeAreaView style={[s.view]}>
       <View style={[s.container]}>
         <Text style={[s.header]}>{t("backup_screen.header")}</Text>
         <Text style={[s.text]}>{t("backup_screen.export.description")}</Text>
@@ -28,7 +29,7 @@ export function Ready(props: ModelLoadedProps) {
           translate={t}
         />
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 

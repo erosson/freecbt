@@ -5,6 +5,7 @@ import { LinkButton } from "@/src/view/view";
 import { useLocalSearchParams } from "expo-router";
 import React, { useState } from "react";
 import { Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { useThoughtFromParams } from ".";
 import { CBTForm, SlideName } from "../create";
 
@@ -21,7 +22,7 @@ function Ready({ model, dispatch, style: s, translate: t }: ModelLoadedProps) {
   );
   if (res.status === "error") return res.error;
   return (
-    <View style={[s.view]}>
+    <SafeAreaView style={[s.view]}>
       <View style={[s.flexRow, s.justifyBetween, s.container]}>
         <Text style={[s.header]}>{t("cbt_form.header")}</Text>
         <View>
@@ -58,6 +59,6 @@ function Ready({ model, dispatch, style: s, translate: t }: ModelLoadedProps) {
           )
         }
       />
-    </View>
+    </SafeAreaView>
   );
 }

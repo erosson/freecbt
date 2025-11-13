@@ -8,6 +8,7 @@ import { Picker } from "@react-native-picker/picker";
 import { Link } from "expo-router";
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Index() {
   return <LoadModel ready={Ready} />;
@@ -15,7 +16,7 @@ export default function Index() {
 function Ready({ model, dispatch, translate: t }: ModelLoadedProps) {
   const s = usePageStyle(Model.colorScheme(model));
   return (
-    <View style={[s.view]}>
+    <SafeAreaView style={[s.view]}>
       <View style={[s.flexRow, s.justifyBetween, s.container]}>
         <Text style={[s.header]}>{t("settings.header")}</Text>
         <View>
@@ -89,7 +90,7 @@ function Ready({ model, dispatch, translate: t }: ModelLoadedProps) {
 
         <DebugLink />
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 

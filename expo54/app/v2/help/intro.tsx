@@ -10,6 +10,7 @@ import Carousel, {
   ICarouselInstance,
   Pagination,
 } from "react-native-reanimated-carousel";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Index() {
   return <LoadModel ready={Ready} />;
@@ -19,7 +20,7 @@ export type SlideName = (typeof slideNames)[number];
 // export const SlideName = z.enum(slideNames);
 // export type SlideName = z.infer<typeof SlideName>;
 function Ready(props: ModelLoadedProps) {
-  const { model, style: s, translate: t } = props;
+  const { model, style: s } = props;
   const ref = React.useRef<ICarouselInstance>(null);
   const progress = useSharedValue<number>(0);
   const width = Math.min(model.deviceWindow.width, s.container.maxWidth);
@@ -32,7 +33,7 @@ function Ready(props: ModelLoadedProps) {
   };
   const slides = featureReminders ? slideNames : slideNames.slice(0, -1);
   return (
-    <View style={[s.view]}>
+    <SafeAreaView style={[s.view]}>
       <View style={[s.container]}>
         <Carousel
           ref={ref}
@@ -66,7 +67,7 @@ function Ready(props: ModelLoadedProps) {
           onPress={onPressPagination}
         />
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 

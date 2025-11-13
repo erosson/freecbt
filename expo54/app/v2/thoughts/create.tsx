@@ -20,6 +20,7 @@ import Carousel, {
   ICarouselInstance,
   Pagination,
 } from "react-native-reanimated-carousel";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { z } from "zod";
 
 const slideNames = [
@@ -41,7 +42,7 @@ export default function Create() {
 function Ready({ model, dispatch, style: s, translate: t }: ModelLoadedProps) {
   const [value, setValue] = useState(Thought.emptySpec());
   return (
-    <View style={[s.view]}>
+    <SafeAreaView style={[s.view]}>
       <View style={[s.flexRow, s.justifyBetween, s.container]}>
         <Text style={[s.header]}>{t("cbt_form.header")}</Text>
         <View>
@@ -69,7 +70,7 @@ function Ready({ model, dispatch, style: s, translate: t }: ModelLoadedProps) {
         onChange={setValue}
         onSubmit={() => dispatch(Action.createThought(value))}
       />
-    </View>
+    </SafeAreaView>
   );
 }
 
