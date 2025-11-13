@@ -3,11 +3,11 @@
  */
 import { act, renderHook, waitFor } from "@testing-library/react";
 import React from "react";
-import { Action, Cmd, Model } from "../model";
+import { Action, Cmd, Model, Thought } from "../model";
 import { createElmArch } from "./use-elm-arch";
 import { ModelProvider, useModel } from "./use-model";
 
-test("use-pure-elm-arch", async () => {
+test("use-model basics", async () => {
   const Ctx = createElmArch<Model.Model, Action.Action, Cmd.Cmd>();
   const wrapper = ({ children }: { children: React.ReactNode }) => (
     <ModelProvider ctx={Ctx}>{children}</ModelProvider>
@@ -24,8 +24,8 @@ test("use-pure-elm-arch", async () => {
   await waitFor(() => expect(model().status).toBe("ready"));
   expect(ready().thoughts.size).toBe(0);
   expect(ready().settings.theme).toBe(null);
-  // NOPE expo-router is basically untestable, and this currently redirects
-  // act(() => dispatch()(Action.createThought(Thought.emptySpec())));
+  act(() => dispatch()(Action.createThought(Thought.emptySpec())));
+  expect(ready().thoughts.size).toBe(1);
   act(() => dispatch()(Action.setTheme("dark")));
   expect(ready().settings.theme).toBe("dark");
 });

@@ -37,6 +37,14 @@ export type Settings = z.infer<typeof Settings>;
 export type HistoryLabel = Settings["historyLabels"];
 export type Pincode = Settings["pincode"];
 
+export function empty(): Settings {
+  return {
+    pincode: null,
+    historyLabels: historyLabelsDefault,
+    locale: null,
+    theme: null,
+  };
+}
 export const fromJson = z.codec(Json, Settings, {
   decode: (json: Json) => {
     const {

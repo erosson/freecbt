@@ -2,6 +2,8 @@ import { Platform } from "react-native";
 
 // https://react-native-async-storage.github.io/async-storage/docs/advanced/jest/
 jest.mock("@react-native-async-storage/async-storage", () =>
+  // the docs recommend this way
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
   require("@react-native-async-storage/async-storage/jest/async-storage-mock")
 );
 
@@ -29,3 +31,9 @@ jest.mock("uuid", () => {
 
 // silence some dumb warning
 process.env.EXPO_OS = Platform.OS;
+
+jest.mock("expo-router", () => ({
+  useRouter: () => ({
+    navigate: () => {},
+  }),
+}));
