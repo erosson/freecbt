@@ -38,14 +38,14 @@ test("use-nonpure-elm-arch", () => {
   const dispatch = () => result.current[1];
   expect(model().value).toBe(0);
   expect(spy.persistCount).toBe(1);
-  // act(() => {
-  //   dispatch()(incr());
-  //   dispatch()(incr());
-  //   dispatch()(incr());
-  //   dispatch()(decr());
-  // });
-  // expect(model().value).toBe(2);
-  // expect(spy.persistCount).toBe(5);
+  act(() => {
+    dispatch()(incr());
+    dispatch()(incr());
+    dispatch()(incr());
+    dispatch()(decr());
+  });
+  expect(model().value).toBe(2);
+  expect(spy.persistCount).toBe(5);
 });
 
 interface Model {
@@ -97,6 +97,7 @@ function runner() {
   return [
     spy,
     (c: Cmd, dispatch: (a: Action) => void) => {
+      // (dispatch: (a: Action) => void) => {
       // return (c: Cmd) => {
       switch (c.cmd) {
         case "persist": {

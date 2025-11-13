@@ -41,16 +41,25 @@ interface PureElmArchCtx<M, A> {
 
 export function createElmArch<M, A, C>(): ElmArchCtx<M, A, C> {
   const Ctx = createContext<ElmArchCtxValue<M, A> | null>(null);
+  const clearCmdsAction = {};
   function Provider(props: ElmArchProviderProps<M, A, C>) {
     const { init, update, runner, children } = props;
     const [[model, lastCmds], dispatch] = useReducer(
-      ([m], a) => update(m, a),
+      ([m0, cs0], a: A | typeof clearCmdsAction) => {
+        if (a === clearCmdsAction) {
+          return [m0, []];
+        }
+        const [m1, cs1] = update(m0, a as A);
+        return [m1, [...cs0, ...cs1]];
+      },
       init
     );
     useEffect(() => {
+      if (!lastCmds.length) return;
       for (const cmd of lastCmds) {
         runner(cmd, dispatch);
       }
+      dispatch(clearCmdsAction);
     }, [runner, lastCmds]);
     return <Ctx value={[model, dispatch]}>{children}</Ctx>;
   }
