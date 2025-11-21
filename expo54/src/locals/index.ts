@@ -39,6 +39,6 @@ export default {
   ro,
   ru,
   sv,
-  uk
+  uk,
   "zh-Hans": zhHans,
 };
