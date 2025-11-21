@@ -17,20 +17,20 @@ import {
   useColorScheme,
   useWindowDimensions,
 } from "react-native";
-import { Storage } from "../../../../src";
+import { Storage } from "../../../..";
 import {
   defaultLocale,
   TranslateFn,
   useTranslate,
-} from "../../../../src/hooks/use-i18n";
-import { Style, useStyle } from "../../../../src/hooks/use-style";
+} from "../../../../hooks/use-i18n";
+import { Style, useStyle } from "../../../../hooks/use-style";
 import {
   Action,
   Distortion,
   DistortionData,
   Model,
   Thought,
-} from "../../../../src/model";
+} from "../../../../model";
 
 const Ctx = createContext<readonly [Model.Model, (a: Action.Action) => void]>([
   Model.loading,

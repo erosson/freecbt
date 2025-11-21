@@ -110,7 +110,7 @@ const EmptyThoughtIllustration = () => (
     }}
   >
     <Image
-      source={require("../../../assets/looker/Looker.png")}
+      source={require("@/assets/looker/Looker.png")}
       style={{
         width: 200,
         height: 150,
