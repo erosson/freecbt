@@ -6,6 +6,7 @@ import AsyncStorage, {
 import { useRouter } from "expo-router";
 import React, { useEffect } from "react";
 import { ActivityIndicator, Appearance, Dimensions } from "react-native";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 import { createElmArch, useElmArch } from "./use-elm-arch";
 import {
   defaultLocale,
@@ -37,6 +38,19 @@ export function ModelI18nProvider(props: {
   const locale = Model.locale(m);
   return <I18nProvider locale={locale}>{props.children}</I18nProvider>;
 }
+export function AppProvider(props: {
+  ctx?: typeof Ctx;
+  children: React.ReactNode;
+}) {
+  return (
+    <ModelProvider ctx={props.ctx}>
+      <ModelI18nProvider ctx={props.ctx}>
+        <SafeAreaProvider>{props.children}</SafeAreaProvider>
+      </ModelI18nProvider>
+    </ModelProvider>
+  );
+}
+
 export function useModel(ctx?: typeof Ctx) {
   return useElmArch(ctx ?? Ctx);
 }

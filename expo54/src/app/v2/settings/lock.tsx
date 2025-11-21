@@ -1,9 +1,9 @@
 import { Routes } from "@/src";
 import { LoadModel, ModelLoadedProps } from "@/src/hooks/use-model";
 import { Action } from "@/src/model";
+import { LockForm } from "@/src/view/auth-lock";
 import { Redirect } from "expo-router";
 import React, { useState } from "react";
-import { LockForm } from "../_layout";
 
 export default function Lock(): React.JSX.Element {
   return <LoadModel ready={Ready} />;
