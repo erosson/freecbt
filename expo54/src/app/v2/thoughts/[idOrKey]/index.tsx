@@ -8,6 +8,8 @@ import React from "react";
 import { Image, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+export const SHRUG_EMOJI = "🤷‍";
+
 export default function Show() {
   return <LoadModel ready={Ready} />;
 }
@@ -57,7 +59,7 @@ function Ready({ model, style: s, translate: t }: ModelLoadedProps) {
                 </View>
               </>
             ) : (
-              <Text style={[s.text, s.m2]}>🤷‍</Text>
+              <Text style={[s.text, s.m2]}>{SHRUG_EMOJI}</Text>
             )}
           </View>
         </Link>
@@ -74,7 +76,7 @@ function Ready({ model, style: s, translate: t }: ModelLoadedProps) {
                 </Text>
               ))
             ) : (
-              <Text style={[s.text, s.m2]}>🤷‍</Text>
+              <Text style={[s.text, s.m2]}>{SHRUG_EMOJI}</Text>
             )}
           </View>
         </Link>
@@ -87,7 +89,7 @@ function Ready({ model, style: s, translate: t }: ModelLoadedProps) {
             {thought.challenge ? (
               <Text style={[s.text, s.m2]}>{thought.challenge}</Text>
             ) : (
-              <Text style={[s.text, s.m2]}>🤷‍</Text>
+              <Text style={[s.text, s.m2]}>{SHRUG_EMOJI}</Text>
             )}
           </View>
         </Link>
@@ -108,7 +110,7 @@ function Ready({ model, style: s, translate: t }: ModelLoadedProps) {
                 </View>
               </>
             ) : (
-              <Text style={[s.text, s.m2]}>🤷‍</Text>
+              <Text style={[s.text, s.m2]}>{SHRUG_EMOJI}</Text>
             )}
           </View>
         </Link>

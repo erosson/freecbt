@@ -8,6 +8,7 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "lint": "expo lint",
+    "playwright": "playwright test --ui-host=127.0.0.1 --ui-port=8282",
     "test": "jest",
     "test:watch": "jest --watchAll"
   },
@@ -63,10 +64,12 @@
   },
   "devDependencies": {
     "@expo/ngrok": "^4.1.3",
+    "@playwright/test": "^1.56.1",
     "@testing-library/dom": "^10.4.1",
     "@testing-library/react": "^16.3.0",
     "@testing-library/react-native": "^13.3.3",
     "@types/jest": "29.5.14",
+    "@types/node": "^24.10.1",
     "@types/react": "~19.1.0",
     "eslint": "^9.25.0",
     "eslint-config-expo": "~10.0.0",

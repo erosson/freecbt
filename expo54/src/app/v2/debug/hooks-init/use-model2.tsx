@@ -32,6 +32,10 @@ import {
   Thought,
 } from "../../../../model";
 
+export default function UNUSED() {
+  return <></>;
+}
+
 const Ctx = createContext<readonly [Model.Model, (a: Action.Action) => void]>([
   Model.loading,
   () => {},
