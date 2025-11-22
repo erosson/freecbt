@@ -7,6 +7,7 @@ import { useRouter } from "expo-router";
 import React, { useEffect } from "react";
 import { ActivityIndicator, Appearance, Dimensions } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { AuthGateway } from "../view/auth-lock";
 import { createElmArch, useElmArch } from "./use-elm-arch";
 import {
   defaultLocale,
@@ -45,7 +46,9 @@ export function AppProvider(props: {
   return (
     <ModelProvider ctx={props.ctx}>
       <ModelI18nProvider ctx={props.ctx}>
-        <SafeAreaProvider>{props.children}</SafeAreaProvider>
+        <AuthGateway>
+          <SafeAreaProvider>{props.children}</SafeAreaProvider>
+        </AuthGateway>
       </ModelI18nProvider>
     </ModelProvider>
   );

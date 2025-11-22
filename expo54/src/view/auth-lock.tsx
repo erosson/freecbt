@@ -33,6 +33,7 @@ function AuthReady(props: ModelLoadedProps & { children: React.ReactNode }) {
       }
     });
   });
+  console.log("pincode", model.settings.pincode, model.sessionAuthed);
   if (model.settings.pincode === null || model.sessionAuthed) {
     return props.children;
   } else {

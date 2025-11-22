@@ -20,6 +20,8 @@ function emptyForm(): LockUpdateForm {
 }
 function Ready({ model, dispatch, translate: t, style: s }: ModelLoadedProps) {
   const [form, setForm] = useState(emptyForm());
+  // const nav = useRouter();
+  // nav.prefetch(Routes.settingsV2());
   function onSubmit() {
     switch (form.status) {
       case "enter": {
