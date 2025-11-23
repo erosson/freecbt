@@ -43,7 +43,7 @@ function Ready(props: ModelLoadedProps) {
           onProgressChange={progress}
           renderItem={IntroItem({ ...props, featureReminders })}
           width={width}
-          height={model.deviceWindow.height - 150}
+          height={w.height - 150}
           onSnapToItem={(index) => {
             Keyboard.dismiss();
           }}

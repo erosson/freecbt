@@ -6,7 +6,6 @@ const emptyReady: Model.Ready = {
   thoughtParseErrors: new Map(),
   deviceColorScheme: null,
   deviceLocale: "en",
-  deviceWindow: { width: 1024, height: 768 },
   distortionData: DistortionData,
   sessionAuthed: false,
   settings: Settings.empty(),

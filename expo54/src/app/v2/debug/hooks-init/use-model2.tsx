@@ -67,7 +67,6 @@ function useModelInit(
   const cs = useColorScheme() ?? null;
   const deviceLocale = defaultLocale();
   const [model, dispatch] = useReducer(update, Model.loading);
-  useEffect(() => dispatch(Action.setDeviceWindow(w)), [w]);
   useEffect(() => dispatch(Action.setDeviceColorScheme(cs)), [cs]);
 
   useEffect(() => {
@@ -79,7 +78,6 @@ function useModelInit(
             distortionData: DistortionData,
             deviceColorScheme: cs,
             deviceLocale,
-            deviceWindow: w,
             settings: await s.read(),
             ...(await t.readAll()),
           })
@@ -177,9 +175,6 @@ function updateReady(m: Model.Ready, a: Action.Action): Model.Ready {
     }
     case "set-device-color-scheme": {
       return { ...m, deviceColorScheme: a.value };
-    }
-    case "set-device-window": {
-      return { ...m, deviceWindow: a.value };
     }
     case "set-session-authed": {
       return { ...m, sessionAuthed: a.value };

@@ -12,7 +12,6 @@ export type Action = ReturnType<
   | typeof setLocale
   | typeof setTheme
   | typeof setDeviceColorScheme
-  | typeof setDeviceWindow
   | typeof createThought
   | typeof deleteThought
   | typeof updateThought
@@ -43,9 +42,6 @@ export function modelReady(model: Model.Ready) {
 }
 export function setDeviceColorScheme(value: Model.Ready["deviceColorScheme"]) {
   return { action: "set-device-color-scheme", value } as const;
-}
-export function setDeviceWindow(value: Model.Ready["deviceWindow"]) {
-  return { action: "set-device-window", value } as const;
 }
 export function createThought(spec: Thought.Spec, now: Date) {
   return { action: "create-thought", spec, now } as const;

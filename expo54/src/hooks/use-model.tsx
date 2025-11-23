@@ -5,7 +5,7 @@ import AsyncStorage, {
 } from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
 import React, { useEffect } from "react";
-import { ActivityIndicator, Appearance, Dimensions } from "react-native";
+import { ActivityIndicator, Appearance } from "react-native";
 import { createElmArch, useElmArch } from "./use-elm-arch";
 import { defaultLocale, TranslateFn, useTranslate } from "./use-i18n";
 import { Style, useStyle } from "./use-style";
@@ -64,12 +64,6 @@ function useCmdRunner(data: Distortion.Data, storage: AsyncStorageStatic) {
     );
     return () => l.remove();
   }, []);
-  useEffect(() => {
-    const l = Dimensions.addEventListener("change", (d) =>
-      dispatch(Action.setDeviceWindow(d.window))
-    );
-    return () => l.remove();
-  }, []);
 
   return (d: (a: Action.Action) => void) => {
     dispatch = d;
@@ -82,13 +76,11 @@ function useCmdRunner(data: Distortion.Data, storage: AsyncStorageStatic) {
           const tm = await t.readAll();
           const deviceLocale = defaultLocale();
           const deviceColorScheme = Appearance.getColorScheme() ?? null;
-          const deviceWindow = Dimensions.get("window");
           const m = Model.ready({
             sessionAuthed: false,
             distortionData: DistortionData,
             deviceColorScheme,
             deviceLocale,
-            deviceWindow,
             settings,
             ...tm,
           });

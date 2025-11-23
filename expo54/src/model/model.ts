@@ -21,7 +21,6 @@ export interface Ready {
   settings: Settings.Settings;
   deviceColorScheme: ColorScheme | null;
   deviceLocale: LocaleTag;
-  deviceWindow: { width: number; height: number };
 }
 
 export const loading = { status: "loading" } as const;
@@ -121,9 +120,6 @@ function updateReady(m: Ready, a: Action.Action): readonly [Model, Cmd.List] {
     }
     case "set-device-color-scheme": {
       return [{ ...m, deviceColorScheme: a.value }, []];
-    }
-    case "set-device-window": {
-      return [{ ...m, deviceWindow: a.value }, []];
     }
     case "create-thought": {
       return writeThought(m, Thought.create(a.spec, a.now));
