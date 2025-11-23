@@ -2,7 +2,6 @@ import { Action, DistortionData, Model, Settings, Thought } from ".";
 
 const emptyReady: Model.Ready = {
   status: "ready",
-  now: new Date(0),
   thoughts: new Map(),
   thoughtParseErrors: new Map(),
   deviceColorScheme: null,
@@ -25,7 +24,7 @@ test("basic actions", () => {
   expect(m.status).toBe("ready");
   expect(ready().thoughts.size).toBe(0);
   expect(ready().settings.theme).toBe(null);
-  [m] = Model.update(m, Action.createThought(Thought.emptySpec()));
+  [m] = Model.update(m, Action.createThought(Thought.emptySpec(), new Date(0)));
   expect(ready().thoughts.size).toBe(1);
   [m] = Model.update(m, Action.setTheme("dark"));
   expect(ready().settings.theme).toBe("dark");

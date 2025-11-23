@@ -14,7 +14,6 @@ export type Loading = typeof loading;
 export type ColorScheme = "light" | "dark";
 export interface Ready {
   status: "ready";
-  now: Date;
   sessionAuthed: boolean;
   distortionData: Distortion.Data;
   thoughts: ReadonlyMap<Thought.Key, Thought.Thought>;
@@ -67,7 +66,19 @@ export function thoughtsByDate(
     string,
     readonly Thought.Thought[]
   >[];
-  return _.sortBy(pairs, ([date]) => date);
+  // Rookie mistake, string dates are not sorted the way we'd expect:
+  // return _.sortBy(pairs, ([date]) => date).map(
+  // Better, but re-parsing stringified dates feels a bit wasteful:
+  // return _.sortBy(pairs, ([date]) => new Date(date).getTime()).map(
+  // We know each thought-group has at least one entry, so let's do this:
+  return (
+    _.sortBy(pairs, ([date, thoughts]) => -thoughts[0].createdAt.getTime())
+      // The thought-groups themselves must be sorted too:
+      .map(([date, thoughts]) => [
+        date,
+        _.sortBy(thoughts, (t) => -t.createdAt.getTime()),
+      ])
+  );
 }
 
 export function update(m: Model, a: Action.Action): readonly [Model, Cmd.List] {
@@ -114,11 +125,8 @@ function updateReady(m: Ready, a: Action.Action): readonly [Model, Cmd.List] {
     case "set-device-window": {
       return [{ ...m, deviceWindow: a.value }, []];
     }
-    case "set-now": {
-      return [{ ...m, now: a.value }, []];
-    }
     case "create-thought": {
-      return writeThought(m, Thought.create(a.value, m.now));
+      return writeThought(m, Thought.create(a.spec, a.now));
     }
     case "update-thought": {
       return writeThought(m, a.value);

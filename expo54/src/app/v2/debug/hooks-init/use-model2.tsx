@@ -65,7 +65,6 @@ function useModelInit(
   // this was a result of me trying to write Elm in React, instead of properly learning React's style.
   const w = useWindowDimensions();
   const cs = useColorScheme() ?? null;
-  const now = new Date();
   const deviceLocale = defaultLocale();
   const [model, dispatch] = useReducer(update, Model.loading);
   useEffect(() => dispatch(Action.setDeviceWindow(w)), [w]);
@@ -76,7 +75,6 @@ function useModelInit(
       dispatch(
         Action.modelReady(
           Model.ready({
-            now,
             sessionAuthed: false,
             distortionData: DistortionData,
             deviceColorScheme: cs,
@@ -138,7 +136,7 @@ function updateReady(m: Model.Ready, a: Action.Action): Model.Ready {
       return m;
     }
     case "create-thought": {
-      const t = Thought.create(a.value, m.now);
+      const t = Thought.create(a.spec, a.now);
       const thoughts = mapMap(m.thoughts, (ts) => ts.set(Thought.key(t), t));
       return { ...m, thoughts };
     }
@@ -174,8 +172,8 @@ function updateReady(m: Model.Ready, a: Action.Action): Model.Ready {
     case "set-theme": {
       return { ...m, settings: { ...m.settings, theme: a.value } };
     }
-    case "set-now": {
-      return { ...m, now: a.value };
+    case "set-existing-user": {
+      return { ...m, settings: { ...m.settings, existingUser: true } };
     }
     case "set-device-color-scheme": {
       return { ...m, deviceColorScheme: a.value };

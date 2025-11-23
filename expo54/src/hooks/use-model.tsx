@@ -107,10 +107,6 @@ function useCmdRunner(data: Distortion.Data, storage: AsyncStorageStatic) {
     );
     return () => l.remove();
   }, []);
-  useEffect(() => {
-    const l = setInterval(() => dispatch(Action.setNow(new Date())), 1000);
-    return () => clearInterval(l);
-  }, []);
 
   return (d: (a: Action.Action) => void) => {
     dispatch = d;
@@ -121,12 +117,10 @@ function useCmdRunner(data: Distortion.Data, storage: AsyncStorageStatic) {
           // const [settings, tm] = await Promise.all([s.read(), t.readAll()]);
           const settings = await s.read();
           const tm = await t.readAll();
-          const now = new Date();
           const deviceLocale = defaultLocale();
           const deviceColorScheme = Appearance.getColorScheme() ?? null;
           const deviceWindow = Dimensions.get("window");
           const m = Model.ready({
-            now,
             sessionAuthed: false,
             distortionData: DistortionData,
             deviceColorScheme,

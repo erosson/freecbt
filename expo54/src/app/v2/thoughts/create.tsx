@@ -68,7 +68,7 @@ function Ready({ model, dispatch, style: s, translate: t }: ModelLoadedProps) {
         translate={t}
         value={value}
         onChange={setValue}
-        onSubmit={() => dispatch(Action.createThought(value))}
+        onSubmit={() => dispatch(Action.createThought(value, new Date()))}
       />
     </SafeAreaView>
   );

@@ -24,7 +24,7 @@ test("use-model basics", async () => {
   await waitFor(() => expect(model().status).toBe("ready"));
   expect(ready().thoughts.size).toBe(0);
   expect(ready().settings.theme).toBe(null);
-  act(() => dispatch()(Action.createThought(Thought.emptySpec())));
+  act(() => dispatch()(Action.createThought(Thought.emptySpec(), new Date(0))));
   expect(ready().thoughts.size).toBe(1);
   act(() => dispatch()(Action.setTheme("dark")));
   expect(ready().settings.theme).toBe("dark");
