@@ -1,5 +1,6 @@
 import { Routes } from "@/src";
 import { LoadModel, ModelLoadedProps } from "@/src/hooks/use-model";
+import { useSafeWindowDimensions } from "@/src/hooks/use-safe-area";
 import { ImagePath } from "@/src/view";
 import { Link } from "expo-router";
 import React from "react";
@@ -23,7 +24,6 @@ function Ready(props: ModelLoadedProps) {
   const { model, style: s } = props;
   const ref = React.useRef<ICarouselInstance>(null);
   const progress = useSharedValue<number>(0);
-  const width = Math.min(model.deviceWindow.width, s.container.maxWidth);
   const featureReminders = false;
   const onPressPagination = (index: number) => {
     ref.current?.scrollTo({
@@ -32,8 +32,10 @@ function Ready(props: ModelLoadedProps) {
     });
   };
   const slides = featureReminders ? slideNames : slideNames.slice(0, -1);
+  const w = useSafeWindowDimensions();
+  const width = Math.min(w.width, s.container.maxWidth);
   return (
-    <SafeAreaView style={[s.view]}>
+    <SafeAreaView style={[s.view, s.p0, s.py4]}>
       <View style={[s.container]}>
         <Carousel
           ref={ref}

@@ -88,6 +88,7 @@ function style(c: Theme) {
     mt2: { marginTop: spacing * 2 },
     mt3: { marginTop: spacing * 3 },
     mt4: { marginTop: spacing * 4 },
+    p0: { padding: 0 },
     p1: { padding: spacing * 1 },
     p2: { padding: spacing * 2 },
     p3: { padding: spacing * 3 },

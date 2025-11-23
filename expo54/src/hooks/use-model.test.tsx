@@ -3,16 +3,14 @@
  */
 import { act, renderHook, waitFor } from "@testing-library/react";
 import React from "react";
-import { Action, Cmd, Model, Thought } from "../model";
-import { createElmArch } from "./use-elm-arch";
+import { Action, Model, Thought } from "../model";
 import { ModelProvider, useModel } from "./use-model";
 
 test("use-model basics", async () => {
-  const Ctx = createElmArch<Model.Model, Action.Action, Cmd.Cmd>();
   const wrapper = ({ children }: { children: React.ReactNode }) => (
-    <ModelProvider ctx={Ctx}>{children}</ModelProvider>
+    <ModelProvider>{children}</ModelProvider>
   );
-  const { result } = renderHook(() => useModel(Ctx), { wrapper });
+  const { result } = renderHook(() => useModel(), { wrapper });
   const model = () => result.current[0];
   const ready = () => {
     const m = model();

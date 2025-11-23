@@ -1,5 +1,6 @@
 import { Routes } from "@/src";
 import { LoadModel, ModelLoadedProps } from "@/src/hooks/use-model";
+import { useSafeWindowDimensions } from "@/src/hooks/use-safe-area";
 import { Action, Distortion, Thought } from "@/src/model";
 import { LinkButton } from "@/src/view/view";
 import React, { useState } from "react";
@@ -42,24 +43,22 @@ export default function Create() {
 function Ready({ model, dispatch, style: s, translate: t }: ModelLoadedProps) {
   const [value, setValue] = useState(Thought.emptySpec());
   return (
-    <SafeAreaView style={[s.view]}>
-      <View style={[s.flexRow, s.justifyBetween, s.container]}>
+    <SafeAreaView style={[s.view, s.p0, s.py4]}>
+      <View style={[s.flexRow, s.justifyBetween, s.container, s.px4]}>
         <Text style={[s.header]}>{t("cbt_form.header")}</Text>
         <View>
-          <View>
-            <LinkButton
-              style={s}
-              href={Routes.helpV2()}
-              label={t("accessibility.help_button")}
-              icon="help-circle"
-            />
-            <LinkButton
-              style={s}
-              href={Routes.thoughtListV2()}
-              label={t("accessibility.list_button")}
-              icon="list"
-            />
-          </View>
+          <LinkButton
+            style={s}
+            href={Routes.helpV2()}
+            label={t("accessibility.help_button")}
+            icon="help-circle"
+          />
+          <LinkButton
+            style={s}
+            href={Routes.thoughtListV2()}
+            label={t("accessibility.list_button")}
+            icon="list"
+          />
         </View>
       </View>
       <CBTForm
@@ -85,7 +84,7 @@ export function CBTForm(
     onSubmit?: () => void;
   }
 ) {
-  const { model, style: s } = props;
+  const { style: s } = props;
   const defaultIndex = props.slide ? slideNums.get(props.slide) ?? 0 : 0;
   // "Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release."
   // 2025/11 - I'm doing this right, it's carousel's fault:
@@ -98,7 +97,8 @@ export function CBTForm(
       animated: true,
     });
   };
-  const width = Math.min(model.deviceWindow.width, s.container.maxWidth);
+  const w = useSafeWindowDimensions();
+  const width = Math.min(w.width, s.container.maxWidth);
   return (
     <View style={[s.container]}>
       <Carousel
@@ -107,7 +107,7 @@ export function CBTForm(
         onProgressChange={progress}
         renderItem={CBTFormItem({ ...props, progress })}
         width={width}
-        height={model.deviceWindow.height - 150}
+        height={w.height - 150}
         onSnapToItem={(index) => {
           Keyboard.dismiss();
         }}
