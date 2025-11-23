@@ -1,4 +1,4 @@
-import { AppProvider } from "@/src/hooks/use-model";
+import { AppProvider } from "@/src/view/app-provider";
 import { Stack } from "expo-router";
 import React from "react";
 

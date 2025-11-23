@@ -6,66 +6,29 @@ import AsyncStorage, {
 import { useRouter } from "expo-router";
 import React, { useEffect } from "react";
 import { ActivityIndicator, Appearance, Dimensions } from "react-native";
-import { SafeAreaProvider } from "react-native-safe-area-context";
-import { AuthGateway } from "../view/auth-gateway";
-import { OnboardingGateway } from "../view/onboarding-gateway";
 import { createElmArch, useElmArch } from "./use-elm-arch";
-import {
-  defaultLocale,
-  I18nProvider,
-  TranslateFn,
-  useTranslate,
-} from "./use-i18n";
+import { defaultLocale, TranslateFn, useTranslate } from "./use-i18n";
 import { Style, useStyle } from "./use-style";
 
 const Ctx = createElmArch<Model.Model, Action.Action, Cmd.Cmd>();
 
-export function ModelProvider(props: {
-  ctx?: typeof Ctx;
-  children: React.ReactNode;
-}) {
+export function ModelProvider(props: { children: React.ReactNode }) {
   const runner = useCmdRunner(DistortionData, AsyncStorage);
-  const ctx = props.ctx ?? Ctx;
   return (
-    <ctx.Provider init={Model.init} update={Model.update} runner={runner}>
+    <Ctx.Provider init={Model.init} update={Model.update} runner={runner}>
       {props.children}
-    </ctx.Provider>
-  );
-}
-export function ModelI18nProvider(props: {
-  ctx?: typeof Ctx;
-  children: React.ReactNode;
-}) {
-  const [m] = useModel(props.ctx);
-  const locale = Model.locale(m);
-  return <I18nProvider locale={locale}>{props.children}</I18nProvider>;
-}
-export function AppProvider(props: {
-  ctx?: typeof Ctx;
-  children: React.ReactNode;
-}) {
-  return (
-    <ModelProvider ctx={props.ctx}>
-      <ModelI18nProvider ctx={props.ctx}>
-        <OnboardingGateway>
-          <AuthGateway>
-            <SafeAreaProvider>{props.children}</SafeAreaProvider>
-          </AuthGateway>
-        </OnboardingGateway>
-      </ModelI18nProvider>
-    </ModelProvider>
+    </Ctx.Provider>
   );
 }
 
-export function useModel(ctx?: typeof Ctx) {
-  return useElmArch(ctx ?? Ctx);
+export function useModel() {
+  return useElmArch(Ctx);
 }
 export function LoadModel(props: {
-  ctx?: typeof Ctx;
   loading?: () => React.JSX.Element;
   ready: ModelLoadedComponent;
 }): React.ReactNode {
-  const [model, dispatch] = useModel(props.ctx);
+  const [model, dispatch] = useModel();
   const style = useStyle(Model.colorScheme(model));
   const translate = useTranslate();
   return Model.match(model, {
