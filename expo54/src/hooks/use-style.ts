@@ -14,10 +14,8 @@ export function useTheme(c: Model.ColorScheme): Theme {
       return DarkTheme;
     case "light":
       return LightTheme;
-    default: {
-      const e: never = c;
-      throw new Error(`unknown color scheme: ${e}`);
-    }
+    default:
+      throw new Error(`unknown color scheme: ${c satisfies never}`);
   }
 }
 

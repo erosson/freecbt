@@ -254,10 +254,8 @@ function CBTFormItem(
           </>
         );
       }
-      default: {
-        const _e: never = item;
-        throw new Error(`unknown slide: ${_e}`);
-      }
+      default:
+        throw new Error(`unknown slide: ${item satisfies never}`);
     }
   };
 }

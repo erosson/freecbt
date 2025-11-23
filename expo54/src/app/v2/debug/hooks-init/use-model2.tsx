@@ -127,10 +127,8 @@ function update(m: Model.Model, a: Action.Action): Model.Model {
     case "ready": {
       return updateReady(m, a);
     }
-    default: {
-      const _e: never = m;
-      throw new Error(`no such model-status: ${_e}`);
-    }
+    default:
+      throw new Error(`no such model-status: ${m satisfies never}`);
   }
 }
 
@@ -188,10 +186,8 @@ function updateReady(m: Model.Ready, a: Action.Action): Model.Ready {
     case "set-session-authed": {
       return { ...m, sessionAuthed: a.value };
     }
-    default: {
-      const _e: never = a;
-      throw new Error(`no such action: ${_e}`);
-    }
+    default:
+      throw new Error(`no such action: ${a satisfies never}`);
   }
 }
 

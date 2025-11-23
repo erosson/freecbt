@@ -18,10 +18,8 @@ export function update(m: Model, a: Action): Model {
       return { ...m, value: m.value + 1 };
     case "decr":
       return { ...m, value: m.value - 1 };
-    default: {
-      const e: never = a;
-      throw new Error(e);
-    }
+    default:
+      throw new Error(a satisfies never);
   }
 }
 

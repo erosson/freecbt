@@ -140,10 +140,8 @@ function updateReady(m: Ready, a: Action.Action): readonly [Model, Cmd.List] {
         ],
       ];
     }
-    default: {
-      const _e: never = a;
-      throw new Error(`no such action: ${_e}`);
-    }
+    default:
+      throw new Error(`no such action: ${a satisfies never}`);
   }
 }
 function writeThought(

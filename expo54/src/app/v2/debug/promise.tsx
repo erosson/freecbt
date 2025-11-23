@@ -44,6 +44,8 @@ function UsePromiseStateSwitch() {
       return <Text>error: {val.error.message}</Text>;
     case "success":
       return <Text>{val.value}</Text>;
+    default:
+      throw new Error(val satisfies never);
   }
 }
 function UsePromiseRender() {

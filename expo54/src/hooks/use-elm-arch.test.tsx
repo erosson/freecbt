@@ -62,10 +62,8 @@ export function pureUpdate(m: Model, a: Action): Model {
       return { ...m, value: m.value + 1 };
     case "decr":
       return { ...m, value: m.value - 1 };
-    default: {
-      const e: never = a;
-      throw new Error(e);
-    }
+    default:
+      throw new Error(a satisfies never);
   }
 }
 
@@ -86,10 +84,8 @@ function impureUpdate(m: Model, a: Action): [Model, readonly Cmd[]] {
       const m2 = { ...m, value: m.value - 1 };
       return [m2, [persist(m2)]];
     }
-    default: {
-      const e: never = a;
-      throw new Error(e);
-    }
+    default:
+      throw new Error(a satisfies never);
   }
 }
 function runner() {
@@ -103,10 +99,8 @@ function runner() {
             spy.persistCount += 1;
             return;
           }
-          default: {
-            const _e: never = c.cmd;
-            throw new Error(`no such cmd: ${_e}`);
-          }
+          default:
+            throw new Error(`no such cmd: ${c.cmd satisfies never}`);
         }
       };
     },

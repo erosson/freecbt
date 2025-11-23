@@ -152,10 +152,8 @@ function useCmdRunner(data: Distortion.Data, storage: AsyncStorageStatic) {
           router.navigate(c.value);
           return;
         }
-        default: {
-          const _e: never = c;
-          throw new Error(`no such cmd: ${_e}`);
-        }
+        default:
+          throw new Error(`no such cmd: ${c satisfies never}`);
       }
     };
   };

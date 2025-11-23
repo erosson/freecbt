@@ -49,10 +49,10 @@ function Ready({ model, dispatch, translate: t, style: s }: ModelLoadedProps) {
       case "done": {
         return;
       }
-      default: {
-        const _e: never = form.status;
-        throw new Error(`unknown lock-form status: ${_e}`);
-      }
+      default:
+        throw new Error(
+          `unknown lock-form status: ${form.status satisfies never}`
+        );
     }
   }
   switch (form.status) {
@@ -81,9 +81,9 @@ function Ready({ model, dispatch, translate: t, style: s }: ModelLoadedProps) {
     case "done": {
       return <Redirect href={Routes.settingsV2()} />;
     }
-    default: {
-      const _e: never = form.status;
-      throw new Error(`unknown lock-form status: ${_e}`);
-    }
+    default:
+      throw new Error(
+        `unknown lock-form status: ${form.status satisfies never}`
+      );
   }
 }
