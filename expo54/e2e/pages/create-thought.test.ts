@@ -1,17 +1,10 @@
 import { PageModel } from "@/e2e";
 import { expect, test } from "@playwright/test";
 
-test.skip("shows intro page", async ({ page }) => {
-  // intro not yet implemented
-  //await page.goto("/v2");
-  //page.waitForURL("/v2/intro");
-  //const intro = PageModel.intro(page);
-  //await expect(intro.guideButton).toBeVisible();
-});
 test("renders and submits nonempty thought form", async ({ page }) => {
   const form = PageModel.createThought(page);
   const view = PageModel.viewThought(page);
-  await page.goto("/v2");
+  await page.goto("/v2?onboarded=1");
   await expect.soft(form.title).toBeVisible();
   await expect.soft(form.automaticThought).toBeVisible();
   await form.automaticThought.fill("my automatic thought");
@@ -38,7 +31,7 @@ test("renders and submits nonempty thought form", async ({ page }) => {
 test("renders and submits empty thought form", async ({ page }) => {
   const form = PageModel.createThought(page);
   const view = PageModel.viewThought(page);
-  await page.goto("/v2");
+  await page.goto("/v2?onboarded=1");
   await expect.soft(form.title).toBeVisible();
   await expect.soft(form.automaticThought).toBeVisible();
   await form.submitButton.click();

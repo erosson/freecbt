@@ -105,6 +105,9 @@ function updateReady(m: Ready, a: Action.Action): readonly [Model, Cmd.List] {
     case "set-theme": {
       return updateSettings(m, { theme: a.value });
     }
+    case "set-existing-user": {
+      return updateSettings(m, { existingUser: true });
+    }
     case "set-device-color-scheme": {
       return [{ ...m, deviceColorScheme: a.value }, []];
     }

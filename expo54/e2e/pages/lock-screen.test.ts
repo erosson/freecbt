@@ -8,7 +8,7 @@ test("enforce lock screen on page reload", async ({ page }) => {
   const auth = PageModel.auth(page);
   const code = "6969";
 
-  await page.goto("/v2");
+  await page.goto("/v2?onboarded=1");
   await form.navListThoughts.click();
   await list.navSettings.click();
   await settings.setPincode.click();
@@ -29,7 +29,7 @@ test("lock screen rejects bad auth", async ({ page }) => {
   const auth = PageModel.auth(page);
   const code = "6969";
 
-  await page.goto("/v2/settings");
+  await page.goto("/v2/settings?onboarded=1");
   await settings.setPincode.click();
   await setAuth(page, code);
   await expect(settings.title).toBeVisible();
@@ -54,7 +54,7 @@ test("change and clear lock screen code", async ({ page }) => {
   const code2 = "0420";
 
   // set pincode 1
-  await page.goto("/v2/settings");
+  await page.goto("/v2/settings?onboarded=1");
   await settings.setPincode.click();
   await setAuth(page, code);
   await expect(settings.title).toBeVisible();

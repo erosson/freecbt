@@ -7,6 +7,7 @@ export const localeKey = `${prefix}locale`;
 export const historyLabelsKey = `${prefix}history-button-labels`;
 export const pincodeKey = `@Quirk:pincode`;
 export const themeKey = `${prefix}theme`;
+export const existingUserKey = "@Quirk:existing-user";
 
 export const historyLabelsDefault = `alternative-thought` as const;
 
@@ -15,6 +16,7 @@ export const Json = z.object({
   [historyLabelsKey]: z.string().nullable(),
   [localeKey]: z.string().nullable(),
   [themeKey]: z.string().nullable(),
+  [existingUserKey]: z.string().nullable(),
 });
 export type Json = z.infer<typeof Json>;
 export type JsonKey = keyof typeof Json.shape;
@@ -32,6 +34,7 @@ export const Settings = z.object({
     .catch(historyLabelsDefault),
   locale: z.enum(localeTags).nullable().catch(null),
   theme: z.enum(["light", "dark"]).nullable().catch(null),
+  existingUser: z.boolean(),
 });
 export type Settings = z.infer<typeof Settings>;
 export type HistoryLabel = Settings["historyLabels"];
@@ -43,6 +46,7 @@ export function empty(): Settings {
     historyLabels: historyLabelsDefault,
     locale: null,
     theme: null,
+    existingUser: false,
   };
 }
 export const fromJson = z.codec(Json, Settings, {
@@ -52,8 +56,15 @@ export const fromJson = z.codec(Json, Settings, {
       [historyLabelsKey]: historyLabels,
       [localeKey]: locale,
       [themeKey]: theme,
+      [existingUserKey]: existingUser,
     } = json;
-    return Settings.parse({ pincode, historyLabels, locale, theme });
+    return Settings.parse({
+      pincode,
+      historyLabels,
+      locale,
+      theme,
+      existingUser: z.stringbool().decode(existingUser ?? "0"),
+    });
   },
   encode: (s: Settings) => {
     return Json.decode({
@@ -62,6 +73,7 @@ export const fromJson = z.codec(Json, Settings, {
         s.historyLabels === historyLabelsDefault ? null : s.historyLabels,
       [localeKey]: s.locale,
       [themeKey]: s.theme,
+      [existingUserKey]: s.existingUser ? "1" : null,
     });
   },
 });

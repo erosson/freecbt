@@ -6,6 +6,7 @@ import * as Settings from "./settings";
 export type Action = ReturnType<
   | typeof modelReady
   | typeof setSessionAuthed
+  | typeof setExistingUser
   | typeof setPincode
   | typeof setHistoryLabel
   | typeof setLocale
@@ -34,6 +35,9 @@ export function setHistoryLabel(value: Settings.HistoryLabel) {
 }
 export function setPincode(value: Settings.Pincode | null) {
   return { action: "set-pincode", value } as const;
+}
+export function setExistingUser() {
+  return { action: "set-existing-user" } as const;
 }
 export function modelReady(model: Model.Ready) {
   return { action: "model-ready", model } as const;

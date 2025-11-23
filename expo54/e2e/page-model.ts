@@ -10,7 +10,7 @@ const ALL_OR_NOTHING_EMOJI = "🌓";
 
 export function intro(page: Page) {
   return {
-    guideButton: page.getByRole("button", { name: "The FreeCBT Guide" }),
+    guideButton: page.getByRole("link", { name: "The FreeCBT Guide" }),
   };
 }
 

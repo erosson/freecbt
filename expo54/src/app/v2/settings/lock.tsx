@@ -1,7 +1,7 @@
 import { Routes } from "@/src";
 import { LoadModel, ModelLoadedProps } from "@/src/hooks/use-model";
 import { Action } from "@/src/model";
-import { LockForm } from "@/src/view/auth-lock";
+import { LockForm } from "@/src/view/auth-gateway";
 import { Redirect } from "expo-router";
 import React, { useState } from "react";
 
