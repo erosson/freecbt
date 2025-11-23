@@ -87,6 +87,9 @@ export function CBTForm(
 ) {
   const { model, style: s } = props;
   const defaultIndex = props.slide ? slideNums.get(props.slide) ?? 0 : 0;
+  // "Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release."
+  // 2025/11 - I'm doing this right, it's carousel's fault:
+  // https://github.com/dohooo/react-native-reanimated-carousel/issues/857
   const ref = React.useRef<ICarouselInstance>(null);
   const progress = useSharedValue<number>(0);
   const onPressPagination = (index: number) => {
