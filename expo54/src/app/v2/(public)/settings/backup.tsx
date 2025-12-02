@@ -17,9 +17,13 @@ export function Ready(props: ModelLoadedProps) {
   return (
     <SafeAreaView style={[s.view]}>
       <View style={[s.container]}>
-        <Text style={[s.text]}>{t("backup_screen.export.description")}</Text>
+        <Text style={[s.text, s.my2]}>
+          {t("backup_screen.export.description")}
+        </Text>
         <ExportLink toArchive={toArchive} style={s} translate={t} />
-        <Text style={[s.text]}>{t("backup_screen.import.description")}</Text>
+        <Text style={[s.text, s.my2]}>
+          {t("backup_screen.import.description")}
+        </Text>
         <ImportButton
           parser={parser}
           toArchive={toArchive}
@@ -47,14 +51,14 @@ function ExportLink(
       translate={t}
       error={(e) => <Text style={[s.errorText]}>{e}</Text>}
       share={(onPress) => (
-        <TouchableOpacity style={[s.button]} onPress={onPress}>
+        <TouchableOpacity style={[s.button, s.my2]} onPress={onPress}>
           <Text style={[s.buttonText]}>
             {t("backup_screen.export.share.button")}
           </Text>
         </TouchableOpacity>
       )}
       download={() => (
-        <TouchableOpacity style={[s.button]}>
+        <TouchableOpacity style={[s.button, s.my2]}>
           <Text style={[s.buttonText]}>
             {t("backup_screen.export.file.button")}
           </Text>
@@ -75,7 +79,7 @@ function ImportButton(
   return (
     <>
       <TouchableOpacity
-        style={[s.button]}
+        style={[s.button, s.my2]}
         onPress={() => onImport({ ...props, setImportResult })}
       >
         <Text style={[s.buttonText]}>

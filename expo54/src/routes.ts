@@ -85,3 +85,6 @@ export function introV2(params: { onboarded?: boolean } = {}): Href {
     params: { onboarded: params.onboarded ? "1" : undefined },
   };
 }
+export function debugV2(): Href {
+  return "/v2/debug";
+}

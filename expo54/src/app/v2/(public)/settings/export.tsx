@@ -14,7 +14,7 @@ export function Ready(props: ModelLoadedProps) {
   return (
     <SafeAreaView style={[s.view]}>
       <View style={[s.container]}>
-        <Text style={[s.text]}>{t("export_screen.description")}</Text>
+        <Text style={[s.text, s.my2]}>{t("export_screen.description")}</Text>
         <MarkdownLink {...props} />
         <CSVLink {...props} />
         <JSONLink {...props} />
@@ -35,14 +35,14 @@ function MarkdownLink(props: ModelLoadedProps) {
       translate={t}
       error={(e) => <Text style={[s.errorText]}>{e}</Text>}
       share={(onPress) => (
-        <TouchableOpacity style={[s.button]} onPress={onPress}>
+        <TouchableOpacity style={[s.button, s.my2]} onPress={onPress}>
           <Text style={[s.buttonText]}>
             {t("export_screen.markdown.button")}
           </Text>
         </TouchableOpacity>
       )}
       download={() => (
-        <TouchableOpacity style={[s.button]}>
+        <TouchableOpacity style={[s.button, s.my2]}>
           <Text style={[s.buttonText]}>
             {t("export_screen.markdown.button")}
           </Text>
@@ -64,12 +64,12 @@ function CSVLink(props: ModelLoadedProps) {
       translate={t}
       error={(e) => <Text style={[s.errorText]}>{e}</Text>}
       share={(onPress) => (
-        <TouchableOpacity style={[s.button]} onPress={onPress}>
+        <TouchableOpacity style={[s.button, s.my2]} onPress={onPress}>
           <Text style={[s.buttonText]}>{t("export_screen.csv.button")}</Text>
         </TouchableOpacity>
       )}
       download={() => (
-        <TouchableOpacity style={[s.button]}>
+        <TouchableOpacity style={[s.button, s.my2]}>
           <Text style={[s.buttonText]}>{t("export_screen.csv.button")}</Text>
         </TouchableOpacity>
       )}
@@ -90,12 +90,12 @@ function JSONLink(props: ModelLoadedProps) {
       translate={t}
       error={(e) => <Text style={[s.errorText]}>{e}</Text>}
       share={(onPress) => (
-        <TouchableOpacity style={[s.button]} onPress={onPress}>
+        <TouchableOpacity style={[s.button, s.my2]} onPress={onPress}>
           <Text style={[s.buttonText]}>{t("export_screen.json.button")}</Text>
         </TouchableOpacity>
       )}
       download={() => (
-        <TouchableOpacity style={[s.button]}>
+        <TouchableOpacity style={[s.button, s.my2]}>
           <Text style={[s.buttonText]}>{t("export_screen.json.button")}</Text>
         </TouchableOpacity>
       )}

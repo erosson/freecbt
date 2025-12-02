@@ -61,7 +61,7 @@ function DownloadLink(props: {
   });
   return (
     // web platform only, so it's safe to use plain html here
-    <a href={url} download={name}>
+    <a style={{ textDecorationLine: "none" }} href={url} download={name}>
       {children}
     </a>
   );

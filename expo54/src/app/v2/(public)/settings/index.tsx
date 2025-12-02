@@ -4,9 +4,16 @@ import { LoadModel, ModelLoadedProps } from "@/src/hooks/use-model";
 import { useStyle, useTheme } from "@/src/hooks/use-style";
 import { Action, Model, Settings } from "@/src/model";
 import { Picker } from "@react-native-picker/picker";
-import { Link } from "expo-router";
-import React from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import Constants from "expo-constants";
+import { Href, Link } from "expo-router";
+import React, { useState } from "react";
+import {
+  Pressable,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Index() {
@@ -43,17 +50,15 @@ function Ready({ model, dispatch, translate: t }: ModelLoadedProps) {
           t={t}
         />
 
-        <TouchableOpacity style={[s.btn, s.mt4]}>
-          <Text style={[s.buttonText]}>{t("settings.locale.contribute")}</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={[s.btn]}>
-          <Text style={[s.buttonText]}>{t("settings.terms")}</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={[s.btn]}>
-          <Text style={[s.buttonText]}>{t("settings.privacy")}</Text>
-        </TouchableOpacity>
+        <LinkButton
+          style={s}
+          href={contributeUrl}
+          label={t("settings.locale.contribute")}
+        />
+        <LinkButton style={s} href={termsUrl} label={t("settings.terms")} />
+        <LinkButton style={s} href={privacyUrl} label={t("settings.privacy")} />
 
-        <DebugLink />
+        <DebugLink style={s} translate={t} />
       </View>
     </SafeAreaView>
   );
@@ -95,16 +100,11 @@ function LockUpdateForm(props: {
       <Text style={[s.text]}>{t("settings.pincode.description")}</Text>
       {isSet ? (
         <>
-          <Link
-            style={[s.btn, s.flex1, { fontWeight: "normal" }]}
+          <LinkButton
+            style={s}
             href={Routes.lockUpdateV2()}
-          >
-            <TouchableOpacity style={[s.flex1]}>
-              <Text style={[s.buttonText]}>
-                {t("settings.pincode.button.update")}
-              </Text>
-            </TouchableOpacity>
-          </Link>
+            label={t("settings.pincode.button.update")}
+          />
           <TouchableOpacity
             style={[s.btn]}
             onPress={() => dispatch(Action.setPincode(null))}
@@ -115,16 +115,11 @@ function LockUpdateForm(props: {
           </TouchableOpacity>
         </>
       ) : (
-        <Link
-          style={[s.btn, s.flex1, { fontWeight: "normal" }]}
+        <LinkButton
+          style={s}
           href={Routes.lockUpdateV2()}
-        >
-          <TouchableOpacity style={[s.flex1]}>
-            <Text style={[s.buttonText]}>
-              {t("settings.pincode.button.set")}
-            </Text>
-          </TouchableOpacity>
-        </Link>
+          label={t("settings.pincode.button.set")}
+        />
       )}
     </>
   );
@@ -170,7 +165,7 @@ function LocaleForm(props: {
     <>
       <Text style={[s.subheader]}>{t("settings.locale.header")}</Text>
       <Picker<LocaleTag | "">
-        style={[s.rounded, s.btn, s.buttonText]}
+        style={[s.rounded, s.btn, s.buttonText, s.mb4]}
         selectedValue={value ?? ""}
         onValueChange={(value) =>
           dispatch(Action.setLocale(value ? value : null))
@@ -216,9 +211,39 @@ function SelectorButtons<V extends string | null>(props: {
   );
 }
 
-function DebugLink() {
-  // TODO
-  return <></>;
+function DebugLink(props: { style: PageStyle; translate: TranslateFn }) {
+  const { style: s, translate: t } = props;
+  const v = Constants.expoConfig?.version;
+  const [presses, setPresses] = useState(0);
+  const isVisible = presses > 0 && presses % 5 === 0;
+  return (
+    <>
+      <Pressable
+        style={{ cursor: "auto" }}
+        onPress={() => setPresses(presses + 1)}
+      >
+        <Text style={[s.text, s.my2]}>
+          {v ? `${t("cbt_form.header")} v${v}` : "(unknown FreeCBT version)"}
+        </Text>
+      </Pressable>
+      {isVisible ? (
+        <Link style={[s.my4]} href={Routes.debugV2()}>
+          <Text style={[s.text, s.underline]}>developer debug page</Text>
+        </Link>
+      ) : null}
+    </>
+  );
+}
+
+function LinkButton(props: { style: PageStyle; href: Href; label: string }) {
+  const { style: s } = props;
+  return (
+    <Link style={[s.btn, s.flex1, { fontWeight: "normal" }]} href={props.href}>
+      <TouchableOpacity style={[s.flex1]}>
+        <Text style={[s.buttonText]}>{props.label}</Text>
+      </TouchableOpacity>
+    </Link>
+  );
 }
 
 function usePageStyle(cs: Model.ColorScheme) {
@@ -243,3 +268,8 @@ function usePageStyle(cs: Model.ColorScheme) {
   });
 }
 type PageStyle = ReturnType<typeof usePageStyle>;
+
+const contributeUrl =
+  "https://github.com/erosson/freecbt/blob/master/TRANSLATIONS.md";
+const privacyUrl = "https://github.com/erosson/freecbt/blob/master/PRIVACY.md";
+const termsUrl = "https://github.com/erosson/freecbt/blob/master/TOS.md";

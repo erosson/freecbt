@@ -12,6 +12,9 @@ export default function Index() {
       <Link href="/v2/debug/counter">
         <Text style={[S.href]}>counter</Text>
       </Link>
+      <Link href="/debug">
+        <Text style={[S.href]}>legacy debug</Text>
+      </Link>
     </View>
   );
 }

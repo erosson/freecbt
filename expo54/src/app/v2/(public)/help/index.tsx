@@ -19,6 +19,7 @@ function Ready(props: ModelLoadedProps) {
           <View style={[s.flexRow]}>
             <Link
               style={[s.flex1, s.border, s.rounded, s.p2, s.button]}
+              target="_blank"
               href="https://freecbt.erosson.org/explanation/?ref=quirk"
             >
               <TouchableOpacity style={[s.flex1]}>
