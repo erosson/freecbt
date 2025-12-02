@@ -1,7 +1,6 @@
 import { Routes } from "@/src";
 import { LoadModel, ModelLoadedProps } from "@/src/hooks/use-model";
 import { ImagePath } from "@/src/view";
-import { LinkButton } from "@/src/view/view";
 import { Link } from "expo-router";
 import React from "react";
 import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
@@ -16,19 +15,6 @@ function Ready(props: ModelLoadedProps) {
   return (
     <ScrollView style={[s.view]}>
       <SafeAreaView style={[s.view]}>
-        <View style={[s.flexRow, s.justifyBetween, s.container]}>
-          <Text style={[s.header]}>{t("explanation_screen.header")}</Text>
-          <View>
-            <View style={[s.flexCol]}>
-              <LinkButton
-                style={s}
-                href={Routes.thoughtCreateV2()}
-                label={t("accessibility.new_thought_button")}
-                icon="message-circle"
-              />
-            </View>
-          </View>
-        </View>
         <View style={[s.flexCol, s.container]}>
           <View style={[s.flexRow]}>
             <Link

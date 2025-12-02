@@ -317,6 +317,10 @@
       "button": "Export as JSON"
     }
   },
+  "nav": {
+    "backup": "backup and restore",
+    "export": "share and export"
+  },
   "lock_screen": {
     "auth": "Please enter your passcode.",
     "update": "Please set a passcode.",

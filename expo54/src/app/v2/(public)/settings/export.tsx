@@ -14,7 +14,6 @@ export function Ready(props: ModelLoadedProps) {
   return (
     <SafeAreaView style={[s.view]}>
       <View style={[s.container]}>
-        <Text style={[s.header]}>{t("export_screen.header")}</Text>
         <Text style={[s.text]}>{t("export_screen.description")}</Text>
         <MarkdownLink {...props} />
         <CSVLink {...props} />

@@ -1,8 +1,6 @@
-import { Routes } from "@/src";
 import { LoadModel, ModelLoadedProps } from "@/src/hooks/use-model";
 import { useSafeWindowDimensions } from "@/src/hooks/use-safe-area";
 import { Action, Distortion, Thought } from "@/src/model";
-import { LinkButton } from "@/src/view/view";
 import React, { useState } from "react";
 import {
   Button,
@@ -44,23 +42,6 @@ function Ready({ model, dispatch, style: s, translate: t }: ModelLoadedProps) {
   const [value, setValue] = useState(Thought.emptySpec());
   return (
     <SafeAreaView style={[s.view, s.p0, s.py4]}>
-      <View style={[s.flexRow, s.justifyBetween, s.container, s.px4]}>
-        <Text style={[s.header]}>{t("cbt_form.header")}</Text>
-        <View>
-          <LinkButton
-            style={s}
-            href={Routes.helpV2()}
-            label={t("accessibility.help_button")}
-            icon="help-circle"
-          />
-          <LinkButton
-            style={s}
-            href={Routes.thoughtListV2()}
-            label={t("accessibility.list_button")}
-            icon="list"
-          />
-        </View>
-      </View>
       <CBTForm
         model={model}
         style={s}

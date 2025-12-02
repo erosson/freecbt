@@ -17,7 +17,6 @@ export function Ready(props: ModelLoadedProps) {
   return (
     <SafeAreaView style={[s.view]}>
       <View style={[s.container]}>
-        <Text style={[s.header]}>{t("backup_screen.header")}</Text>
         <Text style={[s.text]}>{t("backup_screen.export.description")}</Text>
         <ExportLink toArchive={toArchive} style={s} translate={t} />
         <Text style={[s.text]}>{t("backup_screen.import.description")}</Text>

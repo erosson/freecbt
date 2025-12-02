@@ -2,7 +2,6 @@ import { Routes } from "@/src";
 import { LoadModel, ModelLoadedProps } from "@/src/hooks/use-model";
 import { Distortion, Model, Thought } from "@/src/model";
 import { ImagePath } from "@/src/view";
-import { LinkButton } from "@/src/view/view";
 import { Link, Redirect, Unmatched, useLocalSearchParams } from "expo-router";
 import React from "react";
 import { Image, Text, View } from "react-native";
@@ -28,19 +27,6 @@ function Ready({ model, style: s, translate: t }: ModelLoadedProps) {
   );
   return (
     <SafeAreaView style={[s.view]}>
-      <View style={[s.flexRow, s.justifyBetween, s.container]}>
-        <Text style={[s.header]}>{t("cbt_form.header")}</Text>
-        <View>
-          <View>
-            <LinkButton
-              style={s}
-              href={Routes.thoughtListV2()}
-              label={t("accessibility.list_button")}
-              icon="list"
-            />
-          </View>
-        </View>
-      </View>
       <View style={[s.container, s.flexCol]}>
         <Text style={[s.subheader, s.mt4]}>{t("auto_thought")}</Text>
         <Link

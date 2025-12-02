@@ -3,7 +3,6 @@ import { LocaleTag, localeTags, TranslateFn } from "@/src/hooks/use-i18n";
 import { LoadModel, ModelLoadedProps } from "@/src/hooks/use-model";
 import { useStyle, useTheme } from "@/src/hooks/use-style";
 import { Action, Model, Settings } from "@/src/model";
-import { LinkButton } from "@/src/view/view";
 import { Picker } from "@react-native-picker/picker";
 import { Link } from "expo-router";
 import React from "react";
@@ -17,20 +16,6 @@ function Ready({ model, dispatch, translate: t }: ModelLoadedProps) {
   const s = usePageStyle(Model.colorScheme(model));
   return (
     <SafeAreaView style={[s.view]}>
-      <View style={[s.flexRow, s.justifyBetween, s.container]}>
-        <Text style={[s.header]}>{t("settings.header")}</Text>
-        <View>
-          <View style={[s.flexCol]}>
-            <LinkButton
-              style={s}
-              href={Routes.thoughtListV2()}
-              label={t("accessibility.list_button")}
-              icon="list"
-            />
-          </View>
-        </View>
-      </View>
-
       <View style={[s.container]}>
         <ThemeForm
           value={model.settings.theme}
@@ -50,26 +35,6 @@ function Ready({ model, dispatch, translate: t }: ModelLoadedProps) {
           s={s}
           t={t}
         />
-
-        <Text style={[s.subheader]}>{t("settings.backup.header")}</Text>
-        <Link
-          style={[s.btn, s.flex1, { fontWeight: "normal" }]}
-          href={Routes.backupV2()}
-        >
-          <TouchableOpacity style={[s.flex1]}>
-            <Text style={[s.buttonText]}>{t("settings.backup.button")}</Text>
-          </TouchableOpacity>
-        </Link>
-        <Link
-          style={[s.btn, s.flex1, { fontWeight: "normal" }]}
-          href={Routes.exportV2()}
-        >
-          <TouchableOpacity style={[s.flex1]}>
-            <Text style={[s.buttonText]}>
-              {t("settings.backup.export-button")}
-            </Text>
-          </TouchableOpacity>
-        </Link>
 
         <LocaleForm
           value={model.settings.locale}

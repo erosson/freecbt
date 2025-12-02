@@ -1,10 +1,7 @@
-import { Routes } from "@/src";
 import { LoadModel, ModelLoadedProps } from "@/src/hooks/use-model";
 import { Action, Thought } from "@/src/model";
-import { LinkButton } from "@/src/view/view";
 import { useLocalSearchParams } from "expo-router";
 import React, { useState } from "react";
-import { Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useThoughtFromParams } from ".";
 import { CBTForm, SlideName } from "../create";
@@ -23,25 +20,6 @@ function Ready({ model, dispatch, style: s, translate: t }: ModelLoadedProps) {
   if (res.status === "error") return res.error;
   return (
     <SafeAreaView style={[s.view]}>
-      <View style={[s.flexRow, s.justifyBetween, s.container]}>
-        <Text style={[s.header]}>{t("cbt_form.header")}</Text>
-        <View>
-          <View>
-            <LinkButton
-              style={s}
-              href={Routes.helpV2()}
-              label={t("accessibility.help_button")}
-              icon="help-circle"
-            />
-            <LinkButton
-              style={s}
-              href={Routes.thoughtListV2()}
-              label={t("accessibility.list_button")}
-              icon="list"
-            />
-          </View>
-        </View>
-      </View>
       <CBTForm
         model={model}
         style={s}

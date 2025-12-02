@@ -1,4 +1,4 @@
-import { SlideName } from "@/src/app/v2/thoughts/create";
+import { SlideName } from "@/src/app/v2/(public)/thoughts/create";
 import { Href } from "expo-router";
 import { Thought } from "./model";
 

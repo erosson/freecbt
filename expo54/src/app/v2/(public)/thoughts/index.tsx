@@ -1,7 +1,6 @@
 import { Routes } from "@/src";
 import { LoadModel, ModelLoadedProps } from "@/src/hooks/use-model";
 import { Action, Model, Thought } from "@/src/model";
-import { LinkButton } from "@/src/view/view";
 import { Feather } from "@expo/vector-icons";
 import { Link } from "expo-router";
 import React from "react";
@@ -17,25 +16,6 @@ function Ready(props: ModelLoadedProps) {
   const today = new Date().toDateString();
   return (
     <SafeAreaView style={[s.view]}>
-      <View style={[s.flexRow, s.justifyBetween, s.container]}>
-        <Text style={[s.header]}>{t("cbt_list.header")}</Text>
-        <View>
-          <View style={[s.flexCol]}>
-            <LinkButton
-              style={s}
-              href={Routes.settingsV2()}
-              label={t("accessibility.settings_button")}
-              icon="settings"
-            />
-            <LinkButton
-              style={s}
-              href={Routes.thoughtCreateV2()}
-              label={t("accessibility.new_thought_button")}
-              icon="message-circle"
-            />
-          </View>
-        </View>
-      </View>
       <View style={[s.flexCol, s.container]}>
         <Text style={[s.text]}>
           num thoughts: {model.thoughts.size}. date-groups: {list.length}. parse
