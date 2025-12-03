@@ -1,8 +1,8 @@
-// copied from https://docs.expo.dev/versions/v54.0.0/sdk/notifications/#usage
 import { useDefaultStyle } from "@/src/hooks/use-style";
 import Constants from "expo-constants";
 import * as Device from "expo-device";
 import * as Notifications from "expo-notifications";
+import { Link } from "expo-router";
 import { useEffect, useState } from "react";
 import { Button, Platform, Text, View } from "react-native";
 
@@ -53,8 +53,17 @@ export default function Index() {
     };
   }, []);
 
+  const docsUrl =
+    "https://docs.expo.dev/versions/v54.0.0/sdk/notifications/#usage";
   return (
     <View style={[s.view]}>
+      <Text style={[s.text, s.mb4]}>
+        copied and lightly edited from{" "}
+        <Link href={docsUrl}>
+          <Text style={[s.href]}>{docsUrl}</Text>
+        </Link>
+      </Text>
+
       <Text style={[s.text]}>
         Your expo push token: {expoPushToken || "(unknown)"}
       </Text>
