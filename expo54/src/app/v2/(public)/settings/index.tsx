@@ -1,6 +1,7 @@
 import { Routes } from "@/src";
 import { LocaleTag, localeTags, TranslateFn } from "@/src/hooks/use-i18n";
 import { LoadModel, ModelLoadedProps } from "@/src/hooks/use-model";
+import { PromiseRender } from "@/src/hooks/use-promise-state";
 import { useReminders } from "@/src/hooks/use-reminders";
 import { useStyle, useTheme } from "@/src/hooks/use-style";
 import { Action, Model, Settings } from "@/src/model";
@@ -9,6 +10,7 @@ import Constants from "expo-constants";
 import { Href, Link } from "expo-router";
 import React, { useState } from "react";
 import {
+  ActivityIndicator,
   Pressable,
   StyleSheet,
   Text,
@@ -102,9 +104,18 @@ function RemindersForm(props: {
 }) {
   const { value, dispatch, s, t } = props;
   const reminders = useReminders();
+  const [pending, setPending] = useState(Promise.resolve());
+  function onPress(v: boolean) {
+    setPending(
+      (async () => {
+        await reminders.set(!!v, dispatch, t);
+        dispatch(Action.setReminders(!!v));
+      })()
+    );
+  }
   return reminders.isSupported() ? (
     <>
-      <Text style={[s.subheader]}>{t("settings.reminders.header")}</Text>
+      <Text style={[s.subheader]}>{t("settings.reminders.header")} </Text>
       <Text style={[s.text]}>{t("settings.reminders.description")}</Text>
       <SelectorButtons<null | "1">
         style={s}
@@ -113,7 +124,15 @@ function RemindersForm(props: {
           ["1", t("settings.reminders.button.yes")],
           [null, t("settings.reminders.button.no")],
         ]}
-        onPress={(v) => dispatch(Action.setReminders(!!v))}
+        onPress={(v) => onPress(!!v)}
+      />
+      <PromiseRender
+        promise={pending}
+        success={() => <></>}
+        pending={() => <ActivityIndicator />}
+        failure={(err) => (
+          <Text style={[s.errorText]}>Error: {err.message}</Text>
+        )}
       />
     </>
   ) : (

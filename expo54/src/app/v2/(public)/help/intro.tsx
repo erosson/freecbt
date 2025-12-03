@@ -3,7 +3,7 @@ import { LoadModel, ModelLoadedProps } from "@/src/hooks/use-model";
 import { Reminders, useReminders } from "@/src/hooks/use-reminders";
 import { useSafeWindowDimensions } from "@/src/hooks/use-safe-area";
 import { ImagePath } from "@/src/view";
-import { Link } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import React from "react";
 import { Image, Keyboard, Text, TouchableOpacity, View } from "react-native";
 import { useSharedValue } from "react-native-reanimated";
@@ -75,11 +75,21 @@ function Ready(props: ModelLoadedProps) {
 }
 
 function IntroItem(
-  props: Pick<ModelLoadedProps, "model" | "style" | "translate"> & {
+  props: Pick<ModelLoadedProps, "dispatch" | "style" | "translate"> & {
     reminders: Reminders;
   }
 ): CarouselRenderItem<SlideName> {
-  const { reminders, style: s, translate: t } = props;
+  const { reminders, dispatch, style: s, translate: t } = props;
+  const router = useRouter();
+  const href = Routes.thoughtCreateV2();
+  async function onPressYes() {
+    await reminders.enable(dispatch, t);
+    router.push(href);
+  }
+  async function onPressNo() {
+    await reminders.disable(dispatch);
+    router.push(href);
+  }
   return function IntroItem({ item }) {
     switch (item) {
       case "record": {
@@ -136,7 +146,7 @@ function IntroItem(
               {t("onboarding_screen.block2.body")}
             </Text>
             {reminders.isSupported() ? null : (
-              <Link style={[s.button]} href={Routes.thoughtCreateV2()}>
+              <Link style={[s.button]} href={href}>
                 <TouchableOpacity style={[s.flex1]}>
                   <Text style={[s.buttonText]}>
                     {t("onboarding_screen.reminders.button.continue")}
@@ -158,12 +168,12 @@ function IntroItem(
             <Text style={[s.header]}>
               {t("onboarding_screen.reminders.header")}
             </Text>
-            <TouchableOpacity style={[s.button]}>
+            <TouchableOpacity style={[s.button]} onPress={onPressYes}>
               <Text style={[s.buttonText]}>
                 {t("onboarding_screen.reminders.button.yes")}
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity style={[s.button]}>
+            <TouchableOpacity style={[s.button]} onPress={onPressNo}>
               <Text style={[s.buttonText]}>
                 {t("onboarding_screen.reminders.button.no")}
               </Text>

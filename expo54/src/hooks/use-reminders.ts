@@ -1,5 +1,6 @@
 import * as Notifications from "expo-notifications";
 import { Platform } from "react-native";
+import { Action } from "../model";
 import { TranslateFn } from "./use-i18n";
 
 export type Reminders = ReturnType<typeof useReminders>;
@@ -7,21 +8,39 @@ export function useReminders() {
   return {
     // v1 code's reminder-support check.
     // as of 2025/12, expo-notifications doesn't support web: https://docs.expo.dev/guides/using-push-notifications-services/#tips-and-important-considerations
-    // TODO: not sure why android wasn't enabled
-    // isSupported: () => Platform.OS === "ios",
-
-    // TODO v2 side effects not yet implemented, disable until that's fixed
-    isSupported: () => false,
+    // TODO: not sure why android wasn't enabled, but wait til the big v2 release is done to enable it
+    isSupported: () => Platform.OS === "ios",
+    // isSupported: () => false,
+    // isSupported: () => true,
+    async enable(dispatch: (a: Action.Action) => void, t: TranslateFn) {
+      await enable(t);
+      dispatch(Action.setReminders(true));
+    },
+    async disable(dispatch: (a: Action.Action) => void) {
+      await disable();
+      dispatch(Action.setReminders(false));
+    },
+    async set(
+      v: boolean,
+      dispatch: (a: Action.Action) => void,
+      t: TranslateFn
+    ) {
+      if (v) {
+        await this.enable(dispatch, t);
+      } else {
+        await this.disable(dispatch);
+      }
+    },
   } as const;
 }
 
-async function setNotifications(
-  enabled: boolean,
-  t: TranslateFn
-): Promise<boolean> {
-  await Notifications.cancelAllScheduledNotificationsAsync();
+async function disable() {
+  return await Notifications.cancelAllScheduledNotificationsAsync();
+}
+async function enable(t: TranslateFn): Promise<boolean> {
+  await disable();
   // don't enable without permission
-  enabled = enabled && (await registerForLocalNotificationsAsync());
+  const enabled = await registerForLocalNotificationsAsync();
   if (enabled) {
     await Notifications.scheduleNotificationAsync({
       content: {
@@ -41,10 +60,11 @@ async function setNotifications(
         // icon: "https://freecbt.erosson.org/static/favicon/favicon.ico",
         // icon: "https://freecbt.erosson.org/notifications/quirk-bw.png",
       },
-      trigger:
-        // TODO use dailynotificationtrigger/calendarnotificationtrigger
-        // https://docs.expo.dev/versions/latest/sdk/notifications/#notificationcontentinput
-        { channelId: "default", repeats: true, seconds: 86400 },
+      trigger: {
+        type: Notifications.SchedulableTriggerInputTypes.DAILY,
+        channelId: "default",
+      },
+      // { channelId: "default", repeats: true, seconds: 86400 },
     });
   }
   // setSetting(NOTIFICATIONS_KEY, JSON.stringify(enabled));
