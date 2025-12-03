@@ -24,6 +24,7 @@
     "@types/lodash": "^4.17.20",
     "expo": "54.0.21",
     "expo-constants": "~18.0.10",
+    "expo-device": "^8.0.9",
     "expo-document-picker": "^14.0.7",
     "expo-font": "~14.0.9",
     "expo-haptics": "~15.0.7",
