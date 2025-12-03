@@ -6,6 +6,7 @@ const empty: Settings.Json = {
   [Settings.localeKey]: null,
   [Settings.themeKey]: null,
   [Settings.existingUserKey]: null,
+  [Settings.remindersKey]: null,
 };
 
 test("parse + serialize empty json", () => {
@@ -14,6 +15,7 @@ test("parse + serialize empty json", () => {
   expect(s.historyLabels).toBe("alternative-thought");
   expect(s.locale).toBe(null);
   expect(s.existingUser).toBe(false);
+  expect(s.reminders).toBe(false);
   const j = Settings.fromJson.encode(s);
   expect(j).toEqual(empty);
 });
@@ -25,6 +27,7 @@ test("parse + serialize nonempty json", () => {
     [Settings.localeKey]: "de",
     [Settings.themeKey]: "dark",
     [Settings.existingUserKey]: null,
+    [Settings.remindersKey]: null,
   };
   const s = Settings.fromJson.decode(j0);
   expect(s.pincode).toBe("1234");

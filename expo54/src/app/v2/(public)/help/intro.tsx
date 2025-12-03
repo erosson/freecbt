@@ -1,5 +1,6 @@
 import { Routes } from "@/src";
 import { LoadModel, ModelLoadedProps } from "@/src/hooks/use-model";
+import { Reminders, useReminders } from "@/src/hooks/use-reminders";
 import { useSafeWindowDimensions } from "@/src/hooks/use-safe-area";
 import { ImagePath } from "@/src/view";
 import { Link } from "expo-router";
@@ -21,17 +22,17 @@ export type SlideName = (typeof slideNames)[number];
 // export const SlideName = z.enum(slideNames);
 // export type SlideName = z.infer<typeof SlideName>;
 function Ready(props: ModelLoadedProps) {
-  const { model, style: s } = props;
+  const { style: s } = props;
   const ref = React.useRef<ICarouselInstance>(null);
   const progress = useSharedValue<number>(0);
-  const featureReminders = false;
+  const reminders = useReminders();
   const onPressPagination = (index: number) => {
     ref.current?.scrollTo({
       count: index - progress.value,
       animated: true,
     });
   };
-  const slides = featureReminders ? slideNames : slideNames.slice(0, -1);
+  const slides = reminders.isSupported() ? slideNames : slideNames.slice(0, -1);
   const w = useSafeWindowDimensions();
   const width = Math.min(w.width, s.container.maxWidth);
   return (
@@ -41,7 +42,7 @@ function Ready(props: ModelLoadedProps) {
           ref={ref}
           data={[...slides]}
           onProgressChange={progress}
-          renderItem={IntroItem({ ...props, featureReminders })}
+          renderItem={IntroItem({ ...props, reminders })}
           width={width}
           height={w.height - 150}
           onSnapToItem={(index) => {
@@ -75,10 +76,10 @@ function Ready(props: ModelLoadedProps) {
 
 function IntroItem(
   props: Pick<ModelLoadedProps, "model" | "style" | "translate"> & {
-    featureReminders: boolean;
+    reminders: Reminders;
   }
 ): CarouselRenderItem<SlideName> {
-  const { featureReminders, style: s, translate: t } = props;
+  const { reminders, style: s, translate: t } = props;
   return function IntroItem({ item }) {
     switch (item) {
       case "record": {
@@ -134,7 +135,7 @@ function IntroItem(
             <Text style={[s.subheader]}>
               {t("onboarding_screen.block2.body")}
             </Text>
-            {featureReminders ? null : (
+            {reminders.isSupported() ? null : (
               <Link style={[s.button]} href={Routes.thoughtCreateV2()}>
                 <TouchableOpacity style={[s.flex1]}>
                   <Text style={[s.buttonText]}>

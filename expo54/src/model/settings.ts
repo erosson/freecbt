@@ -3,6 +3,7 @@ import { localeTags } from "../hooks/use-i18n";
 
 const prefix = `@SettingsStore:`;
 // these names are from legacy code, could still be around in users' persisted state, be careful changing them
+export const remindersKey = `${prefix}notifications`;
 export const localeKey = `${prefix}locale`;
 export const historyLabelsKey = `${prefix}history-button-labels`;
 export const pincodeKey = `@Quirk:pincode`;
@@ -12,6 +13,7 @@ export const existingUserKey = "@Quirk:existing-user";
 export const historyLabelsDefault = `alternative-thought` as const;
 
 export const Json = z.object({
+  [remindersKey]: z.string().nullable(),
   [pincodeKey]: z.string().nullable(),
   [historyLabelsKey]: z.string().nullable(),
   [localeKey]: z.string().nullable(),
@@ -35,6 +37,7 @@ export const Settings = z.object({
   locale: z.enum(localeTags).nullable().catch(null),
   theme: z.enum(["light", "dark"]).nullable().catch(null),
   existingUser: z.boolean(),
+  reminders: z.boolean(),
 });
 export type Settings = z.infer<typeof Settings>;
 export type HistoryLabel = Settings["historyLabels"];
@@ -47,6 +50,7 @@ export function empty(): Settings {
     locale: null,
     theme: null,
     existingUser: false,
+    reminders: false,
   };
 }
 export const fromJson = z.codec(Json, Settings, {
@@ -57,6 +61,7 @@ export const fromJson = z.codec(Json, Settings, {
       [localeKey]: locale,
       [themeKey]: theme,
       [existingUserKey]: existingUser,
+      [remindersKey]: reminders,
     } = json;
     return Settings.parse({
       pincode,
@@ -64,6 +69,7 @@ export const fromJson = z.codec(Json, Settings, {
       locale,
       theme,
       existingUser: z.stringbool().decode(existingUser ?? "0"),
+      reminders: z.stringbool().decode(reminders ?? "0"),
     });
   },
   encode: (s: Settings) => {
@@ -74,6 +80,7 @@ export const fromJson = z.codec(Json, Settings, {
       [localeKey]: s.locale,
       [themeKey]: s.theme,
       [existingUserKey]: s.existingUser ? "1" : null,
+      [remindersKey]: s.reminders ? "1" : null,
     });
   },
 });

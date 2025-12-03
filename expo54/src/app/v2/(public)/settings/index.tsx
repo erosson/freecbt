@@ -1,6 +1,7 @@
 import { Routes } from "@/src";
 import { LocaleTag, localeTags, TranslateFn } from "@/src/hooks/use-i18n";
 import { LoadModel, ModelLoadedProps } from "@/src/hooks/use-model";
+import { useReminders } from "@/src/hooks/use-reminders";
 import { useStyle, useTheme } from "@/src/hooks/use-style";
 import { Action, Model, Settings } from "@/src/model";
 import { Picker } from "@react-native-picker/picker";
@@ -26,6 +27,12 @@ function Ready({ model, dispatch, translate: t }: ModelLoadedProps) {
       <View style={[s.container]}>
         <ThemeForm
           value={model.settings.theme}
+          dispatch={dispatch}
+          s={s}
+          t={t}
+        />
+        <RemindersForm
+          value={model.settings.reminders}
           dispatch={dispatch}
           s={s}
           t={t}
@@ -85,6 +92,32 @@ function ThemeForm(props: {
         onPress={(v) => dispatch(Action.setTheme(v))}
       />
     </>
+  );
+}
+function RemindersForm(props: {
+  value: boolean;
+  dispatch: (a: Action.Action) => void;
+  s: PageStyle;
+  t: TranslateFn;
+}) {
+  const { value, dispatch, s, t } = props;
+  const reminders = useReminders();
+  return reminders.isSupported() ? (
+    <>
+      <Text style={[s.subheader]}>{t("settings.reminders.header")}</Text>
+      <Text style={[s.text]}>{t("settings.reminders.description")}</Text>
+      <SelectorButtons<null | "1">
+        style={s}
+        selected={value ? "1" : null}
+        options={[
+          ["1", t("settings.reminders.button.yes")],
+          [null, t("settings.reminders.button.no")],
+        ]}
+        onPress={(v) => dispatch(Action.setReminders(!!v))}
+      />
+    </>
+  ) : (
+    <></>
   );
 }
 function LockUpdateForm(props: {

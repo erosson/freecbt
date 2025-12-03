@@ -118,6 +118,9 @@ function updateReady(m: Ready, a: Action.Action): readonly [Model, Cmd.List] {
     case "set-existing-user": {
       return updateSettings(m, { existingUser: true });
     }
+    case "set-reminders": {
+      return updateSettings(m, { reminders: a.value });
+    }
     case "set-device-color-scheme": {
       return [{ ...m, deviceColorScheme: a.value }, []];
     }

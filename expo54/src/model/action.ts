@@ -7,6 +7,7 @@ export type Action = ReturnType<
   | typeof modelReady
   | typeof setSessionAuthed
   | typeof setExistingUser
+  | typeof setReminders
   | typeof setPincode
   | typeof setHistoryLabel
   | typeof setLocale
@@ -36,6 +37,9 @@ export function setPincode(value: Settings.Pincode | null) {
 }
 export function setExistingUser() {
   return { action: "set-existing-user" } as const;
+}
+export function setReminders(value: boolean) {
+  return { action: "set-reminders", value } as const;
 }
 export function modelReady(model: Model.Ready) {
   return { action: "model-ready", model } as const;
