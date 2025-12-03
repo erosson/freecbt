@@ -3,17 +3,17 @@ import { Link } from "expo-router";
 import { Text, View } from "react-native";
 
 export default function Index() {
-  const S = useDefaultStyle();
+  const s = useDefaultStyle();
   return (
-    <View style={[S.view]}>
-      <Link href="/v2/debug/pure-elm-arch">
-        <Text style={[S.href]}>pure-elm-arch</Text>
+    <View style={[s.view]}>
+      <Link href="/v2">
+        <Text style={[s.header, s.href]}>Return to FreeCBT</Text>
       </Link>
-      <Link href="/v2/debug/counter">
-        <Text style={[S.href]}>counter</Text>
-      </Link>
+      <Text style={[s.text, s.my4]}>
+        list of debug pages is in the nav drawer.
+      </Text>
       <Link href="/debug">
-        <Text style={[S.href]}>legacy debug</Text>
+        <Text style={[s.href]}>legacy debug page</Text>
       </Link>
     </View>
   );

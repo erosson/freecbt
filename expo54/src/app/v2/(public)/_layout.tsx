@@ -1,6 +1,8 @@
 import { LoadModel, ModelLoadedProps } from "@/src/hooks/use-model";
+import { Style } from "@/src/hooks/use-style";
 import { AppProvider } from "@/src/view/app-provider";
 import { Feather } from "@expo/vector-icons";
+import { DrawerNavigationOptions } from "@react-navigation/drawer";
 import { Drawer } from "expo-router/drawer";
 import React from "react";
 import { Platform, useWindowDimensions } from "react-native";
@@ -15,39 +17,10 @@ export default function Layout() {
     </AppProvider>
   );
 }
+
 function Nav({ style: s, translate: t }: ModelLoadedProps) {
-  const dim = useWindowDimensions();
-  const isLargeScreen = Platform.OS === "web" && dim.width > 1024;
-  // https://docs.expo.dev/router/advanced/drawer/
-  // https://reactnavigation.org/docs/drawer-navigator
   return (
-    <Drawer
-      screenOptions={(route) => ({
-        headerStyle: {
-          backgroundColor: s.bg.backgroundColor,
-          borderBottomColor: s.border.borderColor,
-        },
-        // isLargeScreen hides the drawer-open button on large screens.
-        // hacky as hell, but I can't find a better way...!
-        headerTintColor: isLargeScreen ? s.bg.backgroundColor : s.header.color,
-        headerTitleStyle: {
-          color: s.header.color,
-          fontSize: s.header.fontSize,
-          fontWeight: s.header.fontWeight,
-        },
-        drawerStyle: {
-          backgroundColor: s.bg.backgroundColor,
-          borderWidth: s.border.borderWidth,
-          borderColor: s.border.borderColor,
-          borderRightColor: s.border.borderColor, // used only on large-screen web
-          borderLeftWidth: 0,
-        },
-        drawerLabelStyle: { color: s.text.color },
-        drawerActiveTintColor: s.bgSelected.backgroundColor,
-        drawerInactiveTintColor: s.text.color,
-        drawerType: isLargeScreen ? "permanent" : undefined,
-      })}
-    >
+    <Drawer screenOptions={useDrawerOptions(s)}>
       <Drawer.Screen
         name="thoughts/create"
         options={{
@@ -121,6 +94,37 @@ function Nav({ style: s, translate: t }: ModelLoadedProps) {
       />
     </Drawer>
   );
+}
+export function useDrawerOptions(s: Style): DrawerNavigationOptions {
+  // https://docs.expo.dev/router/advanced/drawer/
+  // https://reactnavigation.org/docs/drawer-navigator
+  const dim = useWindowDimensions();
+  const isLargeScreen = Platform.OS === "web" && dim.width > 1024;
+  return {
+    headerStyle: {
+      backgroundColor: s.bg.backgroundColor,
+      borderBottomColor: s.border.borderColor,
+    },
+    // isLargeScreen hides the drawer-open button on large screens.
+    // hacky as hell, but I can't find a better way...!
+    headerTintColor: isLargeScreen ? s.bg.backgroundColor : s.header.color,
+    headerTitleStyle: {
+      color: s.header.color,
+      fontSize: s.header.fontSize,
+      fontWeight: s.header.fontWeight,
+    },
+    drawerStyle: {
+      backgroundColor: s.bg.backgroundColor,
+      borderWidth: s.border.borderWidth,
+      borderColor: s.border.borderColor,
+      borderRightColor: s.border.borderColor, // used only on large-screen web
+      borderLeftWidth: 0,
+    },
+    drawerLabelStyle: { color: s.text.color },
+    drawerActiveTintColor: s.bgSelected.backgroundColor,
+    drawerInactiveTintColor: s.text.color,
+    drawerType: isLargeScreen ? "permanent" : undefined,
+  };
 }
 function hidden(
   name: string,
