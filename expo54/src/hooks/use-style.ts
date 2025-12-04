@@ -22,25 +22,31 @@ export function useTheme(c: Model.ColorScheme): Theme {
 export const DarkTheme = {
   text: "white",
   background: "black",
-  border: "rgba(255,255,255,0.2)",
-  button: "cyan",
-  buttonText: "black",
+  backgroundRoot: "rgba(4,4,4,1)",
+  backgroundCard: "rgba(255,255,255,0.2)",
+  border: "rgba(255,255,255,0.25)",
+  buttonText: "rgba(237,240,252,1)",
+  button: "rgba(84,109,229,0.4)",
   paginationDot: "rgba(255,255,255,0.2)",
   selectedText: "white",
-  selectedBackground: "blue",
-  selectedBorder: "darkblue",
+  selectedBackground: "rgba(119,139,235,0.6)",
+  selectedBackgroundCard: "rgba(84,109,229,0.6)",
+  selectedBorder: "rgba(84,109,229,0.6)",
 };
 export type Theme = typeof DarkTheme;
 export const LightTheme: Theme = {
   text: "black",
   background: "white",
+  backgroundRoot: "rgba(252,252,252,1)",
+  backgroundCard: "rgba(242,245,250,1)",
   border: "rgba(0,0,0,0.2)",
-  button: "blue",
-  buttonText: "white",
+  button: "rgba(237,240,252,1)",
+  buttonText: "rgba(84,109,229,1)",
   paginationDot: "rgba(0,0,0,0.2)",
   selectedText: "white",
-  selectedBackground: "blue",
-  selectedBorder: "darkblue",
+  selectedBackground: "rgba(119,139,235,1)",
+  selectedBackgroundCard: "rgba(84,109,229,1)",
+  selectedBorder: "rgba(84,109,229,1)",
 };
 
 const spacing = 4;
@@ -113,7 +119,10 @@ function style(c: Theme) {
     text: { color: c.text },
     errorText: { color: c.text, fontFamily: "ui-monospace" },
     bg: { backgroundColor: c.background },
+    bgRoot: { backgroundColor: c.backgroundRoot },
     bgSelected: { backgroundColor: c.selectedBackground },
+    bgCard: { backgroundColor: c.backgroundCard },
+    bgCardSelected: { backgroundColor: c.selectedBackgroundCard },
     border: { borderWidth: 1, borderColor: c.border },
     container: { maxWidth: 1000 },
   });
@@ -121,7 +130,7 @@ function style(c: Theme) {
   // application-specific "class names"
   return StyleSheet.create({
     ...U,
-    view: { ...U.flex1, ...U.bg, ...U.p4 },
+    view: { ...U.flex1, ...U.bgRoot, ...U.p4 },
     centeredView: {
       ...U.flex1,
       ...U.bg,

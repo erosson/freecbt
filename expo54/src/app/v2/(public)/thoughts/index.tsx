@@ -17,10 +17,10 @@ function Ready(props: ModelLoadedProps) {
   return (
     <SafeAreaView style={[s.view]}>
       <View style={[s.flexCol, s.container]}>
-        <Text style={[s.text]}>
-          num thoughts: {model.thoughts.size}. date-groups: {list.length}. parse
-          errors: {model.thoughtParseErrors.size}.
-        </Text>
+        {/* <Text style={[s.text]}> */}
+        {/* num thoughts: {model.thoughts.size}. date-groups: {list.length}. parse */}
+        {/* errors: {model.thoughtParseErrors.size}. */}
+        {/* </Text> */}
         {list.length === 0 ? (
           <Text style={[s.text]}>{t("cbt_list.empty")}</Text>
         ) : (
@@ -53,20 +53,29 @@ function ThoughtItem(props: ModelLoadedProps & { thought: Thought.Thought }) {
   return (
     <View style={[s.flexRow, s.justifyBetween, s.m2]}>
       <TouchableOpacity style={[s.flex1, s.border, s.rounded, s.p2]}>
-        <Link style={[s.flex1]} href={Routes.thoughtViewV2(thought.uuid)}>
+        <Link
+          style={[s.flex1, s.flexCol]}
+          href={Routes.thoughtViewV2(thought.uuid)}
+        >
           <Text style={[s.text]}>
             {Thought.label(thought, model)}
-            {"\n"}
-            {Thought.emojis(thought)}
+            {"\n\n"}
           </Text>
+          {Thought.emojis(thought) ? (
+            <Text style={[s.text, s.bgCard, s.rounded, s.p1]}>
+              {Thought.emojis(thought)}
+            </Text>
+          ) : (
+            <></>
+          )}
           <Text style={[s.text]}></Text>
         </Link>
       </TouchableOpacity>
       <TouchableOpacity
-        style={[s.selfStart, s.border, s.rounded, s.p2]}
+        style={[s.selfStart, s.bgCard, s.border, s.rounded, s.p2, s.mx2]}
         onPress={onDelete}
       >
-        <Text style={[s.text]}>
+        <Text style={[s.buttonText]}>
           <Feather
             name="trash"
             accessibilityLabel={t("accessibility.delete_thought_button")}

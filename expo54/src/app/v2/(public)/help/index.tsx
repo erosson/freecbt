@@ -55,7 +55,7 @@ function Ready(props: ModelLoadedProps) {
 
               <View style={[s.flexRow, s.my2]}>
                 <Image source={img(i)} style={[s.bubble, s.m2]} />
-                <Text style={[s.text, s.border, s.rounded, s.p2]}>
+                <Text style={[s.text, s.bgCard, s.border, s.rounded, s.p2]}>
                   {" "}
                   {t(d.explanationThoughtKey)}
                 </Text>

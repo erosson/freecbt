@@ -1,9 +1,10 @@
 import { LoadModel, ModelLoadedProps } from "@/src/hooks/use-model";
 import { useSafeWindowDimensions } from "@/src/hooks/use-safe-area";
 import { Action, Distortion, Thought } from "@/src/model";
+import { ImagePath } from "@/src/view";
+import { Image } from "expo-image";
 import React, { useState } from "react";
 import {
-  Button,
   Keyboard,
   Pressable,
   ScrollView,
@@ -152,6 +153,10 @@ function CBTFormItem(
           value.cognitiveDistortions.has(v) ? s.bgSelected : s.bg;
         const selectorText = (v: Distortion.Distortion) =>
           value.cognitiveDistortions.has(v) ? s.selectedText : s.text;
+        const selectorCardBg = (v: Distortion.Distortion) =>
+          value.cognitiveDistortions.has(v) ? s.bgCardSelected : s.bgCard;
+        const img = (i: number) =>
+          ImagePath.bubbles[i % ImagePath.bubbles.length];
         return (
           <>
             <Text style={[s.subheader]}>{t("cog_distortion")}</Text>
@@ -167,7 +172,7 @@ function CBTFormItem(
               </Text>
             </Pressable>
             <ScrollView>
-              {model.distortionData.list.map((d) => {
+              {model.distortionData.list.map((d, i) => {
                 function onPress() {
                   // ignore button-presses if the distortion slide is not focused.
                   // this prevents pressing the button while swiping away from the distortion list.
@@ -185,16 +190,37 @@ function CBTFormItem(
                 return (
                   <TouchableOpacity
                     key={d.slug}
-                    style={[selectorBtn(d), s.rounded, s.border, s.p1]}
+                    style={[selectorBtn(d), s.rounded, s.border, s.p1, s.my1]}
                     onPress={onPress}
                   >
-                    <Text style={[selectorText(d)]}>
+                    <Text style={[selectorText(d), s.m1]}>
                       {Distortion.emoji(d)} {t(d.labelKey)}
-                      {"\n\n"}
-                      {showDetails
-                        ? d.explanationKeys.map((k) => t(k)).join("\n\n")
-                        : t(d.descriptionKey)}
                     </Text>
+                    {showDetails ? (
+                      <>
+                        <Text style={[selectorText(d), s.m1, s.mx4]}>
+                          {d.explanationKeys.map((k) => t(k)).join("\n\n")}
+                        </Text>
+                        <View style={[s.flexRow, s.my2]}>
+                          <Image source={img(i)} style={[s.bubble, s.m2]} />
+                          <Text
+                            style={[
+                              selectorText(d),
+                              selectorCardBg(d),
+                              s.border,
+                              s.rounded,
+                              s.p2,
+                            ]}
+                          >
+                            {t(d.explanationThoughtKey)}
+                          </Text>
+                        </View>
+                      </>
+                    ) : (
+                      <Text style={[selectorText(d), s.m1, s.mx4]}>
+                        {t(d.descriptionKey)}
+                      </Text>
+                    )}
                   </TouchableOpacity>
                 );
               })}
@@ -222,7 +248,7 @@ function CBTFormItem(
         return (
           <>
             <Text style={[s.subheader]}>{t("alt_thought")}</Text>
-            <Text style={[s.text]}>{t("alt_thought_description")}</Text>
+            <Text style={[s.text, s.mb2]}>{t("alt_thought_description")}</Text>
             <TextInput
               style={[s.textInput]}
               // placeholderTextColor={textInputPlaceholderColor}
@@ -234,7 +260,12 @@ function CBTFormItem(
                 onChange({ ...value, alternativeThought: v })
               }
             />
-            <Button onPress={onSubmit} title={t("cbt_form.submit")} />
+            <TouchableOpacity
+              style={[s.button, s.bgSelected]}
+              onPress={onSubmit}
+            >
+              <Text style={[s.selectedText]}>{t("cbt_form.submit")}</Text>
+            </TouchableOpacity>
           </>
         );
       }
