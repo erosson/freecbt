@@ -17,20 +17,20 @@ import {
   useColorScheme,
   useWindowDimensions,
 } from "react-native";
-import { Storage } from "../../../..";
+import { Storage } from "../../../../..";
 import {
   defaultLocale,
   TranslateFn,
   useTranslate,
-} from "../../../../hooks/use-i18n";
-import { Style, useStyle } from "../../../../hooks/use-style";
+} from "../../../../../hooks/use-i18n";
+import { Style, useStyle } from "../../../../../hooks/use-style";
 import {
   Action,
   Distortion,
   DistortionData,
   Model,
   Thought,
-} from "../../../../model";
+} from "../../../../../model";
 
 export default function UNUSED() {
   return <></>;

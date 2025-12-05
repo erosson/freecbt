@@ -74,9 +74,11 @@ function style(c: Theme) {
     selfStart: { alignSelf: "flex-start" },
     alignMiddle: { verticalAlign: "middle" },
     selfCenter: { alignSelf: "center" },
+    selfStretch: { alignSelf: "stretch" },
     hFull: { height: "100%" },
     wFull: { width: "100%" },
     textCenter: { textAlign: "center" },
+    textRight: { textAlign: "right" },
 
     m1: { margin: spacing * 1 },
     m2: { margin: spacing * 2 },
