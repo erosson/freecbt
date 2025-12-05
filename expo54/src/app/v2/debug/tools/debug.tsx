@@ -74,15 +74,23 @@ function Ready(props: ModelLoadedProps) {
         }
       />,
     ],
-    //[
-    //  "Test: create a legacy-encoded thought",
-    //  <Button
-    //    key="create-legacy"
-    //    title="Legacy"
-    //    onPress={async () => {
-    //    }}
-    //  />,
-    //],
+    [
+      "Test: create a legacy-encoded thought",
+      <Button
+        key="create-legacy"
+        title="Legacy"
+        onPress={async () => {
+          const t = Thought.create(exampleThought(), new Date());
+          const { fromJson } = Thought.createParsers(DistortionData);
+          const enc = fromJson.encode(t);
+          (enc as any)["cognitiveDistortions"] = [
+            { slug: "all-or-nothing", stuff: "nonsense" },
+          ];
+          AsyncStorage.setItem(Thought.key(t), JSON.stringify(enc));
+          console.log("legacy", Thought.key(t), enc);
+        }}
+      />,
+    ],
     [
       "Test: create an unparsable thought",
       <Button
@@ -131,25 +139,6 @@ function Ready(props: ModelLoadedProps) {
     </SafeAreaView>
   );
 }
-
-// const writeThoughts: { [name: string]: () => Promise<void> } = {
-//  legacy: async () => {
-//    const t = exampleThought();
-//    const enc = Thought.FromLegacy.encode(t);
-//    const raw = JSON.stringify(enc);
-//    await AsyncStorage.setItem(Thought.key(t), raw);
-//    console.log("write legacy");
-//  },
-//  invalid: async () => {
-//    const t = exampleThought();
-//    const enc = Thought.FromLegacy.encode(t);
-//    (enc as any)["automaticThought"] = false;
-//    const raw = JSON.stringify(enc);
-//    await AsyncStorage.setItem(Thought.key(t), raw);
-//    console.log("write invalid");
-//  },
-//};
-// };
 
 function exampleThought(): Thought.Spec {
   return {

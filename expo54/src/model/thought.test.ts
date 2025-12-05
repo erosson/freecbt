@@ -30,6 +30,15 @@ test("allow missing version", () => {
   expect(t).toBeTruthy();
 });
 
+test("allow legacy distortion objects", () => {
+  const json = {
+    ...fixture,
+    cognitiveDistortions: [{ slug: "all-or-nothing", stuff: "nonsense" }],
+  };
+  const t = T.fromJson.decode(json);
+  expect(t).toBeTruthy();
+});
+
 test("accept keys saved in the id field, too", () => {
   // I messed this one up for a few versions...!
   // be forgiving when parsing it...

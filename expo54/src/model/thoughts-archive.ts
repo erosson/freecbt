@@ -57,7 +57,7 @@ export function createParsers(data: Distortion.Data) {
     },
     encode: (arc: z.input<typeof Archive>) => {
       const thoughts = Archive.decode(arc).thoughts.map((t) =>
-        T.fromJson.encode(t)
+        T.toJson.encode(t)
       );
       return { v: VERSION, thoughts };
     },

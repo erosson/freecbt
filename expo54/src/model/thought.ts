@@ -19,6 +19,12 @@ export const Json = z.object({
 });
 export type Json = z.infer<typeof Json>;
 
+export const LegacyJson = z.object({
+  ...Json.shape,
+  cognitiveDistortions: z.object({ slug: z.string() }).array(),
+});
+export type LegacyJson = z.infer<typeof LegacyJson>;
+
 export const KEY_PREFIX = `@Quirk:thoughts:`;
 // Keys start with KEY_PREFIX above, and are persisted as storage-ids (`storage.getItem(key)`).
 export const Key = z.string().startsWith(KEY_PREFIX).brand<"thought.key">();
@@ -100,7 +106,7 @@ export function createParsers(data: Distortion.Data) {
   const { fromSlugSet: distortionsFromSlugSet } =
     Distortion.createParsers(data);
 
-  const fromJson = z.codec(Json, Thought, {
+  const toJson = z.codec(Json, Thought, {
     decode: (json: Json) => {
       const cognitiveDistortions = distortionsFromSlugSet.decode(
         new Set(json.cognitiveDistortions)
@@ -129,12 +135,21 @@ export function createParsers(data: Distortion.Data) {
       });
     },
   });
+  const fromJson = z.codec(z.union([Json, LegacyJson]), toJson, {
+    decode: (json: Json | LegacyJson) => {
+      const cognitiveDistortions = json.cognitiveDistortions.map((d) =>
+        typeof d === "string" ? d : d.slug
+      );
+      return { ...json, cognitiveDistortions };
+    },
+    encode: (json: Json) => json,
+  });
 
   const fromString = z.codec(z.string(), fromJson, {
     decode: (enc: string) => JSON.parse(enc),
-    encode: (dec: z.input<typeof Json>) => JSON.stringify(dec),
+    encode: (dec: Json | LegacyJson) => JSON.stringify(dec),
   });
-  return { fromJson, fromString };
+  return { fromJson, toJson, fromString };
 }
 
 export function label(t: Thought, m: Pick<Model.Ready, "settings">) {
