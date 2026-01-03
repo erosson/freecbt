@@ -9,6 +9,7 @@
     "web": "expo start --web",
     "lint": "expo lint",
     "playwright": "playwright test --ui-host=127.0.0.1 --ui-port=8282",
+    "build:web": "expo export --platform web",
     "test": "jest",
     "test:watch": "jest --watchAll"
   },

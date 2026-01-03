@@ -1,10 +1,11 @@
 #!/bin/bash
 cd "`dirname "$0"`/.."
 
-#cd ../expo54
-#yarn build:web
-#cd -
+# TODO: the expo54 web deployment expects to be hosted at `/`, not `/webapp/`. Until we re-engineer that, it's broken
+# cd ../expo54
+# yarn build:web
+# cd -
 
 rm -rf build
 cp -rp public build
-#cp -rp ../expo54/dist build/webapp
+# cp -rp ../expo54/dist build/webapp
