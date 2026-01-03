@@ -4,7 +4,7 @@
   "packageManager": "yarn@1.22.19",
   "scripts": {
     "start": "serve public",
-    "build": "bash -c \"cd webapp && yarn install --frozen-lockfile && yarn build && cd - && rm -rf build && cp -rp public build && cp -rp webapp/build build/webapp\"",
+    "build": "./scripts/build",
     "serve": "serve build"
   },
   "devDependencies": {

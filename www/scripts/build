@@ -1,0 +1,10 @@
+#!/bin/bash
+cd "`dirname "$0"`/.."
+
+#cd ../expo54
+#yarn build:web
+#cd -
+
+rm -rf build
+cp -rp public build
+#cp -rp ../expo54/dist build/webapp
