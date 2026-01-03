@@ -4,7 +4,7 @@ import { Action, Model, Thought } from "@/src/model";
 import { Feather } from "@expo/vector-icons";
 import { Link } from "expo-router";
 import React from "react";
-import { Text, TouchableOpacity, View } from "react-native";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Index() {
@@ -16,7 +16,7 @@ function Ready(props: ModelLoadedProps) {
   const today = new Date().toDateString();
   return (
     <SafeAreaView style={[s.view]}>
-      <View style={[s.flexCol, s.container]}>
+      <ScrollView style={[s.flexCol, s.container]}>
         {/* <Text style={[s.text]}> */}
         {/* num thoughts: {model.thoughts.size}. date-groups: {list.length}. parse */}
         {/* errors: {model.thoughtParseErrors.size}. */}
@@ -43,7 +43,7 @@ function Ready(props: ModelLoadedProps) {
             </React.Fragment>
           ))
         )}
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
