@@ -57,8 +57,8 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     },
   },
   runtimeVersion: {
-    // "Property indicating compatibility between a build's native code and an OTA update."
-    // https://docs.expo.dev/versions/latest/config/app/#runtimeversion
+    // Property indicating compatibility between a build's native code and an OTA update.
+    // https://docs.expo.dev/eas-update/runtime-versions/
     policy: "sdkVersion",
   },
   plugins: [
