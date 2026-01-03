@@ -271,7 +271,7 @@ function DebugLink(props: { style: PageStyle; translate: TranslateFn }) {
   return (
     <>
       <Pressable
-        style={{ cursor: "auto" }}
+        style={{ cursor: "auto", userSelect: "none" }}
         onPress={() => setPresses(presses + 1)}
       >
         <Text style={[s.text, s.my2]}>
