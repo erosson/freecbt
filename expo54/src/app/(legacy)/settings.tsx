@@ -35,10 +35,17 @@ import Constants from "expo-constants";
 import * as Linking from "expo-linking";
 import * as Localization from "expo-localization";
 import * as Notifications from "expo-notifications";
-import { useRouter } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import * as T from "io-ts";
 import React from "react";
-import { Platform, ScrollView, StatusBar, Text } from "react-native";
+import {
+  Platform,
+  Pressable,
+  ScrollView,
+  StatusBar,
+  Text,
+  View,
+} from "react-native";
 
 export { HistoryButtonLabelSetting };
 
@@ -155,7 +162,6 @@ export default function SettingScreen(): React.JSX.Element {
     getLocaleSetting,
     [refresh]
   );
-  const [debugClicks, setDebugClicks] = React.useState(0);
 
   const percentFormat = new Intl.NumberFormat(i18n.locale, {
     minimumFractionDigits: 2,
@@ -495,25 +501,42 @@ export default function SettingScreen(): React.JSX.Element {
           />
         </Row>
         <Row>
-          <ActionButton
-            flex={1}
-            opacity={feature.debugVisible ? 1 : 0}
-            fillColor={feature.debugVisible ? undefined : "#ffffff"}
-            textColor={feature.debugVisible ? undefined : "#ffffff"}
-            title={"Debug"}
-            onPress={() => {
-              const clicks = debugClicks + 1;
-              if (clicks >= 5) {
-                setDebugClicks(0);
-                router.navigate(Routes.debug());
-              } else {
-                setDebugClicks(clicks);
-              }
-            }}
-          />
+          <DebugLink />
         </Row>
       </Container>
     </ScrollView>
     // </FadesIn>
+  );
+}
+
+function DebugLink() {
+  const v = Constants.expoConfig?.version;
+  const [presses, setPresses] = React.useState(0);
+  const isVisible = presses > 0 && presses % 5 === 0;
+  return (
+    <View style={{ display: "flex" }}>
+      <Pressable
+        style={{
+          marginVertical: 16,
+          display: "flex",
+          cursor: "auto",
+          userSelect: "none",
+        }}
+        onPress={() => setPresses(presses + 1)}
+      >
+        <Paragraph>
+          {v
+            ? `${i18n.t("cbt_form.header")} v${v}`
+            : "(unknown FreeCBT version)"}
+        </Paragraph>
+      </Pressable>
+      {isVisible ? (
+        <Link href={Routes.debugV2()}>
+          <Paragraph style={{ textDecorationLine: "underline" }}>
+            developer debug page
+          </Paragraph>
+        </Link>
+      ) : null}
+    </View>
   );
 }
