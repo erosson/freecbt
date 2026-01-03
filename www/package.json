@@ -4,6 +4,7 @@
   "packageManager": "yarn@1.22.19",
   "scripts": {
     "start": "serve public",
+    "start:docker": "docker compose up --build",
     "build": "./scripts/build",
     "serve": "serve build"
   },

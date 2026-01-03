@@ -81,5 +81,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   experiments: {
     typedRoutes: true,
     reactCompiler: true,
+    // https://freecbt.erosson.org/webapp/
+    baseUrl: "/webapp",
   },
 });
