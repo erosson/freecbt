@@ -3,7 +3,7 @@ import { ConfigContext, ExpoConfig } from "expo/config";
 export default ({ config }: ConfigContext): ExpoConfig => ({
   name: "FreeCBT",
   slug: "freecbt",
-  version: "2.4.0",
+  version: "2.5.0-rc.1",
   owner: "erosson",
   githubUrl: "https://github.com/erosson/freecbt",
   platforms: ["android", "ios", "web"],
