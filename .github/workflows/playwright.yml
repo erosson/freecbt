@@ -13,16 +13,17 @@ jobs:
     - uses: actions/setup-node@v4
       with:
         node-version: lts/*
-    - run: cd expo54
     - name: Install dependencies
       run: npm install -g yarn && yarn
     - name: Install Playwright Browsers
       run: yarn playwright install --with-deps
+      working-directory: expo54
     - name: Run Playwright tests
       run: yarn playwright test
+      working-directory: expo54
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       with:
         name: playwright-report
-        path: playwright-report/
+        path: expo54/playwright-report/
         retention-days: 30
