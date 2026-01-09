@@ -17,6 +17,8 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     bundleIdentifier: "org.erosson.freecbt",
     supportsTablet: true,
     icon: "./assets/ios.png",
+    // apple doesn't like my prerelease version tag ("2.5.0-rc.1"). remove this apple-specific override once we're done with prerelease versions.
+    version: "2.5.0",
     config: {
       // this silences a warning during `eas build -p ios`:
       // `app.config.ts is missing ios.infoPlist.ITSAppUsesNonExemptEncryption boolean. Manual configuration is required in App Store Connect before the app can be tested.`
