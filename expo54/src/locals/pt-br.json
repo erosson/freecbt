@@ -1,9 +1,22 @@
 {
   "onboarding_screen": {
+    "readme": "Primeiro, você deve ler isto.",
+    "header": "O Guia FreeCBT",
+    "block1": {
+      "header": "FreeCBT é algo que você precisa praticar",
+      "body": "Dá trabalho, mas aprender o FreeCBT pode ajudar você a se sentir muito melhor."
+    },
+    "block2": {
+      "header": "Use o FreeCBT no momento.",
+      "body": "Quando você estiver se sentindo ansioso, com raiva ou deprimido, use o FreeCBT."
+    },
     "auto_thought_ex": "Me esqueci da festa do Jorge! Ele deve me odiar.",
     "challenge_ex": "O Jorge sabe que não consigo ir a todas as festas. Eu não o odiaria caso se esquecesse da minha. Tenho que me considerar tão bem quanto considero os outros.",
     "alt_thought_ex": "É verdade que me esqueci da festa do Jorge mas posso pedir desculpa e ele compreenderá.",
-    "cog_distortion": { "label": "Leitura da mente", "slug": "leitura-mente" },
+    "cog_distortion": {
+      "label": "Leitura da mente",
+      "slug": "leitura-mente"
+    },
     "intro": {
       "line1": "Bem vindo ao",
       "emphasis1": "FreeCBT",
@@ -42,12 +55,12 @@
       "line1": "Vamos passo-a-passo."
     },
     "catch": {
-      "line1": "1. Vamos começar por",
+      "line1": "Vamos começar por",
       "emphasis1": "escrever",
       "line2": "os pensamentos automáticos assim que acontecerem."
     },
     "bad_thought_note": {
-      "line1": "Repare o pensamento:",
+      "line1": "Observe o pensamento:",
       "line2": "Me esqueci da festa do Jorge. Ele deve me odiar."
     },
     "identify_distortions": {
@@ -60,14 +73,14 @@
       "line2": "Me esqueci da festa do Jorge. Ele deve me odiar."
     },
     "challenge_screen": {
-      "line1": "3. Por que este pensamento não é realista?",
+      "line1": "Por que este pensamento não é realista?",
       "emphasis1": "Desafie-o."
     },
     "write_challenge": {
       "line1": "Vamos escrever algo do tipo:"
     },
     "alt_thought": {
-      "line1": "4. Finalmente, vamos escrever um",
+      "line1": "Finalmente, vamos escrever um",
       "emphasis1": "pensamento alternativo."
     },
     "show_off": {
@@ -76,66 +89,241 @@
     "got_it": {
       "line1": "E é basicamente isto.",
       "btn_title": "Bora lá!"
+    },
+    "reminders": {
+      "header": "Antes de terminar, podemos enviar lembretes se você quiser.",
+      "disabled": "Você pode controlar os lembretes na tela de configurações.",
+      "button": {
+        "yes": "Sim, por favor!",
+        "no": "Continuar sem lembretes",
+        "continue": "Continuar"
+      }
     }
   },
   "auto_thought": "Pensamento automático",
-  "cog_distortion": "Distorção cognitiva",
+  "cog_distortion": "Selecione as distorções que se aplicam.",
   "challenge": "Desafie-o",
-  "alt_thought": "Pensamento alternativo",
+  "alt_thought": "Escreva um pensamento alternativo.",
+  "alt_thought_description": "Isso não é um desafio, é uma forma de consolidar um pensamento alternativo.",
+  "cbt_list": {
+    "header": ".FreeCBT",
+    "today": "Hoje",
+    "empty": "Nenhum pensamento ainda!"
+  },
+  "settings": {
+    "header": "FreeCBT*",
+    "theme": {
+      "header": "*tema",
+      "light": "Claro",
+      "dark": "Escuro",
+      "default": "Padrão do sistema"
+    },
+    "reminders": {
+      "header": "*lembretes",
+      "description": "Se quiser, você pode ativar notificações de lembretes que ajudam a criar o hábito de desafiar os pensamentos.",
+      "button": {
+        "yes": "Por favor, me lembre",
+        "no": "Sem lembretes, obrigado"
+      }
+    },
+    "pincode": {
+      "header": "*bloqueio por PIN 🔒",
+      "description": "Você pode bloquear o aplicativo com um código PIN, se quiser. Esteja ciente de que a única maneira de redefinir um código esquecido é apagando todos os seus dados, portanto, tenha cuidado para não esquecer.",
+      "button": {
+        "update": "Atualizar PIN",
+        "clear": "Remover PIN",
+        "set": "Definir PIN"
+      }
+    },
+    "history": {
+      "header": "*rótulos dos botões de histórico",
+      "description": "Por padrão, configuramos os botões na tela de histórico para usar o Pensamento Alternativo. Isso ajuda a consolidar o pensamento como \"modificado\".",
+      "button": {
+        "alternative": "Pensamento Alternativo",
+        "automatic": "Pensamento Automático"
+      }
+    },
+    "backup": {
+      "header": "*backup",
+      "button": "Fazer backup dos seus dados do FreeCBT",
+      "export-button": "Exportar seus dados do FreeCBT"
+    },
+    "locale": {
+      "header": "*idioma",
+      "default": "Padrão do sistema",
+      "contribute": "Ajude a traduzir o FreeCBT",
+      "// list": "translator note: use each language's native translation here; don't translate this list in other file. initial list based on https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes",
+      "list": {
+        "bg": "български",
+        "de": "Deutsch",
+        "en": "English",
+        "es": "Español",
+        "fi": "Suomi",
+        "fr": "Français",
+        "hi": "हिंदी",
+        "it": "Italiano",
+        "ko": "한국어",
+        "nb": "Norsk Bokmål",
+        "nl": "Nederlands",
+        "pl": "język polski",
+        "pt-BR": "Português do Brasil",
+        "pt-PT": "Português",
+        "ro": "Română",
+        "ru": "русский",
+        "sv": "Svenska",
+        "uk": "українська",
+        "zh-Hans": "中文",
+        "fa": "فارسی",
+        "_test": ")tset( hsilgnE-esreveR"
+      }
+    },
+    "privacy": "Política de Privacidade",
+    "terms": "Termos de Serviço"
+  },
   "cbt_form": {
+    "header": "FreeCBT",
     "edit": "Editar",
     "new": "Novo",
     "save": "Salvar",
-    "auto_thought_placeholder": "O que está acontencendo?",
+    "submit": "Salvar & Fechar",
+    "auto_thought_placeholder": "ex: \"Eu deveria estar mais motivado\"",
     "cog_distortion": "Distorção cognitiva",
-    "challenged": "Desafie-o",
-    "changed_placeholder": "Debate o pensamento!",
-    "alt_thought_placeholder": "O que devemos pensar alternativamente?"
+    "challenged": "Desafio",
+    "changed_placeholder": "Pode não ser verdade que...",
+    "alt_thought_placeholder": "O que poderíamos pensar em vez disso?",
+    "show_details": "Mostrar descrições detalhadas"
   },
-  "all_or_nothing_thinking": "Pensamento Dicotômico",
-  "all_or_nothing_thinking_explanation": "Consiste na valorização de um acontecimento sem ter em conta possíveis aspectos ou resultados intermediários. Se pensarmos que uma pequena falha nossa significa que estamos fundamentalmente arruinados, então estamos provavelmente praticando pensamento dicotômico.",
-  "all_or_nothing_thinking_thought": "Falhei na entrevista, certamente não sou empregável",
+  "explanation_screen": {
+    "header": "FreeCBT.",
+    "intro": "Introdução"
+  },
+  "finished_screen": {
+    "header": "FreeCBT"
+  },
+  "all_or_nothing_thinking": "Pensamento Tudo ou Nada",
+  "all_or_nothing_thinking_explanation": "Essa distorção acontece quando não temos espaço para o meio-termo. Se pensamos que uma pequena falha em nós mesmos significa que somos fundamentalmente ruins ou terríveis, provavelmente estamos engajados no pensamento tudo ou nada.",
+  "all_or_nothing_thinking_thought": "Fui péssimo na entrevista, devo ser impossível de ser contratado.",
   "catastrophizing": "Catastrofização",
-  "catastrophizing_explanation": "Se estamos considerarando um pequeno problema e a aumentando drasticamente o seu significado, então estamos a catastrofizar. Se você cometeu um pequeno erro no trabalho e teme que alguém o descubra, mesmo não sendo nada de grave? Provavelmente você está catastrofizando.",
-  "catastrophizing_thought": "Estou agitado, devo estar tendo um ataque cardíaco",
+  "catastrophizing_explanation": "Se estamos pegando um problema pequeno e o aumentando desproporcionalmente, estamos catastrofizando. Você cometeu um pequeno erro no trabalho e está com pavor de que alguém descubra, mesmo que não seja nada grave? Você provavelmente está catastrofizando.",
+  "catastrophizing_thought": "Estou me sentindo nervoso, posso estar tendo um ataque cardíaco.",
   "emotional_reasoning": "Raciocínio Emocional",
-  "emotional_reasoning_explanation_1": "\"Eu me sinto desta forma, portanto sou assim.\" Se estiver justificando o \"perigo\" de algo inofensivo usando o medo como argumento, então provavelmente está usando raciocínio emocional. As coisas não são periogosas porque temos medo delas e também não somos más pessoas só por pensarmos ser.",
-  "emotional_reasoning_explanation_2": "Este é difícil de reconhecer. É necessário algum trabalho para reconhecer que a emoção está dominando o raciocínio lógico.",
-  "emotional_reasoning_thought": "Me Sinto culpado, logo devo ter feito algo de errado.",
-  "fortune_telling": "Predição do Futuro",
-  "fortune_telling_explanation": "Esta distorção ocorre quando prevemos o futuro. Muitas vezes superestimamos as nossas capacidades de prever o que vai acontecer. Frequentemente nos preocupamos com algo que pode acontecer e procuramos evidências que suportem isso.",
-  "fortune_telling_thought": "O avião que estou embarcando vai sofrer um acidente.",
-  "labeling": "Rotulagem",
-  "labeling_explanation": "Se considerarmos uma característica de alguém e reduzirmos a pessoa a essa característica, então estamos rotulando. Se alguém nos desdenhou, não são necessariamente idiotas. Podem estar apenas com pressa. Isto é, também, aplicável a nós mesmos; Cometer um erro não implica que somos uma \"falha\".",
-  "labeling_thought": "Falhei num teste, portanto sou um estudante ruim.",
+  "emotional_reasoning_explanation_1": "\"Eu sinto isso, logo deve ser verdade.\" Se você se pega justificando o \"perigo\" de algo inofensivo porque tem medo disso, então você provavelmente está se engajando no raciocínio emocional. As coisas não são perigosas porque temos medo delas e não somos horríveis só porque pensamos que somos.",
+  "emotional_reasoning_explanation_2": "Essa distorção costuma ser difícil de reconhecer. É preciso um pouco de esforço para perceber quando sua mente emocional está assumindo as rédeas da lógica.",
+  "emotional_reasoning_thought": "Eu me sinto culpado, então devo ter feito algo ruim.",
+  "fortune_telling": "Previsão do Futuro",
+  "fortune_telling_explanation": "Essa distorção acontece quando prevemos o futuro. Muitas vezes superestimamos nossas habilidades de prever o que vai acontecer. Frequentemente nos preocupamos que algo possa acontecer e então começamos a procurar evidências de que vai ocorrer.",
+  "fortune_telling_thought": "O avião em que vou embarcar vai cair.",
+  "labeling": "Rotulação",
+  "labeling_explanation": "Se estamos pegando uma característica de uma pessoa e aplicando-a a toda a pessoa, estamos rotulando. Se alguém nos ignorou, pode não ser um \"idiota\", talvez apenas esteja com pressa. Isso se aplica a nós mesmos também; só porque cometemos um erro não significa que somos um \"fracasso\".",
+  "labeling_thought": "Fui reprovado em uma prova, então sou um mau aluno.",
   "magnification_of_the_negative": "Maximização do Negativo",
-  "magnification_of_the_negative_explanation": "Se você consideras apenas os aspectos negativos para avaliar uma situação e não considera os aspectos positivos, então provavelmente está aplicando a distorção de maximização do negativo. Se você está constantemente se julgando por ter falhado numa entrevista de emprego, então está filtrando todas as experiências positivas que você ganhou dessa entrevista.",
-  "magnification_of_the_negative_thought": "Tive uma dieta saudável esta semana, mas não fiz exercício físico.",
-  "mind_reading": "Leitura da Mente",
-  "mind_reading_explanation": "Se estamos preocupados com o que outras pessoas pensam sobre nós, então estamos tentando fazer uma leitura da mente. A menos que alguém nos diga exatamente o que estão pensando, não há forma de saber. Por que assumir o pior?",
-  "mind_reading_thought": "Acho que fui desagradável com o Jorge, aposto que ele me odeia.",
+  "magnification_of_the_negative_explanation": "Se você está julgando uma situação com base inteiramente nas partes negativas e não considerando as partes positivas, provavelmente está maximizando o negativo. Se você está constantemente se repreendendo por ter ido mal em uma entrevista de emprego, provavelmente está filtrando toda a experiência que ganhou com essa entrevista.",
+  "magnification_of_the_negative_thought": "Comi de forma saudável esta semana, mas pulei minha corrida.",
+  "mind_reading": "Leitura Mental",
+  "mind_reading_explanation": "Se estamos preocupados com o que outra pessoa está pensando sobre nós, estamos tentando ler mentes. A menos que alguém lhe diga o que está pensando, você não tem absolutamente nenhuma maneira de saber. Então, por que presumir o pior?",
+  "mind_reading_thought": "Acho que fui rude com o George, aposto que ele me odeia.",
   "minimization_of_the_positive": "Minimização do Positivo",
-  "minimization_of_the_positive_explanation": "Se minimizarmos as coisas positivas que nos acontecem, estamos aplicando a distorção da minimização do positivo. Mesmo que o dia não tenha sido 100% da forma que desejávamos, não significa que os 60% que foram bem devam ser ignorados.",
-  "minimization_of_the_positive_thought": "Muitas pessoas gostaram da minha apresentação, mas na introdução gaguejei um bocado, portanto apresentei mal.",
-  "other_blaming": "Culpar os outros",
-  "other_blaming_explanation_1": "Se estamos culpando alguém por uma situação ruim, então estamos aplicando a distorção de culpar os outros. Se você falhou um exame e está culpando o professor, então está dirigindo a sua energia para o local errado. Alguém se colocou na sua frente na auto-estrada? Buzinar, xingar e ficar zangado não ajuda com a situação.",
-  "other_blaming_explanation_2": "Isto não quer dizer que deveria culpar a si próprio por todas as situações negativas. Você não tem que culpar ninguém. Ninguém tem de ser culpado se não atribuir a culpa às situações e as deixar passar.",
-  "other_blaming_thought": "Aquele idiota está demorarando muito tempo na fila. Assim vou chegar tarde!",
-  "over_generalization": "Generalização",
-  "over_generalization_explanation": "Se tiramos conclusões com apenas um exemplo, estamos generalizando. Se você teve uma falha numa apresentação e assume que isso significa que você é mal em apresentações, então está generalizando.",
-  "over_generalization_thought": "Ninguém me chamou para dançar, o que significa que nunca ninguém me vai chamar.",
-  "self_blaming": "Personalização",
-  "self_blaming_explanation": "Se atribui a totalidade de uma situação negativa como sua culpa, então está aplicando a distorção da personalização. Você não precisa ser responsável por todos os aspectos negativos que acontecem. Se você está preso no trânsito e começa a se culpar por não ter saído de casa mais cedo, está personalizando. Você trataria outros desta mesma forma?",
-  "self_blaming_thought": "O meu filho está indo mal na escola, certamente a culpa é minha.",
-  "should_statements": "Deveria fazer isso…",
-  "should_statements_explanation_1": "Se você está atribuindo alguém a capacidades que elas não têm, você está aplicando a distorção do \"deveria ser assim\". Por exemplo, se você tiver medo de voar e tentar se convencer que \"Não deveria ter medo de voar, não há nada de errado com o avião\", está aplicando muita pressão sobre você mesmo. É normal para alguém que tenha medo de voar ter medo de voar!",
-  "should_statements_explanation_2": "Afirmações como \"deveria ser assim\" podem soar absurdas quando ditas em voz alta. É esse o ponto; são ilógicas!",
-  "should_statements_thought": "Sou um adulto, não deveria ter estes problemas mentais.",
+  "minimization_of_the_positive_explanation": "Se minimizamos as coisas boas que acontecem conosco, estamos minimizando o positivo. Mesmo que nosso dia não tenha saído 100% como planejado, isso não significa que os 60% que deram certo devam ser ignorados.",
+  "minimization_of_the_positive_thought": "Muitas pessoas gostaram da minha apresentação, mas gaguejei na introdução, então foi ruim.",
+  "other_blaming": "Culpar os Outros",
+  "other_blaming_explanation_1": "Se uma situação ruim deve ser culpa de alguém, estamos culpando os outros. Se você reprovou em uma prova e está culpando o professor, você está direcionando sua energia para o lugar errado. Alguém te cortou na estrada? Se você buzinar, mostrar o dedo do meio e ficar remoendo, como isso ajuda? Agora você foi cortado e está com raiva!",
+  "other_blaming_explanation_2": "Isso não significa que você tenha que se culpar por toda situação negativa. Você não precisa culpar ninguém. Ninguém tem que ter culpa se você deixar a situação passar sem atribuir culpa a alguém.",
+  "other_blaming_thought": "Aquele idiota está demorando muito na fila e vou me atrasar!",
+  "over_generalization": "Supergeneralização",
+  "over_generalization_explanation": "Se tiramos conclusões com base em apenas um exemplo, estamos supergeneralizando. Se você foi mal em uma apresentação e presume que isso significa que você é \"ruim\" em apresentar, você está supergeneralizando.",
+  "over_generalization_thought": "Ninguém me tirou para dançar, então ninguém nunca vai me tirar.",
+  "self_blaming": "Autoculpa",
+  "self_blaming_explanation": "Se você está atribuindo uma situação negativa inteiramente a si mesmo, você está praticando a autoculpa. Você não precisa ser responsável por cada coisa ruim que acontece. Se você está preso no trânsito e fica se repreendendo por não ter saído mais cedo, você está se culpando. Você trataria outra pessoa assim?",
+  "self_blaming_thought": "Meu filho está indo mal na escola, eu devo ter falhado com ele.",
+  "should_statements": "Afirmações do tipo \"Deveria\"",
+  "should_statements_explanation_1": "Se você está atribuindo a si ou a alguém habilidades que não tem, está usando afirmações equivocadas de \"deveria\". Por exemplo, se você tem medo de voar e diz a si mesmo \"Eu não deveria ter medo disso, não há nada de errado com o avião!\", você está colocando um fardo indevido sobre si mesmo. Você tem medo de voar! É normal que pessoas que têm medo de voar tenham medo de voar!",
+  "should_statements_explanation_2": "As afirmações de \"deveria\" podem parecer sem sentido quando você as diz em voz alta; esse é o ponto! Elas são ilógicas!",
+  "should_statements_thought": "Sou um adulto, não deveria ter esses problemas mentais.",
   "accessibility": {
-    "help_button": "Ajuda",
-    "list_button": "Listagem de pensamentos",
-    "new_thought_button": "Novo pensamento",
-    "settings_button": "Definições",
-    "delete_thought_button": "Apagar pensamento"
+    "help_button": "ajuda",
+    "list_button": "listar pensamentos",
+    "new_thought_button": "novo pensamento",
+    "settings_button": "configurações",
+    "delete_thought_button": "excluir pensamento",
+    "close_button": "fechar"
+  },
+  "reminder_notification": {
+    "1": {
+      "title": "Se algo está acontecendo, registre.",
+      "body": "Não deixe seus pensamentos guardados, lide com eles o mais rápido possível."
+    },
+    "2": {
+      "title": "Se você está tendo problemas, o FreeCBT pode ajudar.",
+      "body": "Tire um momento agora para desafiar seus pensamentos"
+    },
+    "intro": {
+      "title": "Se você está tendo problemas, o FreeCBT pode ajudar.",
+      "body": "Você receberá um lembrete como este uma vez por dia"
+    }
+  },
+  "all_or_nothing_thinking_one_liner": "ex: \"Isso foi uma completa perda de tempo\"",
+  "overgeneralization_one_liner": "ex: \"Todo mundo vai me decepcionar\"",
+  "mind_reading_one_liner": "ex: \"Aposto que ele me odeia agora\"",
+  "fortune_telling_one_liner": "ex: \"Vou ficar doente na festa\"",
+  "magnification_of_the_negative_one_liner": "Focar apenas no que deu errado",
+  "minimization_of_the_positive_one_liner": "Ignorar as coisas boas que aconteceram",
+  "catastrophizing_one_liner": "Focar no pior cenário possível",
+  "emotional_reasoning_one_liner": "ex: \"Estou com medo, então vou ter um ataque de pânico\"",
+  "should_statements_one_liner": "ex: \"Eu deveria ter sido melhor\"",
+  "labeling_one_liner": "ex: \"Ele é um idiota\"",
+  "self_blaming_one_liner": "Assumir toda a culpa para si mesmo",
+  "other_blaming_one_liner": "Atribuir toda a culpa a outra pessoa",
+  "backup_screen": {
+    "header": "FreeCBT<-",
+    "export": {
+      "description": "Para fazer backup de seus dados do FreeCBT, \"compartilhe-os\" em algum lugar seguro e privado, como enviar um e-mail para si mesmo. Mais tarde, você pode carregar esse arquivo abaixo para restaurar seus dados. Qualquer pessoa com este arquivo pode ler seus exercícios do FreeCBT, portanto, tenha muito cuidado para onde o envia!",
+      "clipboard": {
+        "button": "Exportar seus dados do FreeCBT para a área de transferência",
+        "success": "Copiado para a área de transferência!"
+      },
+      "file": {
+        "button": "Exportar seus dados do FreeCBT para um arquivo",
+        "success": "Copiado para o arquivo!"
+      },
+      "share": {
+        "button": "Exportar e compartilhar seus dados do FreeCBT",
+        "unavailable": "Erro: compartilhamento não disponível neste dispositivo"
+      }
+    },
+    "import": {
+      "description": "Restaurar um arquivo de backup apagará quaisquer dados existentes do FreeCBT, substituindo-os pelos dados do backup, então considere fazer outro backup primeiro.",
+      "clipboard": {
+        "button": "Importar seus dados do FreeCBT da área de transferência",
+        "failure": "A importação falhou. Tem certeza de que colou todo o texto de backup do FreeCBT?"
+      },
+      "file": {
+        "button": "Importar seus dados do FreeCBT",
+        "failure": "A importação falhou. Tem certeza de que este é um arquivo de backup do FreeCBT?"
+      },
+      "noop": "A importação foi bem-sucedida - mas nada mudou! Você deve salvar seu texto de backup para mais tarde e colá-lo aqui se o aplicativo perder seus dados.",
+      "success": "Importação bem-sucedida!"
+    }
+  },
+  "export_screen": {
+    "header": "FreeCBT->",
+    "description": "Visualize seus dados do FreeCBT em outros formatos. Você não poderá importar esses arquivos de volta para o FreeCBT mais tarde.",
+    "markdown": {
+      "button": "Exportar como Markdown/texto simples"
+    },
+    "csv": {
+      "button": "Exportar como CSV"
+    },
+    "json": {
+      "button": "Exportar como JSON"
+    }
+  },
+  "nav": {
+    "backup": "fazer backup e restaurar",
+    "export": "compartilhar e exportar"
+  },
+  "lock_screen": {
+    "auth": "Por favor, insira sua senha.",
+    "update": "Por favor, defina uma senha.",
+    "confirm": "Por favor, insira sua senha novamente para confirmar."
   }
 }
