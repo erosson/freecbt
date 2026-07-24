@@ -1,0 +1,4 @@
+[[redirects]]
+  from = "/webapp/*"
+  to = "/webapp/index.html"
+  status = 200

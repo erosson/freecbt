@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="461px" height="453px" viewBox="0 0 461 453" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 51.3 (57544) - http://www.bohemiancoding.com/sketch -->
+    <title>PurpleDook</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <ellipse id="path-1" cx="229.842416" cy="225.881799" rx="229.842416" ry="225.881799"></ellipse>
+        <ellipse id="path-3" cx="60.2273715" cy="60.1598202" rx="60.2273715" ry="60.1598202"></ellipse>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Logo" transform="translate(-102.000000, -427.000000)">
+            <g id="PurpleDook" transform="translate(332.500000, 653.500000) rotate(-17.000000) translate(-332.500000, -653.500000) translate(102.657584, 427.618201)">
+                <g id="Body">
+                    <mask id="mask-2" fill="white">
+                        <use xlink:href="#path-1"></use>
+                    </mask>
+                    <use id="Mask" fill="#574B90" xlink:href="#path-1"></use>
+                    <ellipse id="Oval-11" fill="#786FA6" mask="url(#mask-2)" cx="326.227946" cy="225.881799" rx="229.842416" ry="225.881799"></ellipse>
+                </g>
+                <ellipse id="RightEye" fill="#303952" cx="322.314858" cy="309.468474" rx="22.2428145" ry="25.5027838"></ellipse>
+                <ellipse id="lefteye" fill="#303952" transform="translate(159.486827, 225.881799) rotate(48.000000) translate(-159.486827, -225.881799) " cx="159.486827" cy="225.881799" rx="22.2428145" ry="25.5027838"></ellipse>
+                <g id="Mouth" transform="translate(205.384802, 323.836620) rotate(23.000000) translate(-205.384802, -323.836620) translate(144.731943, 262.525846)">
+                    <mask id="mask-4" fill="white">
+                        <use xlink:href="#path-3"></use>
+                    </mask>
+                    <use id="Mask" fill="#303952" xlink:href="#path-3"></use>
+                    <ellipse id="Oval" fill="#E66767" mask="url(#mask-4)" cx="60.2273715" cy="96.2557124" rx="60.2273715" ry="24.0639281"></ellipse>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

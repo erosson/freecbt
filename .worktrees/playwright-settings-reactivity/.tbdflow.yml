@@ -1,0 +1,73 @@
+main_branch_name: dndrade/main
+release_url_template: https://github.com/dndrade/freecbt/releases/tag/{{version}}
+stale_branch_threshold_days: 14
+log_display_count: 15
+monorepo:
+  enabled: false
+  project_dirs: []
+issue_handling:
+  strategy: branch-name
+review:
+  enabled: false
+  default_reviewers: []
+  strategy: github-issue
+  workflow: null
+  rules: []
+  labels:
+    pending: review-pending
+    concern: review-concern
+    accepted: review-accepted
+    dismissed: review-dismissed
+  concern_blocks_status: false
+radar:
+  enabled: false
+  level: file
+  on_sync: true
+  on_commit: off
+  ignore_patterns:
+  - '*.lock'
+  - '*-lock.*'
+  - CHANGELOG.md
+ci_check:
+  enabled: false
+branch_types:
+  ci: ci/
+  feat: feat/
+  docs: docs/
+  fix: fix/
+  release: release/
+  chore: chore/
+  refactor: refactor/
+  hotfix: hotfix/
+automatic_tags:
+  release_prefix: v
+lint:
+  conventional_commit_type:
+    enabled: true
+    allowed_types:
+    - build
+    - chore
+    - ci
+    - docs
+    - feat
+    - fix
+    - perf
+    - refactor
+    - release
+    - hotfix
+    - revert
+    - style
+    - test
+  issue_key_missing:
+    enabled: false
+    pattern: ^[A-Z]+-\d+$
+  scope:
+    enabled: true
+    enforce_lowercase: true
+  subject_line_rules:
+    max_length: 72
+    enforce_lowercase: true
+    no_period: true
+  body_line_rules:
+    max_line_length: 80
+    leading_blank: true

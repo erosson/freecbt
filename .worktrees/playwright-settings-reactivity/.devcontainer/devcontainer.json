@@ -1,0 +1,38 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/javascript-node
+{
+    "name": "Node.js",
+    // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+    "image": "mcr.microsoft.com/devcontainers/javascript-node:1-22-bullseye",
+    // Features to add to the dev container. More info: https://containers.dev/features.
+    "features": {
+        "ghcr.io/devcontainers/features/java:1": {},
+        "ghcr.io/devcontainers/features/docker-in-docker:2": {},
+        "ghcr.io/nordcominc/devcontainer-features/android-sdk:1": {}
+    },
+    // expose ports from this image to the local network, so my phone can see the expo go server.
+    // `yarn start --host tunnel` would work too, but this adds a dependency on ngrok, and is also much slower.
+    // this breaks the QR code and URL displayed by expo. Instead, you must find your host machine's ip 
+    // (perhaps with `ifconfig`) and enter that manually, but you only have to do it once per dev environment.
+    // https://github.com/orgs/community/discussions/13473
+    "runArgs": [
+        "-p=3000:3000",
+        "-p=8081:8081"
+    ],
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "esbenp.prettier-vscode",
+                "Orta.vscode-jest"
+            ]
+        }
+    }
+    // Use 'forwardPorts' to make a list of ports inside the container available locally.
+    // "forwardPorts": [],
+    // Use 'postCreateCommand' to run commands after the container is created.
+    // "postCreateCommand": "yarn install",
+    // Configure tool-specific properties.
+    // "customizations": {},
+    // Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+    // "remoteUser": "root"
+}

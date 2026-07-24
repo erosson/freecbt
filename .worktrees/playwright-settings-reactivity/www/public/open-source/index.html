@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="/next-jsx.css" />
+    <link rel="stylesheet" href="/main.css" />
+    <link rel="icon" type="image/x-icon" href="/static/favicon/favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+    <title class="next-head">FreeCBT app for iOS and Android</title>
+  </head>
+  <body>
+    <div id="__next">
+      <div class="jsx-989211465 row">
+        <a href="/" class="jsx-989211465"
+          ><h1 class="jsx-989211465">
+            Free<span class="jsx-989211465 blue">CBT</span>
+          </h1>
+        </a>
+        <div class="jsx-989211465 row inner">
+          <a class="jsx-1094775025" href="/about"
+            ><button class="jsx-1094775025">About</button></a
+          ><a class="jsx-1094775025" href="/distortions"
+            ><button class="jsx-1094775025">Distortions</button></a
+          ><a class="jsx-1094775025" href="/app"
+            ><button class="jsx-1094775025">App</button></a
+          >
+        </div>
+      </div>
+      <div>
+        <h1>What does open source mean?</h1>
+        <p>
+          FreeCBT is <em>FOSS (Open Source)</em>. That means that the code that
+          powers the application is open and available to look at for free. If
+          you'd like to look,
+          <a href="https://github.com/erosson/freecbt">it lives here.</a>
+        </p>
+        <p>
+          For example, here's the code that does the "Catastrophizing"
+          explanation:
+        </p>
+        <pre><code class="language-jsx" metastring="">const Catastrophizing = () =&gt; (
+  &lt;Distortion&gt;
+    &lt;SubHeader&gt;
+      {i18n.t('catastrophizing')} {'🤯'}
+    &lt;/SubHeader&gt;
+
+    &lt;Paragraph&gt;{i18n.t('catastrophizing_explanation')}&lt;/Paragraph&gt;
+
+    &lt;ThoughtView color="purple"&gt;
+      {i18n.t('catastrophizing_thought')}
+    &lt;/ThoughtView&gt;
+  &lt;/Distortion&gt;
+)
+</code></pre>
+        <h2>FOSS means you can contribute</h2>
+        <p>
+          If you want to help, FreeCBT accepts new contributions. Want a new
+          feature? Found a typo? Think something should be different? You can
+          propose a code change at any time. We'll take a look at it.
+        </p>
+        <h2>FOSS means you can disagree</h2>
+        <p>
+          If you don't like something about FreeCBT and you've got the technical
+          know-how, you can "fork" (copy) the project and then redistribute it.
+          If you do this, we'd ask you give your new version a different name so
+          people don't get confused.
+        </p>
+        <h2>FOSS means you can audit</h2>
+        <p>
+          If you think FreeCBT is doing something dangerous or otherwise don't
+          trust us, you're free to look for yourself. With a medical app, this
+          is pretty important.
+        </p>
+        <h2>FOSS means you can learn</h2>
+        <p>
+          FreeCBT is an up-to-date example of how a real software project is
+          built. If you're interested in how to program something like FreeCBT,
+          you're free to look at how we did something and then do it the same
+          way. Remeber, we're not geniuses and we may not do everything the
+          best.
+        </p>
+        <h2>FOSS means FreeCBT can live on</h2>
+        <p>
+          <a href="https://github.com/flaque/quirk"
+            >Quirk, FreeCBT's predecessor</a
+          >, is sadly no longer maintained. For a non-open-source app, the loss
+          of the company maintaining it is the end. However, because Quirk was
+          open-source, a new maintainer stepped up and resurrected Quirk as
+          FreeCBT! If FreeCBT's maintainer is ever unable to keep the app going,
+          another maintainer can once again step up and keep your favorite CBT
+          app alive.
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

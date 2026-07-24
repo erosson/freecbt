@@ -1,0 +1,5 @@
+checklist:
+  - "Relevant tests pass."
+  - "User data, privacy, and security implications have been considered."
+  - "User-facing changes have been manually verified in the app."
+  - "Documentation, feature switches, and release notes are updated when applicable."

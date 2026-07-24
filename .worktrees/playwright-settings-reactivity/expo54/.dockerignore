@@ -1,0 +1,8 @@
+**/node_modules
+.expo
+app-example
+dist
+playwright-report
+test-results
+.yarn
+.svelte-kit

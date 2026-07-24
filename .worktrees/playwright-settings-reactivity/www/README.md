@@ -1,0 +1,1 @@
+This website started with code from a view-source of https://www.quirk.fyi/ . This was clearly generated code, but the original source code was unavailable. I did my best to (quickly, cheaply) make things maintainable as static files.

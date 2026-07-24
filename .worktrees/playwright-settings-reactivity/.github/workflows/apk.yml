@@ -1,0 +1,42 @@
+# TODO: this has been broken for a while
+name: Build and release Android APK
+
+on:
+  #push:
+  #  branches:
+  #    - master
+  #  tags:
+  #    - "*"
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 22.x
+      - uses: actions/setup-java@v2
+        with:
+          distribution: "temurin"
+          java-version: "8"
+      - run: yarn --dev --frozen-lockfile
+      - run: yarn turtle setup:android
+        working-directory: expo47
+      - run: yarn turtle build:android -t apk --output freecbt.apk | tee build.log
+        working-directory: expo47
+        env:
+          EXPO_USERNAME: erosson
+          EXPO_PASSWORD: ${{ secrets.EXPO_CLI_PASSWORD }}
+          #EXPO_ANDROID_KEYSTORE_PASSWORD: ${{ secrets.EXPO_ANDROID_KEYSTORE_PASSWORD }}
+          #EXPO_ANDROID_KEY_PASSWORD: ${{ secrets.EXPO_ANDROID_KEY_PASSWORD }}
+      # turtle doesn't have a useful exit code, so fail here if it didn't generate our apk
+      - run: test -f freecbt.apk
+        working-directory: expo47
+      # release only for new tags
+      - uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: |
+            expo47/freecbt.apk

@@ -12,9 +12,6 @@ export default function Index() {
       <Text style={[s.text, s.my4]}>
         list of debug pages is in the nav drawer.
       </Text>
-      <Link href="/debug">
-        <Text style={[s.href]}>legacy debug page</Text>
-      </Link>
     </View>
   );
 }

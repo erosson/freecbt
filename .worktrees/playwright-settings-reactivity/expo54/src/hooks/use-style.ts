@@ -1,0 +1,214 @@
+import { Model } from "@/src/model";
+import { Appearance, StyleSheet } from "react-native";
+
+export function useStyle(c: Model.ColorScheme) {
+  return style(useTheme(c));
+}
+export function useDefaultStyle() {
+  return useStyle(Appearance.getColorScheme() ?? "light");
+}
+
+export function useTheme(c: Model.ColorScheme): Theme {
+  switch (c) {
+    case "dark":
+      return DarkTheme;
+    case "light":
+      return LightTheme;
+    default:
+      throw new Error(`unknown color scheme: ${c satisfies never}`);
+  }
+}
+
+export const DarkTheme = {
+  text: "white",
+  background: "black",
+  backgroundRoot: "rgba(4,4,4,1)",
+  backgroundCard: "rgba(255,255,255,0.2)",
+  border: "rgba(255,255,255,0.25)",
+  buttonText: "rgba(237,240,252,1)",
+  button: "rgba(84,109,229,0.4)",
+  paginationDot: "rgba(255,255,255,0.2)",
+  selectedText: "white",
+  selectedBackground: "rgba(119,139,235,0.6)",
+  selectedBackgroundCard: "rgba(84,109,229,0.6)",
+  selectedBorder: "rgba(84,109,229,0.6)",
+};
+export type Theme = typeof DarkTheme;
+export const LightTheme: Theme = {
+  text: "black",
+  background: "white",
+  backgroundRoot: "rgba(252,252,252,1)",
+  backgroundCard: "rgba(242,245,250,1)",
+  border: "rgba(0,0,0,0.2)",
+  button: "rgba(237,240,252,1)",
+  buttonText: "rgba(84,109,229,1)",
+  paginationDot: "rgba(0,0,0,0.2)",
+  selectedText: "white",
+  selectedBackground: "rgba(119,139,235,1)",
+  selectedBackgroundCard: "rgba(84,109,229,1)",
+  selectedBorder: "rgba(84,109,229,1)",
+};
+
+const spacing = 4;
+function style(c: Theme) {
+  // Tailwind-style utility classes.
+  // Very incomplete, feel free to expand. Try to match tailwind's names.
+  const U = StyleSheet.create({
+    rounded: { borderRadius: 8 },
+    roundedXs: { borderRadius: 2 },
+    roundedSm: { borderRadius: 4 },
+    roundedMd: { borderRadius: 6 },
+    roundedLg: { borderRadius: 8 },
+    roundedXl: { borderRadius: 12 },
+    rounded2xl: { borderRadius: 16 },
+    rounded3xl: { borderRadius: 24 },
+    rounded4xl: { borderRadius: 32 },
+    justifyCenter: { justifyContent: "center" },
+    itemsCenter: { alignItems: "center" },
+    itemsStart: { alignItems: "flex-start" },
+    flex1: { flex: 1 },
+    flexRow: { flexDirection: "row" },
+    flexCol: { flexDirection: "column" },
+    justifyBetween: { justifyContent: "space-between" },
+    underline: { textDecorationLine: "underline" },
+    selfStart: { alignSelf: "flex-start" },
+    alignMiddle: { verticalAlign: "middle" },
+    selfCenter: { alignSelf: "center" },
+    selfStretch: { alignSelf: "stretch" },
+    hFull: { height: "100%" },
+    wFull: { width: "100%" },
+    textCenter: { textAlign: "center" },
+    textRight: { textAlign: "right" },
+
+    m1: { margin: spacing * 1 },
+    m2: { margin: spacing * 2 },
+    m3: { margin: spacing * 3 },
+    m4: { margin: spacing * 4 },
+    mx1: { marginHorizontal: spacing * 1 },
+    mx2: { marginHorizontal: spacing * 2 },
+    mx3: { marginHorizontal: spacing * 3 },
+    mx4: { marginHorizontal: spacing * 4 },
+    my1: { marginVertical: spacing * 1 },
+    my2: { marginVertical: spacing * 2 },
+    my3: { marginVertical: spacing * 3 },
+    my4: { marginVertical: spacing * 4 },
+    mt1: { marginTop: spacing * 1 },
+    mt2: { marginTop: spacing * 2 },
+    mt3: { marginTop: spacing * 3 },
+    mt4: { marginTop: spacing * 4 },
+    mb1: { marginBottom: spacing * 1 },
+    mb2: { marginBottom: spacing * 2 },
+    mb3: { marginBottom: spacing * 3 },
+    mb4: { marginBottom: spacing * 4 },
+    p0: { padding: 0 },
+    p1: { padding: spacing * 1 },
+    p2: { padding: spacing * 2 },
+    p3: { padding: spacing * 3 },
+    p4: { padding: spacing * 4 },
+    px1: { paddingHorizontal: spacing * 1 },
+    px2: { paddingHorizontal: spacing * 2 },
+    px3: { paddingHorizontal: spacing * 3 },
+    px4: { paddingHorizontal: spacing * 4 },
+    py1: { paddingVertical: spacing * 1 },
+    py2: { paddingVertical: spacing * 2 },
+    py3: { paddingVertical: spacing * 3 },
+    py4: { paddingVertical: spacing * 4 },
+    pt1: { paddingTop: spacing * 1 },
+    pt2: { paddingTop: spacing * 2 },
+    pt3: { paddingTop: spacing * 3 },
+    pt4: { paddingTop: spacing * 4 },
+
+    text: { color: c.text },
+    errorText: { color: c.text, fontFamily: "ui-monospace" },
+    bg: { backgroundColor: c.background },
+    bgRoot: { backgroundColor: c.backgroundRoot },
+    bgSelected: { backgroundColor: c.selectedBackground },
+    bgCard: { backgroundColor: c.backgroundCard },
+    bgCardSelected: { backgroundColor: c.selectedBackgroundCard },
+    border: { borderWidth: 1, borderColor: c.border },
+    container: { maxWidth: 1000 },
+  });
+
+  // application-specific "class names"
+  return StyleSheet.create({
+    ...U,
+    view: { ...U.flex1, ...U.bgRoot, ...U.p4 },
+    centeredView: {
+      ...U.flex1,
+      ...U.bg,
+      ...U.justifyCenter,
+      ...U.itemsCenter,
+    },
+    href: { ...U.underline, ...U.text },
+    header: {
+      fontWeight: "900",
+      fontSize: 48,
+      color: c.text,
+      marginBottom: 12,
+    },
+    subheader: {
+      fontWeight: "700",
+      fontSize: 18,
+      color: c.text,
+      marginBottom: 12,
+    },
+    carouselItem: {
+      flex: 1,
+      borderWidth: 1,
+      borderRadius: 8,
+      borderColor: c.border,
+      justifyContent: "center",
+      padding: 20,
+    },
+    textInput: {
+      height: 156,
+      backgroundColor: c.background,
+      padding: 12,
+      paddingTop: 14,
+      borderRadius: 8,
+      fontSize: 16,
+      borderColor: c.border,
+      borderWidth: 1,
+      color: c.text,
+    },
+    button: {
+      backgroundColor: c.button,
+      // color: C.buttonText,
+      fontWeight: 700,
+      fontSize: 16,
+      padding: 12,
+      borderRadius: 10,
+      textAlign: "center",
+      justifyContent: "center",
+      alignItems: "center",
+      maxHeight: 48,
+      // width: 120,
+    },
+    buttonText: {
+      color: c.buttonText,
+    },
+    formDistortionItem: {
+      backgroundColor: c.background,
+      borderColor: c.border,
+      borderBottomWidth: 2,
+      paddingTop: 8,
+      paddingBottom: 4,
+      borderRadius: 8,
+      borderWidth: 1,
+      marginBottom: 4,
+      marginTop: 1,
+    },
+    formDistortionItemSelected: {
+      backgroundColor: c.selectedBackground,
+      borderColor: c.selectedBorder,
+    },
+    formDistortionItemSelectedText: {
+      color: c.selectedText,
+    },
+    selectedText: { color: c.selectedText },
+    paginationDot: { backgroundColor: c.paginationDot, borderRadius: 50 },
+    activePaginationDot: { backgroundColor: c.text, borderRadius: 50 },
+    bubble: { width: 24, height: 24 },
+  });
+}
+export type Style = ReturnType<typeof style>;

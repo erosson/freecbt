@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="998px" height="940px" viewBox="0 0 998 940" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Group</title>
+    <defs>
+        <ellipse id="path-1" cx="246" cy="242" rx="246" ry="242"></ellipse>
+        <ellipse id="path-3" cx="64.4612671" cy="64.452632" rx="64.4612671" ry="64.452632"></ellipse>
+        <ellipse id="path-5" cx="246.331111" cy="242.37317" rx="246.331111" ry="242.37317"></ellipse>
+        <ellipse id="path-7" cx="64.5480308" cy="64.5520195" rx="64.5480308" ry="64.5520195"></ellipse>
+        <ellipse id="path-9" cx="246" cy="242" rx="246" ry="242"></ellipse>
+        <ellipse id="path-11" cx="64.4612671" cy="64.452632" rx="64.4612671" ry="64.452632"></ellipse>
+    </defs>
+    <g id="Main" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="icon3" transform="translate(-13.000000, -42.000000)">
+            <g id="Group" transform="translate(13.000000, 42.000000)">
+                <g id="Group-2">
+                    <g id="PurpleDook" transform="translate(307.000000, 608.000000) rotate(-17.000000) translate(-307.000000, -608.000000) translate(61.000000, 366.000000)">
+                        <g id="Body">
+                            <mask id="mask-2" fill="white">
+                                <use xlink:href="#path-1"></use>
+                            </mask>
+                            <use id="Mask" fill="#574B90" xlink:href="#path-1"></use>
+                            <ellipse id="Oval-11" fill="#786FA6" mask="url(#mask-2)" cx="349.16129" cy="242" rx="246" ry="242"></ellipse>
+                        </g>
+                        <ellipse id="RightEye" fill="#303952" cx="344.973118" cy="331.551152" rx="23.8064516" ry="27.3225806"></ellipse>
+                        <ellipse id="lefteye" fill="#303952" transform="translate(170.698516, 242.000000) rotate(48.000000) translate(-170.698516, -242.000000) " cx="170.698516" cy="242" rx="23.8064516" ry="27.3225806"></ellipse>
+                        <g id="Mouth" transform="translate(219.902769, 345.690364) rotate(23.000000) translate(-219.902769, -345.690364) translate(155.402769, 281.190364)">
+                            <mask id="mask-4" fill="white">
+                                <use xlink:href="#path-3"></use>
+                            </mask>
+                            <use id="Mask" fill="#303952" xlink:href="#path-3"></use>
+                            <ellipse id="Oval" fill="#E66767" mask="url(#mask-4)" cx="64.4612671" cy="103.124211" rx="64.4612671" ry="25.7810528"></ellipse>
+                        </g>
+                    </g>
+                    <g id="PinkDook" transform="translate(532.500000, 304.500000) rotate(-17.000000) translate(-532.500000, -304.500000) translate(286.000000, 62.000000)">
+                        <g id="Body" transform="translate(0.000000, 0.000000)">
+                            <mask id="mask-6" fill="white">
+                                <use xlink:href="#path-5"></use>
+                            </mask>
+                            <use id="Mask" fill="#F78FB3" xlink:href="#path-5"></use>
+                            <ellipse id="Oval-11" fill="#F8A5C2" mask="url(#mask-6)" cx="349.631255" cy="242.37317" rx="246.331111" ry="242.37317"></ellipse>
+                        </g>
+                        <ellipse id="righteye" fill="#303952" cx="270.169606" cy="131.238928" rx="23.8384946" ry="27.3647127"></ellipse>
+                        <ellipse id="lefteye" fill="#303952" transform="translate(134.883289, 57.634535) rotate(48.000000) translate(-134.883289, -57.634535) " cx="134.883289" cy="57.6345349" rx="23.8384946" ry="27.3647127"></ellipse>
+                        <g id="Mouth" transform="translate(135.187026, 155.384914) rotate(23.000000) translate(-135.187026, -155.384914) translate(70.187026, 90.384914)">
+                            <mask id="mask-8" fill="white">
+                                <use xlink:href="#path-7"></use>
+                            </mask>
+                            <use id="Mask" fill="#303952" xlink:href="#path-7"></use>
+                            <ellipse id="Oval" fill="#E66767" mask="url(#mask-8)" cx="64.5480308" cy="103.283231" rx="64.5480308" ry="25.8208078"></ellipse>
+                        </g>
+                    </g>
+                    <g id="YellowDook" transform="translate(691.000000, 636.000000) rotate(-17.000000) translate(-691.000000, -636.000000) translate(445.000000, 394.000000)">
+                        <g id="body">
+                            <mask id="mask-10" fill="white">
+                                <use xlink:href="#path-9"></use>
+                            </mask>
+                            <use id="Mask" fill="#F5CD79" xlink:href="#path-9"></use>
+                            <ellipse id="Oval-11" fill="#F7D795" mask="url(#mask-10)" cx="349.16129" cy="242" rx="246" ry="242"></ellipse>
+                        </g>
+                        <ellipse id="righteye" fill="#303952" cx="399.639785" cy="165.608295" rx="23.8064516" ry="27.3225806"></ellipse>
+                        <ellipse id="lefteye" fill="#303952" transform="translate(242.691583, 75.906332) rotate(48.000000) translate(-242.691583, -75.906332) " cx="242.691583" cy="75.9063319" rx="23.8064516" ry="27.3225806"></ellipse>
+                        <g id="Mouth" transform="translate(291.895836, 174.910287) rotate(23.000000) translate(-291.895836, -174.910287) translate(227.395836, 110.410287)">
+                            <mask id="mask-12" fill="white">
+                                <use xlink:href="#path-11"></use>
+                            </mask>
+                            <use id="Mask" fill="#303952" xlink:href="#path-11"></use>
+                            <ellipse id="Oval" fill="#E66767" mask="url(#mask-12)" cx="64.4612671" cy="103.124211" rx="64.4612671" ry="25.7810528"></ellipse>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
