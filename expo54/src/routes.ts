@@ -55,6 +55,9 @@ export function settingsV2(): Href {
 export function thoughtCreateV2(): Href {
   return "/v2/thoughts/create";
 }
+export function freeWriteV2(): Href {
+  return "/v2/thoughts/free-write";
+}
 export function thoughtListV2(): Href {
   return "/v2/thoughts";
 }

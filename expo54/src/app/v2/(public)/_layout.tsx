@@ -29,6 +29,14 @@ function Nav({ style: s, translate: t }: ModelLoadedProps) {
           title: t("cbt_form.header"),
         }}
       />
+      <Drawer.Screen
+        name="thoughts/free-write"
+        options={{
+          drawerLabel: t("free_write.header") || "Free Writing",
+          drawerIcon: () => <Feather style={s.text} name="edit-3" />,
+          title: t("free_write.header") || "Free Writing",
+        }}
+      />
       <Drawer.Screen {...hidden("index", t("cbt_form.header"))} />
       <Drawer.Screen
         name="thoughts/index"

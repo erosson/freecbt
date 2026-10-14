@@ -7,11 +7,30 @@ import * as Distortion from "./distortion";
 
 export const VERSION = "Thought-v2";
 
+export const Emotion = z.object({
+  name: z.string(),
+  intensity: z.number().min(0).max(100),
+  reassessedIntensity: z.number().min(0).max(100).optional(),
+});
+export type Emotion = z.infer<typeof Emotion>;
+
+export const BlockTimestamps = z.object({
+  situation: z.string().optional(),
+  automaticThought: z.string().optional(),
+  distortions: z.string().optional(),
+  challenge: z.string().optional(),
+  alternativeThought: z.string().optional(),
+});
+export type BlockTimestamps = z.infer<typeof BlockTimestamps>;
+
 export const Json = z.object({
+  situation: z.string().optional(),
   automaticThought: z.string(),
   cognitiveDistortions: z.string().array(),
   challenge: z.string(),
   alternativeThought: z.string(),
+  emotions: Emotion.array().optional(),
+  blockTimestamps: BlockTimestamps.optional(),
   createdAt: z.iso.datetime(),
   updatedAt: z.iso.datetime(),
   uuid: z.string(),
@@ -49,10 +68,13 @@ export const idFromKey = z.codec(Key, Id, {
 });
 
 export const Spec = z.object({
+  situation: z.string().optional(),
   automaticThought: z.string(),
   cognitiveDistortions: z.set(Distortion.Distortion),
   challenge: z.string(),
   alternativeThought: z.string(),
+  emotions: Emotion.array().optional(),
+  blockTimestamps: BlockTimestamps.optional(),
 });
 export type Spec = z.infer<typeof Spec>;
 
@@ -79,23 +101,46 @@ export function create(spec: Spec, now: Date): Thought {
   const createdAt = now;
   const updatedAt = now;
   const uuid = Id.decode(uuidv4());
-  return { ...spec, createdAt, updatedAt, uuid };
+  const nowIso = now.toISOString();
+  const blockTimestamps: BlockTimestamps = {
+    situation: nowIso,
+    automaticThought: nowIso,
+    distortions: nowIso,
+    challenge: nowIso,
+    alternativeThought: nowIso,
+    ...(spec.blockTimestamps ?? {}),
+  };
+  return {
+    situation: "",
+    emotions: [],
+    ...spec,
+    createdAt,
+    updatedAt,
+    uuid,
+    blockTimestamps,
+  };
 }
 export function toSpec(t: Thought): Spec {
   return _.pick(t, [
+    "situation",
     "automaticThought",
     "cognitiveDistortions",
     "challenge",
     "alternativeThought",
+    "emotions",
+    "blockTimestamps",
   ]);
 }
 
 export function emptySpec(): Spec {
   return {
+    situation: "",
     automaticThought: "",
     cognitiveDistortions: new Set(),
     challenge: "",
     alternativeThought: "",
+    emotions: [],
+    blockTimestamps: {},
   };
 }
 
@@ -114,6 +159,9 @@ export function createParsers(data: Distortion.Data) {
       const createdAt = new Date(json.createdAt);
       const updatedAt = new Date(json.updatedAt);
       return Thought.decode({
+        situation: json.situation ?? "",
+        emotions: json.emotions ?? [],
+        blockTimestamps: json.blockTimestamps,
         ...json,
         cognitiveDistortions,
         createdAt,
@@ -126,13 +174,22 @@ export function createParsers(data: Distortion.Data) {
       );
       const createdAt = t.createdAt.toISOString();
       const updatedAt = t.updatedAt.toISOString();
-      return Json.decode({
-        ...t,
+      const raw: Json = {
+        automaticThought: t.automaticThought,
         cognitiveDistortions,
+        challenge: t.challenge,
+        alternativeThought: t.alternativeThought,
         createdAt,
         updatedAt,
+        uuid: t.uuid,
         v: VERSION,
-      });
+        ...(t.situation ? { situation: t.situation } : {}),
+        ...(t.emotions && t.emotions.length > 0 ? { emotions: t.emotions } : {}),
+        ...(t.blockTimestamps && Object.keys(t.blockTimestamps).length > 0
+          ? { blockTimestamps: t.blockTimestamps }
+          : {}),
+      };
+      return Json.decode(raw);
     },
   });
   const fromJson = z.codec(z.union([Json, LegacyJson]), toJson, {
@@ -152,6 +209,52 @@ export function createParsers(data: Distortion.Data) {
   return { fromJson, toJson, fromString };
 }
 
+export interface EmotionDelta {
+  diff: number;
+  direction: "decrease" | "increase" | "same" | "none";
+}
+
+export function calculateEmotionDelta(
+  initial: number,
+  reassessed?: number
+): EmotionDelta {
+  if (reassessed === undefined || reassessed === null) {
+    return { diff: 0, direction: "none" };
+  }
+  const diff = reassessed - initial;
+  if (diff < 0) return { diff, direction: "decrease" };
+  if (diff > 0) return { diff, direction: "increase" };
+  return { diff: 0, direction: "same" };
+}
+
+export function getEmotionSuggestions(
+  allThoughts: Iterable<Thought>,
+  customEmotions: readonly string[] = [],
+  query: string = "",
+  excluded: readonly string[] = []
+): string[] {
+  const set = new Set<string>();
+  for (const c of customEmotions) {
+    if (c && c.trim()) set.add(c.trim());
+  }
+  for (const t of allThoughts) {
+    if (t.emotions) {
+      for (const e of t.emotions) {
+        if (e.name && e.name.trim()) set.add(e.name.trim());
+      }
+    }
+  }
+  const excludedLower = new Set(excluded.map((e) => e.trim().toLowerCase()));
+  const q = query.trim().toLowerCase();
+  const list = Array.from(set).filter((item) => {
+    const itemLower = item.toLowerCase();
+    if (excludedLower.has(itemLower)) return false;
+    if (!q) return true;
+    return itemLower.includes(q);
+  });
+  return list.sort((a, b) => a.localeCompare(b));
+}
+
 export function label(t: Thought, m: Pick<Model.Ready, "settings">) {
   return m.settings.historyLabels === "automatic-thought"
     ? t.automaticThought
@@ -165,4 +268,16 @@ export function emojis(t: Thought): string {
 }
 export function key(t: Thought): Key {
   return keyFromId.decode(t.uuid);
+}
+
+export function getBlockTimestamp(
+  t: Thought,
+  block: keyof BlockTimestamps
+): Date {
+  const ts = t.blockTimestamps?.[block];
+  if (ts) {
+    const d = new Date(ts);
+    if (!isNaN(d.getTime())) return d;
+  }
+  return t.createdAt;
 }

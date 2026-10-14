@@ -1,0 +1,31 @@
+{
+  "name": "FreeCBT Lite — تفكيك الأفكار وتدوين مشفر",
+  "short_name": "FreeCBT",
+  "description": "تطبيق عربي خفيف وفائق السرعة لتفكيك الأفكار بالعلاج المعرفي السلوكي وتسجيل الملاحظات الصوتية المشفرة",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#090d16",
+  "theme_color": "#4f46e5",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

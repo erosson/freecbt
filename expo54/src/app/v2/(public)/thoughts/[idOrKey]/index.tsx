@@ -1,109 +1,102 @@
 import { Routes } from "@/src";
 import { LoadModel, ModelLoadedProps } from "@/src/hooks/use-model";
-import { Distortion, Model, Thought } from "@/src/model";
-import { ImagePath } from "@/src/view";
-import { Link, Redirect, Unmatched, useLocalSearchParams } from "expo-router";
+import { Action, Model, Thought } from "@/src/model";
+import { ThoughtCard } from "@/src/view/thought-card";
+import { Feather } from "@expo/vector-icons";
+import {
+  Link,
+  Redirect,
+  Unmatched,
+  useLocalSearchParams,
+  useRouter,
+} from "expo-router";
 import React from "react";
-import { Image, Text, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-
-export const SHRUG_EMOJI = "🤷‍";
 
 export default function Show() {
   return <LoadModel ready={Ready} />;
 }
-function Ready({ model, style: s, translate: t }: ModelLoadedProps) {
+
+function Ready({ model, dispatch, style: s, translate: t }: ModelLoadedProps) {
+  const router = useRouter();
   const res = useThoughtFromParams(model);
   if (res.status === "error") return res.error;
   const thought = res.value;
-  // filter model.distortionData.list below, instead of iterating
-  // thought.cognitiveDistortions directly, because it guarantees a
-  // consistent order.
-  const slugs = new Set(
-    Array.from(thought.cognitiveDistortions).map((d) => d.slug)
-  );
-  const distortions = model.distortionData.list.filter((d) =>
-    slugs.has(d.slug)
-  );
+
+  const isDark =
+    model.settings.theme === "dark" ||
+    (model.settings.theme === null && model.deviceColorScheme === "dark");
+  const locale = Model.locale(model);
+  const textColor = s.text.color;
+  const isRtl = locale === "ar" || locale === "fa";
+  const backLabel =
+    locale === "ar"
+      ? "العودة للأفكار"
+      : t("cbt_list.deck_view") || "Back to Deck";
+
   return (
     <SafeAreaView style={[s.view]}>
-      <View style={[s.container, s.flexCol]}>
-        <Text style={[s.subheader, s.mt4]}>{t("auto_thought")}</Text>
-        <Link
-          style={[s.flex1, s.border, s.rounded]}
-          href={Routes.thoughtEditV2(thought.uuid, "automatic-thought")}
-        >
-          <View style={[s.flexRow]}>
-            {thought.automaticThought ? (
-              <>
-                <Image
-                  source={ImagePath.yellowBubble}
-                  style={[{ width: 24, height: 24 }, s.selfCenter, s.m2]}
-                />
-                <View style={[s.border, s.rounded, s.p2]}>
-                  <Text style={[s.text]}>{thought.automaticThought}</Text>
-                </View>
-              </>
-            ) : (
-              <Text style={[s.text, s.m2]}>{SHRUG_EMOJI}</Text>
-            )}
-          </View>
-        </Link>
-        <Text style={[s.subheader, s.mt4]}>{t("cog_distortion")}</Text>
-        <Link
-          style={[s.flex1, s.border, s.rounded, s.p1]}
-          href={Routes.thoughtEditV2(thought.uuid, "distortions")}
-        >
-          <View style={[s.flexCol]}>
-            {distortions.length ? (
-              distortions.map((d) => (
-                <Text key={d.slug} style={[s.text, s.p1]}>
-                  {Distortion.emoji(d)} {t(d.labelKey)}
-                </Text>
-              ))
-            ) : (
-              <Text style={[s.text, s.m2]}>{SHRUG_EMOJI}</Text>
-            )}
-          </View>
-        </Link>
-        <Text style={[s.subheader, s.mt4]}>{t("challenge")}</Text>
-        <Link
-          style={[s.flex1, s.border, s.rounded]}
-          href={Routes.thoughtEditV2(thought.uuid, "challenge")}
-        >
-          <View style={[s.flexRow]}>
-            {thought.challenge ? (
-              <Text style={[s.text, s.m2]}>{thought.challenge}</Text>
-            ) : (
-              <Text style={[s.text, s.m2]}>{SHRUG_EMOJI}</Text>
-            )}
-          </View>
-        </Link>
-        <Text style={[s.subheader, s.mt4]}>{t("alt_thought")}</Text>
-        <Link
-          style={[s.flex1, s.border, s.rounded]}
-          href={Routes.thoughtEditV2(thought.uuid, "alternative-thought")}
-        >
-          <View style={[s.flexRow]}>
-            {thought.alternativeThought ? (
-              <>
-                <Image
-                  source={ImagePath.pinkBubble}
-                  style={[{ width: 24, height: 24 }, s.selfCenter, s.m2]}
-                />
-                <View style={[s.border, s.rounded, s.p2]}>
-                  <Text style={[s.text]}>{thought.alternativeThought}</Text>
-                </View>
-              </>
-            ) : (
-              <Text style={[s.text, s.m2]}>{SHRUG_EMOJI}</Text>
-            )}
-          </View>
-        </Link>
+      <View style={[s.container, styles.container]}>
+        <View style={styles.topNav}>
+          <Link href={Routes.thoughtListV2()} asChild>
+            <TouchableOpacity style={styles.backBtn}>
+              <Feather
+                name={isRtl ? "arrow-right" : "arrow-left"}
+                size={18}
+                color={textColor}
+              />
+              <Text style={[styles.backText, { color: textColor }]}>
+                {backLabel}
+              </Text>
+            </TouchableOpacity>
+          </Link>
+        </View>
+
+        <View style={styles.cardWrapper}>
+          <ThoughtCard
+            thought={thought}
+            model={model}
+            style={s}
+            translate={t}
+            isDark={isDark}
+            locale={locale}
+            onDelete={() => {
+              dispatch(Action.deleteThought(thought.uuid));
+              router.replace(Routes.thoughtListV2());
+            }}
+          />
+        </View>
       </View>
     </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    width: "100%",
+  },
+  topNav: {
+    marginBottom: 10,
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  backBtn: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+    paddingVertical: 6,
+    paddingHorizontal: 8,
+  },
+  backText: {
+    fontSize: 14,
+    fontWeight: "600",
+  },
+  cardWrapper: {
+    flex: 1,
+  },
+});
 
 type Result<V, E> =
   | { status: "success"; value: V }

@@ -1,4 +1,5 @@
 // a list of every available FreeCBT language. Add new ones to the list below. Alphabetical order, please. Thanks!
+import ar from "./ar.json";
 import bg from "./bg.json";
 import de from "./de.json";
 import en from "./en.json";
@@ -21,6 +22,7 @@ import uk from "./uk.json";
 import zhHans from "./zh-Hans.json";
 
 export default {
+  ar,
   bg,
   de,
   en,

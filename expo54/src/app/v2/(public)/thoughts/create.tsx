@@ -2,6 +2,8 @@ import { LoadModel, ModelLoadedProps } from "@/src/hooks/use-model";
 import { useSafeWindowDimensions } from "@/src/hooks/use-safe-area";
 import { Action, Distortion, Thought } from "@/src/model";
 import { ImagePath } from "@/src/view";
+import { EmotionEditor } from "@/src/view/emotion-editor";
+import { EmotionReassessment } from "@/src/view/emotion-reassessment";
 import { Image } from "expo-image";
 import React, { useState } from "react";
 import {
@@ -129,23 +131,83 @@ function CBTFormItem(
   const { model, value, progress, style: s, translate: t } = props;
   const onChange = props.onChange ?? (() => {});
   const onSubmit = props.onSubmit ?? (() => {});
+  const isDark = model.settings.theme === "dark" || (model.settings.theme === null && model.deviceColorScheme === "dark");
+  const nowIso = new Date().toISOString();
+
   return function CBTFormItem({ item }) {
     const [showDetails, setShowDetails] = useState(false);
     switch (item) {
       case "automatic-thought": {
         return (
-          <>
-            <Text style={[s.subheader]}>{t("auto_thought")}</Text>
+          <ScrollView
+            style={[s.flex1]}
+            contentContainerStyle={{ paddingBottom: 20 }}
+            keyboardShouldPersistTaps="handled"
+          >
+            <Text style={[s.subheader, { marginBottom: 6 }]}>
+              {t("cbt_form.situation_placeholder") || "Situation"}
+            </Text>
             <TextInput
-              style={[s.textInput]}
-              // placeholderTextColor={textInputPlaceholderColor}
+              style={[s.textInput, { height: 75, marginBottom: 12 }]}
+              placeholder={
+                (model.settings.locale ?? model.deviceLocale) === "ar"
+                  ? "ما هو الموقف أو السياق الذي حدث؟ (مثال: كنت في العمل، مقابلة شخص...)"
+                  : "What was the situation? (e.g. at work, talking to a friend...)"
+              }
+              placeholderTextColor={isDark ? "#888" : "#999"}
+              value={value.situation ?? ""}
+              multiline={true}
+              numberOfLines={2}
+              onChangeText={(v) =>
+                onChange({
+                  ...value,
+                  situation: v,
+                  blockTimestamps: {
+                    ...(value.blockTimestamps ?? {}),
+                    situation: nowIso,
+                  },
+                })
+              }
+            />
+            <Text style={[s.subheader, { marginBottom: 6 }]}>
+              {t("auto_thought") || "Automatic Thought"}
+            </Text>
+            <TextInput
+              style={[s.textInput, { height: 95, marginBottom: 12 }]}
               placeholder={t("cbt_form.auto_thought_placeholder")}
+              placeholderTextColor={isDark ? "#888" : "#999"}
               value={value.automaticThought}
               multiline={true}
-              numberOfLines={6}
-              onChangeText={(v) => onChange({ ...value, automaticThought: v })}
+              numberOfLines={3}
+              onChangeText={(v) =>
+                onChange({
+                  ...value,
+                  automaticThought: v,
+                  blockTimestamps: {
+                    ...(value.blockTimestamps ?? {}),
+                    automaticThought: nowIso,
+                  },
+                })
+              }
             />
-          </>
+            <EmotionEditor
+              emotions={value.emotions ?? []}
+              onChange={(ems) =>
+                onChange({
+                  ...value,
+                  emotions: ems,
+                  blockTimestamps: {
+                    ...(value.blockTimestamps ?? {}),
+                    automaticThought: nowIso,
+                  },
+                })
+              }
+              allThoughts={model.thoughts.values()}
+              textColor={s.text.color}
+              isDark={isDark}
+              translate={t}
+            />
+          </ScrollView>
         );
       }
       case "distortions": {
@@ -161,13 +223,11 @@ function CBTFormItem(
           <>
             <Text style={[s.subheader]}>{t("cog_distortion")}</Text>
             <Pressable
-              style={[s.flexRow]}
+              style={[s.flexRow, s.itemsCenter, s.my2]}
               onPress={() => setShowDetails(!showDetails)}
             >
-              <Text style={[s.text]}>
-                <Switch value={showDetails} onValueChange={setShowDetails} />
-              </Text>
-              <Text style={[s.text, s.alignMiddle, s.mx2, s.hFull]}>
+              <Switch value={showDetails} onValueChange={setShowDetails} />
+              <Text style={[s.text, s.mx2]}>
                 {t("cbt_form.show_details")}
               </Text>
             </Pressable>
@@ -185,7 +245,14 @@ function CBTFormItem(
                   } else {
                     ds.add(d);
                   }
-                  return onChange({ ...value, cognitiveDistortions: ds });
+                  return onChange({
+                    ...value,
+                    cognitiveDistortions: ds,
+                    blockTimestamps: {
+                      ...(value.blockTimestamps ?? {}),
+                      distortions: nowIso,
+                    },
+                  });
                 }
                 return (
                   <TouchableOpacity
@@ -239,34 +306,70 @@ function CBTFormItem(
               value={value.challenge}
               multiline={true}
               numberOfLines={6}
-              onChangeText={(v) => onChange({ ...value, challenge: v })}
+              onChangeText={(v) =>
+                onChange({
+                  ...value,
+                  challenge: v,
+                  blockTimestamps: {
+                    ...(value.blockTimestamps ?? {}),
+                    challenge: nowIso,
+                  },
+                })
+              }
             />
           </>
         );
       }
       case "alternative-thought": {
         return (
-          <>
+          <ScrollView
+            style={[s.flex1]}
+            contentContainerStyle={{ paddingBottom: 24 }}
+            keyboardShouldPersistTaps="handled"
+          >
             <Text style={[s.subheader]}>{t("alt_thought")}</Text>
             <Text style={[s.text, s.mb2]}>{t("alt_thought_description")}</Text>
             <TextInput
-              style={[s.textInput]}
-              // placeholderTextColor={textInputPlaceholderColor}
+              style={[s.textInput, { height: 110 }]}
               placeholder={t("cbt_form.alt_thought_placeholder")}
+              placeholderTextColor={isDark ? "#888" : "#999"}
               value={value.alternativeThought}
               multiline={true}
-              numberOfLines={6}
+              numberOfLines={4}
               onChangeText={(v) =>
-                onChange({ ...value, alternativeThought: v })
+                onChange({
+                  ...value,
+                  alternativeThought: v,
+                  blockTimestamps: {
+                    ...(value.blockTimestamps ?? {}),
+                    alternativeThought: nowIso,
+                  },
+                })
               }
             />
+            <EmotionReassessment
+              emotions={value.emotions ?? []}
+              onChange={(ems) =>
+                onChange({
+                  ...value,
+                  emotions: ems,
+                  blockTimestamps: {
+                    ...(value.blockTimestamps ?? {}),
+                    alternativeThought: nowIso,
+                  },
+                })
+              }
+              textColor={s.text.color}
+              isDark={isDark}
+              translate={t}
+            />
             <TouchableOpacity
-              style={[s.button, s.bgSelected]}
+              style={[s.button, s.bgSelected, s.mt4]}
               onPress={onSubmit}
             >
               <Text style={[s.selectedText]}>{t("cbt_form.submit")}</Text>
             </TouchableOpacity>
-          </>
+          </ScrollView>
         );
       }
       default:

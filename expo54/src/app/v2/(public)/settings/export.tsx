@@ -112,6 +112,21 @@ function toMarkdown(props: {
   return thoughts
     .map((thought) => {
       const distortions = Thought.distortionsList(thought);
+      const emotions = thought.emotions ?? [];
+      const emotionsMd =
+        emotions.length > 0
+          ? `\n## Emotions\n\n` +
+            emotions
+              .map(
+                (e) =>
+                  `- ${e.name}: ${e.intensity}%` +
+                  (e.reassessedIntensity !== undefined
+                    ? ` → ${e.reassessedIntensity}%`
+                    : "")
+              )
+              .join("\n") +
+            "\n"
+          : "";
       return `\
 created: ${thought.createdAt.toLocaleDateString()} ${thought.createdAt.toLocaleTimeString()}
 updated: ${thought.updatedAt.toLocaleDateString()} ${thought.createdAt.toLocaleTimeString()}
@@ -120,7 +135,7 @@ id: ${thought.uuid}
 ## ${t("auto_thought")}
 
 ${thought.automaticThought ? escapeMarkdown(thought.automaticThought) : EMPTY}
-
+${emotionsMd}
 ## ${t("cog_distortion")}
 
 ${
@@ -154,17 +169,28 @@ function toCSV(ts: readonly Thought.Thought[]): string {
     "createdAt",
     "updatedAt",
     "automaticThought",
+    "emotions",
     "cognitiveDistortions",
     "challenge",
     "alternativeThought",
   ];
   const table: string[][] = [headers].concat(
     ts.map((t): string[] => {
+      const emotionsStr = (t.emotions ?? [])
+        .map(
+          (e) =>
+            `${e.name}:${e.intensity}%` +
+            (e.reassessedIntensity !== undefined
+              ? `->${e.reassessedIntensity}%`
+              : "")
+        )
+        .join(";");
       return [
         t.uuid,
         t.createdAt.toISOString(),
         t.updatedAt.toISOString(),
         t.automaticThought,
+        emotionsStr,
         Array.from(t.cognitiveDistortions)
           .map((d) => d.slug)
           .sort()

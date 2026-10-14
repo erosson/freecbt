@@ -108,7 +108,12 @@
   "cbt_list": {
     "header": ".FreeCBT",
     "today": "Today",
-    "empty": "No thoughts yet!"
+    "empty": "No thoughts yet!",
+    "deck_view": "Cards",
+    "list_view": "List",
+    "record_counter": "%{current} of %{total}",
+    "prev": "Previous",
+    "next": "Next"
   },
   "settings": {
     "header": "FreeCBT*",
@@ -154,6 +159,7 @@
       "contribute": "Help translate FreeCBT",
       "// list": "translator note: use each language's native translation here; don't translate this list in other file. initial list based on https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes",
       "list": {
+        "ar": "العربية",
         "bg": "български",
         "de": "Deutsch",
         "en": "English",
@@ -187,12 +193,44 @@
     "save": "Save",
     "submit": "Save & Finish",
     "// auto_thought_placeholder_UNUSED": "ex: \"The plane might crash\"",
-    "auto_thought_placeholder": "ex: \"I should be more motivated\"",
+    "auto_thought_placeholder": "What happened, and what went through your mind? (Situation & Automatic Thought)",
+    "situation_placeholder": "Situation & Automatic Thought",
+    "emotion_placeholder": "Add emotion (e.g. Anxiety, Anger)...",
+    "add": "Add",
+    "intensity": "Intensity",
+    "reassessed_emotions": "Reassess Emotions",
+    "reassessed_emotions_desc": "How intense are these emotions now after reframing your thoughts?",
     "cog_distortion": "Cognitive Distortion",
     "challenged": "Challenge",
     "changed_placeholder": "It might not be true that...",
     "alt_thought_placeholder": "What could we think instead?",
     "show_details": "Show detailed descriptions"
+  },
+  "free_write": {
+    "header": "Free Writing",
+    "title_placeholder": "Title (optional)...",
+    "body_placeholder": "Write freely without constraints — your thoughts, feelings, or notes...",
+    "save": "Save Entry",
+    "words": "words",
+    "chars": "characters",
+    "badge": "Free Note",
+    "saved_success": "Saved successfully!"
+  },
+  "stats": {
+    "tab": "Stats",
+    "header": "My Insights & Progress",
+    "streak_title": "Daily Streak",
+    "streak_unit": "days",
+    "total_thoughts": "Total Thoughts",
+    "this_week": "This Week",
+    "relief_title": "Emotional Relief",
+    "relief_desc": "Average decrease in emotional distress after challenging thoughts.",
+    "no_relief_data": "Reassess your emotions in thoughts to see your relief rate!",
+    "distortions_title": "Top Thinking Patterns",
+    "no_distortions_data": "Select cognitive distortions in thoughts to see your top patterns.",
+    "emotions_title": "Most Frequent Emotions",
+    "no_emotions_data": "Add emotions to your thoughts to track your emotional landscape.",
+    "encouragement": "Every thought challenged is a step toward clarity and peace."
   },
   "explanation_screen": {
     "header": "FreeCBT.",

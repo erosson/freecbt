@@ -1,10 +1,16 @@
 import { Model } from "@/src/model";
 import { Appearance, StyleSheet } from "react-native";
 
-export function useStyle(c: Model.ColorScheme) {
-  return style(useTheme(c));
+let _darkStyle: Style | null = null;
+let _lightStyle: Style | null = null;
+
+export function useStyle(c: Model.ColorScheme): Style {
+  if (c === "dark") {
+    return (_darkStyle ??= style(DarkTheme));
+  }
+  return (_lightStyle ??= style(LightTheme));
 }
-export function useDefaultStyle() {
+export function useDefaultStyle(): Style {
   return useStyle(Appearance.getColorScheme() ?? "light");
 }
 

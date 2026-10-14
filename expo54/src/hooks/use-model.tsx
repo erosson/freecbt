@@ -71,9 +71,7 @@ function useCmdRunner(data: Distortion.Data, storage: AsyncStorageStatic) {
       switch (c.cmd) {
         case "load-model": {
           if (typeof window === "undefined") return; // web platform ssr + asyncstorage bugs out
-          // const [settings, tm] = await Promise.all([s.read(), t.readAll()]);
-          const settings = await s.read();
-          const tm = await t.readAll();
+          const [settings, tm] = await Promise.all([s.read(), t.readAll()]);
           const deviceLocale = defaultLocale();
           const deviceColorScheme = Appearance.getColorScheme() ?? null;
           const m = Model.ready({

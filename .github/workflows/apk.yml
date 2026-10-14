@@ -1,42 +1,50 @@
-# TODO: this has been broken for a while
-name: Build and release Android APK
+name: Build Android APK
 
 on:
-  #push:
-  #  branches:
-  #    - master
-  #  tags:
-  #    - "*"
+  push:
+    branches:
+      - master
   workflow_dispatch:
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: 22.x
-      - uses: actions/setup-java@v2
+
+      - name: Setup Java 17
+        uses: actions/setup-java@v4
         with:
           distribution: "temurin"
-          java-version: "8"
-      - run: yarn --dev --frozen-lockfile
-      - run: yarn turtle setup:android
-        working-directory: expo47
-      - run: yarn turtle build:android -t apk --output freecbt.apk | tee build.log
-        working-directory: expo47
+          java-version: "17"
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v4
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Expo Prebuild Android
+        run: yarn --cwd expo54 expo prebuild --platform android --no-install
+
+      - name: Make Gradlew Executable
+        run: chmod +x expo54/android/gradlew
+
+      - name: Build Android APK
         env:
-          EXPO_USERNAME: erosson
-          EXPO_PASSWORD: ${{ secrets.EXPO_CLI_PASSWORD }}
-          #EXPO_ANDROID_KEYSTORE_PASSWORD: ${{ secrets.EXPO_ANDROID_KEYSTORE_PASSWORD }}
-          #EXPO_ANDROID_KEY_PASSWORD: ${{ secrets.EXPO_ANDROID_KEY_PASSWORD }}
-      # turtle doesn't have a useful exit code, so fail here if it didn't generate our apk
-      - run: test -f freecbt.apk
-        working-directory: expo47
-      # release only for new tags
-      - uses: softprops/action-gh-release@v1
-        if: startsWith(github.ref, 'refs/tags/')
+          GRADLE_OPTS: "-Dorg.gradle.jvmargs='-Xmx4096m -XX:MaxMetaspaceSize=1024m -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8'"
+        run: |
+          cd expo54/android
+          ./gradlew assembleRelease -x lint -x lintVitalRelease -x lintVitalAnalyzeRelease --no-daemon || ./gradlew assembleDebug -x lint -x lintVitalRelease -x lintVitalAnalyzeRelease --no-daemon
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
         with:
-          files: |
-            expo47/freecbt.apk
+          name: FreeCBT-APK
+          path: expo54/android/app/build/outputs/apk/**/*.apk

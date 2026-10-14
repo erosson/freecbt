@@ -179,6 +179,9 @@ function updateReady(m: Model.Ready, a: Action.Action): Model.Ready {
     case "set-session-authed": {
       return { ...m, sessionAuthed: a.value };
     }
+    case "set-reminders": {
+      return { ...m, settings: { ...m.settings, reminders: a.value } };
+    }
     default:
       throw new Error(`no such action: ${a satisfies never}`);
   }

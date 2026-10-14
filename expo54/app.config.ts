@@ -79,6 +79,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       },
     ],
     "expo-web-browser",
+    "./plugins/withAndroidBuildFixes.js",
   ],
   experiments: {
     typedRoutes: true,

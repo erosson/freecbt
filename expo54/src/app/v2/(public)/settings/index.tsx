@@ -12,6 +12,7 @@ import React, { useState } from "react";
 import {
   ActivityIndicator,
   Pressable,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -26,7 +27,11 @@ function Ready({ model, dispatch, translate: t }: ModelLoadedProps) {
   const s = usePageStyle(Model.colorScheme(model));
   return (
     <SafeAreaView style={[s.view]}>
-      <View style={[s.container]}>
+      <ScrollView
+        showsVerticalScrollIndicator={true}
+        contentContainerStyle={{ paddingBottom: 40 }}
+      >
+        <View style={[s.container]}>
         <ThemeForm
           value={model.settings.theme}
           dispatch={dispatch}
@@ -69,6 +74,7 @@ function Ready({ model, dispatch, translate: t }: ModelLoadedProps) {
 
         <DebugLink style={s} translate={t} />
       </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
