@@ -149,12 +149,16 @@ function CBTFormItem(
         );
       }
       case "distortions": {
+        // Loaded thoughts can contain different objects for the same distortion.
+        const selectedSlugs = new Set(
+          Array.from(value.cognitiveDistortions, (d) => d.slug)
+        );
         const selectorBtn = (v: Distortion.Distortion) =>
-          value.cognitiveDistortions.has(v) ? s.bgSelected : s.bg;
+          selectedSlugs.has(v.slug) ? s.bgSelected : s.bg;
         const selectorText = (v: Distortion.Distortion) =>
-          value.cognitiveDistortions.has(v) ? s.selectedText : s.text;
+          selectedSlugs.has(v.slug) ? s.selectedText : s.text;
         const selectorCardBg = (v: Distortion.Distortion) =>
-          value.cognitiveDistortions.has(v) ? s.bgCardSelected : s.bgCard;
+          selectedSlugs.has(v.slug) ? s.bgCardSelected : s.bgCard;
         const img = (i: number) =>
           ImagePath.bubbles[i % ImagePath.bubbles.length];
         return (
@@ -178,11 +182,12 @@ function CBTFormItem(
                   // this prevents pressing the button while swiping away from the distortion list.
                   if (progress.get() !== slideNums.get("distortions")) return;
 
-                  const ds = new Set(value.cognitiveDistortions);
-                  // toggle
-                  if (ds.has(d)) {
-                    ds.delete(d);
-                  } else {
+                  const ds = new Set(
+                    Array.from(value.cognitiveDistortions).filter(
+                      (selected) => selected.slug !== d.slug
+                    )
+                  );
+                  if (!selectedSlugs.has(d.slug)) {
                     ds.add(d);
                   }
                   return onChange({ ...value, cognitiveDistortions: ds });
