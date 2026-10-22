@@ -1,4 +1,5 @@
 import { Routes } from "@/src";
+import { localeName, LocaleTag } from "@/src/hooks/use-i18n";
 import * as AsyncState from "@/src/legacy/async-state";
 import * as Feature from "@/src/legacy/feature";
 import i18n from "@/src/legacy/i18n";
@@ -440,7 +441,7 @@ export default function SettingScreen(): React.JSX.Element {
                         <Picker.Item
                           key={locale}
                           label={
-                            i18n.t("settings.locale.list." + locale) + suffix
+                            localeName(locale as LocaleTag) + suffix
                           }
                           value={locale}
                         />

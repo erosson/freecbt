@@ -1,5 +1,10 @@
 import { Routes } from "@/src";
-import { LocaleTag, localeTags, TranslateFn } from "@/src/hooks/use-i18n";
+import {
+  localeName,
+  LocaleTag,
+  localeTags,
+  TranslateFn,
+} from "@/src/hooks/use-i18n";
 import { LoadModel, ModelLoadedProps } from "@/src/hooks/use-model";
 import { PromiseRender } from "@/src/hooks/use-promise-state";
 import { useReminders } from "@/src/hooks/use-reminders";
@@ -210,8 +215,7 @@ function LocaleForm(props: {
     ["", t("settings.locale.default")],
     ...localeTags
       .filter((locale) => !locale.startsWith("_"))
-      // since translation-keys and locales are both static, these constructed translation-keys are still typesafe! amazing!
-      .map((locale) => [locale, t(`settings.locale.list.${locale}`)] as const),
+      .map((locale) => [locale, localeName(locale)] as const),
   ];
   return (
     <>

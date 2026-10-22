@@ -47,6 +47,9 @@ const locals = {
 export type LocaleTag = keyof typeof locals;
 export const localeTags = Object.keys(locals).sort() as readonly LocaleTag[];
 export const LocaleTag = z.union(localeTags.map((name) => z.literal(name)));
+export function localeName(locale: LocaleTag): string {
+  return en.settings.locale.list[locale];
+}
 
 const Ctx = createContext<I18n | null>(null);
 
